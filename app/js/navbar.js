@@ -67,7 +67,7 @@
 
 		var specifiedElement = document.querySelector(".site-mobile-menu");
 		var mt, mtoggleTemp;
-		document.addEventListener('click', function(event) {
+		document?.addEventListener('click', function(event) {
 			var isClickInside = specifiedElement.contains(event.target);
 			menuToggle.forEach(mtoggle => {
 				mtoggleTemp = mtoggle
