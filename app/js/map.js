@@ -6,7 +6,7 @@ const mapContainer = document.getElementById("map"), // 지도를 표시할 div
 
 const map = new kakao.maps.Map(mapContainer, mapOption);
 
-//근처 산 데이터 (추후 db 데이터 불러올 부분. 현재 dummy list 생성해둠.)
+//근처 산 데이터 (추후 db데이터 불러올 부분. 현재 dummy list 생성해둠.)
 const positions = [
   { title: "북악산", latlng: new kakao.maps.LatLng(37.593, 126.9737306) },
   { title: "인왕산", latlng: new kakao.maps.LatLng(37.5849, 126.9578444) },

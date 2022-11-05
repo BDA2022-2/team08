@@ -88,23 +88,21 @@
         </div>
         <!-- 필터링 버튼 & 정렬 드롭다운박스 -->
         <div class="filter-and-sort">
-          <form class="filter-rate" method="post">
+          <form id="filter-rate" class="filter-rate" method="post">
             <input
               type="submit"
-              name="filter_rate"
-              id="filter-rate"
+              name="filter_rate"              
               value="방문 평점 3.5 이상"
             />
           </form>
-          <form class="filter-visitor" method="post">
+          <form id="filter-visitor" class="filter-visitor" method="post">
             <input
               type="submit"
-              name="filter_visitor"
-              id="filter-visitor"
+              name="filter_visitor"              
               value="최근 방문 1K 이상"
             />
           </form>
-          <form class="sort" method="post">
+          <form id="sort" class="sort" method="post">
             <select name="sort" onChange="this.form.submit();">
               <option value="sort_rating">별점 순</option>
               <option value="sort_visitor">방문자 순</option>

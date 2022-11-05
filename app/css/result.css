@@ -3,50 +3,16 @@
   background: #00462a;
 }
 
-/* 필터 버튼 & 정렬 드롭다운
+/* 필터 버튼 & 정렬 드롭다운*/
 .filter-and-sort {
-  position: absolute;
-  width: 100%;
-  margin-top: 30px;
-  bottom: 64px;
+  display: flex;
 }
-.filter-and-sort input {
-  display: inline-block;
-  cursor: pointer;
-  padding: 7px 20px;
-  border-radius: 30px;
-  background: #00462a;
-  color: #fff;
-  text-align: center;
-  -webkit-transition: 0.3s all ease;
-  -o-transition: 0.3s all ease;
-  transition: 0.3s all ease;
+#filter-rate {
 }
-#filter-and-sort input:hover,
-#filter-and-sort input.active {
-  background: #00462a;
-  color: #fff !important;
+#filter_visitor {
 }
-.filter-rate,
-.filter-visitor {
-  position: absolute;
-  cursor: pointer;
+#sort {
 }
-.filter-rate:hover,
-.filter-visitor:hover {
-  position: absolute;
-  cursor: pointer;
-}
-.filter-rate {
-  left: 0;
-}
-.filter-visitor {
-  left: 1;
-}
-.sort {
-  right: 0;
-}
-*/
 
 /* icomoon 아이콘 변경 */
 .icon-bed:before {

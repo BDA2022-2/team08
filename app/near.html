@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/near.css" />
+    <link rel="stylesheet" href="css/result.css" />
     <script src="js/includeHTML.js"></script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
@@ -70,8 +71,8 @@
               <div
                 id="map"
                 style="
-                  width: 600px;
-                  height: 507px;
+                  width: 90%;
+                  height: 450px;
                   margin-top: 13px;
                   margin-left: 30px;
                   position: relative;
@@ -85,6 +86,38 @@
             </div>
           </div>
           <div class="col-lg-4">
+            <div
+              class="property-item"
+              style="margin-top: 120px; margin-bottom: 120px"
+            >
+              <div class="property-content">
+                <div class="price mb-2"><span>도봉산</span></div>
+                <div>
+                  <span class="d-block mb-2 text-black-50">
+                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
+                  </span>
+                  <div class="specs d-flex mb-4">
+                    <span class="d-block d-flex align-items-center me-3">
+                      <span class="icon-bed me-2"></span>
+                      <span class="caption">1234.56m</span>
+                    </span>
+                    <span class="d-block d-flex align-items-center">
+                      <span class="icon-bath me-2"></span>
+                      <span class="caption">4.5</span>
+                    </span>
+                  </div>
+                  <form action="info.php" method="get">
+                    <input type="hidden" name="mtnname" value="도봉산" />
+                    <input
+                      class="btn btn-primary py-2 px-3"
+                      type="submit"
+                      value="See details"
+                    />
+                  </form>
+                </div>
+              </div>
+            </div>
+
             <div onclick="location.href='info.html'" class="d-flex feature-h">
               <div class="feature-text">
                 <h3 class="heading">도봉산</h3>
