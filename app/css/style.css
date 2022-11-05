@@ -9218,7 +9218,7 @@ textarea.form-control-lg {
         padding: 10px 15px;
         display: inline-block;
         text-decoration: none !important;
-        color: rgba(255, 255, 255, 0.5); }
+        color: rgba(255, 255, 255, 0.7); }
         .site-nav .site-navigation .site-menu > li > a:hover {
           color: #fff; }
       .site-nav .site-navigation .site-menu > li.cta-button a {
@@ -9653,7 +9653,7 @@ textarea {
   transform: translate(-50%, -50%); }
 
 .menu-bg-wrap {
-  background-color: #005555;
+  background: linear-gradient(130deg, #77B625, #00462A 40%);
   padding: 20px 30px;
   position: relative;
   float: left;
@@ -9714,7 +9714,7 @@ textarea {
   .hero .form-search .form-control {
     margin-right: 10px; }
   .hero .form-search .btn {
-    background-color: #005555;
+    background-color: #007042;  
     padding-left: 30px;
     padding-right: 30px;
     color: #fff; }
@@ -9795,7 +9795,7 @@ textarea {
   -o-transition: .3s all ease;
   transition: .3s all ease; }
   .btn.btn-primary {
-    background: #005555;
+    background: #007042;
     color: #fff; }
   .btn:hover {
     top: -2px;
