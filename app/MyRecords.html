@@ -27,9 +27,15 @@
 	<link rel="stylesheet" href="css/aos.css">
 	<link rel="stylesheet" href="css/style.css">
 
+	<script src="js/includeHTML.js"></script>
 	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
+	
 </head>
 <body>
+	<div include-html="html/nav.html"></div>
+    <script>
+      includeHTML();
+    </script>
 
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -106,15 +112,14 @@
 								<div class="specs d-flex mb-4">
 									<span class="d-block d-flex align-items-center me-3">
 										<span class="icon-map-marker"></span>
-										
-										<span class="caption">대한민국 강원도 속초시·양양군·인제군</span>
+										<span class="caption">&nbsp;&nbsp;대한민국 강원도 속초시·양양군·인제군</span>
 									</span>
 								</div>
 
 								<div class="specs d-flex mb-4">
 									<span class="d-block d-flex align-items-center">
 										<span class="icon-star"></span>
-										<span class="caption">3점</span>
+										<span class="caption">&nbsp;3점</span>
 									</span>
 								</div>
 							</div>
@@ -229,5 +234,9 @@
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
+	<footer include-html="html/footer.html"></footer>
+   <script defer>
+       includeHTML();
+     </script>
   </body>
   </html>
