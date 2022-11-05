@@ -27,7 +27,48 @@
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
-    <div include-html="html/nav.html"></div>
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icofont-close js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <nav class="site-nav">
+      <div class="container">
+        <div class="menu-bg-wrap">
+          <div class="site-navigation">
+            <a href="index.html" class="logo m-0 float-start">
+              <img
+                src="images/logo_nav.png"
+                alt="Image"
+                object-fit="cover"
+                height="40px"
+              />
+            </a>
+
+            <ul
+              class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
+            >
+              <li class="active"><a href="admin.html">야생화 정보 수정하기</a></li>
+              <li><a href="admin_rest.html">음식점 정보 수정하기</a></li>
+            </ul>
+
+            <a
+              href="#"
+              class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
+              data-toggle="collapse"
+              data-target="#main-navbar"
+            >
+              <span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <script>
       includeHTML();
     </script>
@@ -46,30 +87,9 @@
           style="background-image: url('images/hero_bg_1.jpg')"
         ></div>
       </div>
-
-      <div class="container">
-        <div class="row justify-content-center align-items-center">
-          <div class="col-lg-9 text-center">
-            <div class="container">
-                <h4 class="display-4 text-center">로그인</h4>
-                <form action="./login_check.php" method="post">
-                    <div class="mb-3">
-                        <label for="mb_id">아이디</label>
-                        <input type="text" id="mb_id" name="mb_id" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="mb_password">비밀번호</label>
-                        <input type="password" id="mb_password" name="mb_password" class="form-control">
-                    </div>
-            
-                    <button type="submit" class="btn btn-primary">로그인</button>
-                    <a href="./register.php" class="btn btn-secondary">회원가입</a>
-                </form>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+
+    야생화 정보수정 화면입니다.
 
     <footer include-html="html/footer.html"></footer>
     <script defer>
