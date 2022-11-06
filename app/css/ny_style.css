@@ -36,7 +36,7 @@
     --bs-gray-700: #495057;
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
-    --bs-primary: #00204a;
+    --bs-primary: #00462a;
     --bs-secondary: #007042;
     --bs-success: #198754;
     --bs-info: #0dcaf0;
@@ -502,7 +502,7 @@
    }
   
    .weather-icon {
-    max-width: 70%;
+    max-width: 50%;
     fill:#00462a;
     height: auto; }  
   
@@ -523,71 +523,7 @@
   
   .figure-caption {
     font-size: 0.875em;
-    color: #6c757d; }
-  
-  .chartWrap{
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin:100px;
-  }
-  .chart {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      transition: 0.3s;
-      background:lightgray;
-      display:inline-block;
-  }
-  .chart:after{
-      content:'';
-      background: #fff;
-      position: absolute;
-      top:50%; left:50%;
-      width:170px; height:170px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-  }
-  .chart-bar{
-      width: inherit;
-      height: inherit;
-      border-radius: 50%;
-      position: relative;
-  }
-    
-  .chart-total{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background:gray;
-      width:100%;
-  }
-  .chart-total span{
-      position: absolute;
-      color:#777;
-  }
-  .chart-total-num{
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size:1.3rem;
-      font-weight:bold;
-      color:#333;
-  }
-    .chart-total-text1{
-      top:-150px;right:-10px;
-    }
-    .chart-total-text2{
-      top:-50px;right:-70px;
-    }
-    .chart-total-text3{
-      top:120px;right:30px;
-    }
-    .chart-total-text4{
-      top:0;left:-70px;
-    }
+    color: #6c757d; }  
   
   .container,
   .container-fluid,
@@ -9691,7 +9627,7 @@
   
   h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, .logo {
     font-family: "Work Sans", sans-serif;
-    color: #00204a; }
+    color: #00462a; }
   
   a {
     -webkit-transition: .3s all ease;
@@ -10085,13 +10021,16 @@
     position: relative; }
     .img-about.dots:after {
       position: absolute;
-      z-index: 1;
+      z-index: 2;
       bottom: -50px;
-      right: -70px;
-      content: "";
-      width: 412px;
+      right: -150px;
+      content: "";  
+      width: 500px;
       height: 220px;
-      background: url("../images/dots.png") no-repeat; }
+      background: linear-gradient(
+        rgba(255, 255, 255, 0.8),
+        rgba(255, 255, 255, 0.1)
+      ),url("../images/dots.png") no-repeat; }
   
   .social a {
     text-decoration: none;

@@ -27,6 +27,8 @@
 	<link rel="stylesheet" href="css/aos.css">
 	<link rel="stylesheet" href="css/ny_style.css">
     <script src="js/includeHTML.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
 	<title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
 </head>
@@ -37,156 +39,226 @@
       includeHTML();
     </script>
 
-<div class="hero overlay" style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80');">
+<div class="hero page-inner overlay" style="background-image: url('https://images.unsplash.com/photo-1438786657495-640937046d18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");">
+	<div class="container">
+		<div class="row justify-content-center align-items-center">
+			<div class="col-lg-9 text-center mt-5">
+				<h1 class="heading" data-aos="fade-up">
+					<?php
+						echo($_GET['mtnname'])
+					?>
+				</h1>
 
-<div class="container">
-	<div class="row justify-content-center align-items-center">
-		<div class="col-lg-9 text-center mt-5">
-			<h1 class="heading" data-aos="fade-up">설악산</h1>
-
-			<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
-				<ol class="breadcrumb text-center justify-content-center">
-					<li class="breadcrumb-item text-white">★★★★☆</li>
-					<li class="breadcrumb-item active text-white-50" aria-current="page">최근 방문 수 1234</li>
-				</ol>
-			</nav>
-			<div
-                data-aos="fade-up"
-                data-aos-delay="400"
-              >
-                <div class="box-feature">
-                  <p><h3 class="text-start">현재 날씨</h3></p>
-				  <div class="row">
-				  <?php
-                  $SKY = "1";
-                  $TMP = "11";
-				  $TMN = "0";
-				  $TMX = "13";
-                  $RN1 = "0";
-                  $REH = "46";
-				  $POP = "20";
-				  $PCP = "0";
-                  $PTY = "0";
-                  $WSD = "1";
-                  if ($PTY == "0") {
-	                  if ($SKY == "1") {
-		                  print('<div class="col-8 col-lg-4">
-									<img src="images/sunny.svg" class="weather-icon svg">
-								 </div>'
-		                  	);
-	                  }
-					  else if ($SKY == "3") {
-						print('<div class="col-8 col-lg-4">
-								  <img src="images/clear-sky.svg" class="weather-icon svg">
-							   </div>'
-							);
-					  }
-					  else {
-						print('<div class="col-8 col-lg-4">
-								  <img src="images/cloud.svg" class="weather-icon svg">
-							   </div>'
-							);
-					  }
-					  printf('<div class="col-8 col-lg-4 text-black">
-				  			<br>
-							기온 %s℃(%s℃/%s℃)<br>
-							습도 %s%%<br>
-							</div>
-							<div class="col-8 col-lg-4 text-black">
-							<br>
-							풍속 %sm/s<br>
-							강수 확률 %smm
-						  </div>', $TMP, $TMX, $TMN, $REH, $WSD, $PCP);
-                  }
-				  else {
-					if($PTY=="1") {
-						print('<div class="col-8 col-lg-4">
-								  <img src="images/rainy-day.svg" class="weather-icon svg">
-							   </div>'
-							);
-					}
-					else if($PTY=="2") {
-						print('<div class="col-8 col-lg-4">
-								  <img src="images/sleet.svg" class="weather-icon svg">
-							   </div>'
-							);
-					}
-					else if($PTY=="2") {
-						print('<div class="col-8 col-lg-4">
-								  <img src="images/snowfall.svg" class="weather-icon svg">
-							   </div>'
-							);
-					}
-					else {
-						print('<div class="col-8 col-lg-4">
-								  <img src="images/downpour.svg" class="weather-icon svg">
-							   </div>'
-							);
-					}
-					printf('<div class="col-8 col-lg-4">
-				  			<br>
-							기온 %s℃(%s℃/%s℃)<br>
-							습도 %s%%<br>
-							</div>
-							<div class="col-8 col-lg-4 text-black">
-							<br>
-							풍속 %sm/s<br>
-							강수량 %s%%
-						  </div>', $TMP, $TMX, $TMN, $REH, $WSD, $POP);
-				  }
-                  ?>
-				  </div>
-                </div>
-              </div>
+				<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+					<ol class="breadcrumb text-center justify-content-center h5">
+						<?php
+							#DB 연결 - 산 정보 받아오는 코드
+							$review_num = 123;
+							$mtn_rate_avg = "4.4"; #더미 데이터
+							$star_n = (int)$mtn_rate_avg;
+							echo '<li class="breadcrumb-item text-white">';
+							for($i=0; $i<$star_n; $i=$i+1)
+								{
+									echo '<span class="icon-star text-white"></span>';
+								}
+							if ((float)$mtn_rate_avg - $star_n >= 0.5){
+								echo '<span class="icon-star-half-o text-white"></span>';
+								for($i=0; $i<5-$star_n-1; $i=$i+1)
+								{
+									echo '<span class="icon-star-o text-white"></span>';
+								}
+							}
+							else {
+								for($i=0; $i<5-$star_n; $i=$i+1)
+								{
+									echo '<span class="icon-star-o text-white"></span>';
+								}
+							}
+							echo ' (' . $mtn_rate_avg . ')</li>';
+							echo '<li class="breadcrumb-item text-white text-opacity-75" aria-current="page">최근 방문 수 ' . $review_num . '</li>';
+						?>
+					</ol>
+				</nav>
+			</div>
 		</div>
 	</div>
 </div>
-</div>
+
+<div class="section features-1">
+		<div class="container col-8">
+			<div class="row mb-5 align-items-center">
+				<div class="col-lg-6">
+					<h2 class="font-weight-bold text-start heading mt-5 mb-3">
+						<?php
+							echo($_GET['mtnname'])
+						?> 기상 정보
+					</h2>
+				</div>
+                <div class="box-feature mt-3">
+				  <div class="row my-3">
+					<?php
+						date_default_timezone_set('Asia/Seoul');
+						#API로 날씨 받아오는 코드 넣기
+						$SKY = "1";
+						$TMP = "11";
+						$TMN = "0";
+						$TMX = "13";
+						$RN1 = "0";
+						$REH = "46";
+						$POP = "20";
+						$PCP = "0";
+						$PTY = "3";
+						$WSD = "1"; #더미 데이터
+						if ($PTY == "0") {
+							if ($SKY == "1") {
+								print('<div class="col-8 col-lg-4">
+											<img src="images/sunny.svg" class="weather-icon svg">
+										</div>'
+									);
+							}
+							else if ($SKY == "3") {
+								print('<div class="col-8 col-lg-4">
+										<img src="images/clear-sky.svg" class="weather-icon svg">
+									</div>'
+									);
+							}
+							else {
+								print('<div class="col-8 col-lg-4">
+										<img src="images/cloud.svg" class="weather-icon svg">
+									</div>'
+									);
+							}
+							printf('<div class="col-8 col-lg-4 text-black text-start">
+										<br>
+										<h6>'.date("H:i",time()).' 현재</h6>
+										<h1>%s℃</h1>
+										<h5>최고 %s℃ / 최저 %s℃<h5>
+									</div>
+									<div class="h7 col-8 col-lg-4 text-black text-start">
+										<br>
+										<span class="icon-opacity text-black-50"></span> 현재 습도 %s%%<br><br>
+										<span class="icon-toys text-black-50"></span> 현재 풍속 %sm/s<br><br> 
+										<span class="icon-tint text-black-50"></span> &nbsp강수 확률 %s%%
+									</div>', $TMP, $TMX, $TMN, $REH, $WSD, $PCP);
+						}
+						else {
+							if($PTY=="1") {
+								print('<div class="col-8 col-lg-4">
+										<img src="images/rainy-day.svg" class="weather-icon svg">
+									</div>'
+									);
+							}
+							else if($PTY=="2") {
+								print('<div class="col-8 col-lg-4">
+										<img src="images/sleet.svg" class="weather-icon svg">
+									</div>'
+									);
+							}
+							else if($PTY=="2") {
+								print('<div class="col-8 col-lg-4">
+										<img src="images/snowfall.svg" class="weather-icon svg">
+									</div>'
+									);
+							}
+							else {
+								print('<div class="col-8 col-lg-4">
+										<img src="images/downpour.svg" class="weather-icon svg">
+									</div>'
+									);
+							}
+							printf('<div class="col-8 col-lg-4 text-black text-start">
+										<br>
+										<h6>'.date("H:i",time()).' 현재</h6>
+										<h1>%s℃</h1>
+										<h5>최고 %s℃ / 최저 %s℃<h5>
+									</div>
+									<div class="h7 col-8 col-lg-4 text-black text-start">
+										<br>
+										<span class="icon-opacity text-black-50"></span> 현재 습도 %s%%<br><br>
+										<span class="icon-toys text-black-50"></span> 현재 풍속 %sm/s<br><br> 
+										<span class="icon-tint text-black-50"></span> &nbsp강수량&nbsp %smm
+									</div>', $TMP, $TMX, $TMN, $REH, $WSD, $POP);
+						}
+					?>
+				  </div>
+                </div>	
+			</div>
+			<div class="row">
+
+			</div>
+		</div>
+	</div>
+
+
 	<section class="section">
 		<div class="container">
-			<div class="row">
+			<div class="row section-counter">
 				<div class="col-md-12">
 					<h2 class="font-weight-bold heading text-primary mb-4 mb-md-0">날씨 기반 안전 정보</h2>
 				</div>
-				<div class="col-8 col-lg-4"  data-aos="fade-up" data-aos-delay="500">
+				<div class="col-8 col-lg-4 mt-4"  data-aos="fade-up" data-aos-delay="500">
 					<div class="box-feature">
-						<h3 class="mb-3">산사태</h3>
+						<h5 class="mb-3">산사태</h5>
 						<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
 							<div class="counter-wrap mb-5 mb-lg-0">
-								<span class="caption text-black-50">발생 횟수</span>
-								<span class="number"><span class="countup text-primary">7191</span></span>
+								<span class="caption text-black text-opacity-75">발생 횟수</span>
+								<span class="number"><span class="countup text-primary">
+									<?php
+										#DB 연결 - 발생횟수 가져오기
+										$res = "1245"; #더미 데이터
+										echo (int)$res;
+									?>
+								</span></span>
+							</div>
+						</div>
+					</div>
+					<div class="box-feature">
+						<h5 class="mb-3">산불</h5>
+						<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+							<div class="counter-wrap mb-5 mb-lg-0">
+								<span class="caption text-black text-opacity-75">발생 횟수</span>
+								<span class="number"><span class="countup text-primary">
+									<?php
+										#DB 연결 - 발생횟수 가져오기
+										$res = "7192"; #더미 데이터
+										echo (int)$res;
+									?>
+								</span></span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-8 col-lg-4"  data-aos="fade-up" data-aos-delay="400">
-					<div class="box-feature">
-						<h3 class="mb-3">산불</h3>
-						<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-					<div class="counter-wrap mb-5 mb-lg-0">
-					<span class="caption text-black-50">발생 횟수</span>
-						<span class="number"><span class="countup text-primary">7191</span></span>
-					</div>
+				<?php
+					# DB 연결 - 산악 사고 관련 데이터 받아오기
+					$res = [["Accident_type","count"],["실족추락",125],["저체온증",56],["개인질환",37],["기타산악",71],["탈진탈수",49],["일반조난",11]];
+				?>
+				<div class="col-8 col-lg-8"  data-aos="fade-up" data-aos-delay="600">
+						<div id="acc_piechart" style="width: 900px; height: 500px;"></div>
+						<script type="text/javascript">
+							google.load("visualization", "1", {packages:["corechart"]});
+							google.setOnLoadCallback(drawChart);
+							function drawChart() 
+							{
+								var data = google.visualization.arrayToDataTable(
+									<?php
+										echo json_encode($res);
+									?>
+								);
+								var options = {
+									title: '산악 사고',
+									titleTextStyle: {color: '#00462a', fontName: "Work Sans", fontSize: '20', bold: 0,},
+									pieHole: 0.4,
+									pieSliceText: 'label',
+									sliceVisibilityThreshold: .1,
+									legend: 'none',
+									colors: ['#F19292','#2D604C','#697F69','#A0937D','#F0BB62', '#EFE5C5']
+								};
+								var chart = new google.visualization.PieChart(document.getElementById("acc_piechart"));
+								chart.draw(data, options);
+							}
+						</script>
 				</div>
-					</div>
-				</div>
-				<div class="col-8 col-lg-4"  data-aos="fade-up" data-aos-delay="600">
-					<div class="box-feature">
-						<h3 class="mb-3">산악 사고</h3>
-						<div class="chartWrap">
-  
-						  <div class="chart">
-						    <div class="chart-bar" data-deg="50"></div>
-						    <div class="chart-bar" data-deg="95"></div>
-						    <div class="chart-bar" data-deg="200"></div>
-						    <div class="chart-bar" data-deg="15"></div>
-						  </div>
-						  
-						</div>
-					</div>
-				</div>	
 			</div>
-		</div>
 	</section>
 
 	<div class="section features-1">
@@ -197,78 +269,40 @@
 				</div>
 			</div>
 			<div class="row">
-
 				<div class="col-12">
-
-
 					<div class="property-slider-wrap">
-
-
-
 						<div class="property-slider">
-
-							<div class="property-item">
-
-								<a class="img-fluid">
-									<img src="https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2" alt="Image" class="img-flower">
-								</a>
-
-								<div class="property-content">
-									<div>
-										<span class="city d-block mb-3">실새삼</span>
-										<span class="d-block mb-2 text-black-50">메꽃과</span>
-										<span class="d-block mb-2 text-black-50">길이 50cm 내외이다.</span>
-									</div>
-								</div>
-							</div> <!-- .item -->
-
-							<div class="property-item">
-
-								<a class="img-fluid">
-									<img src="https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2" alt="Image" class="img-flower">
-								</a>
-
-								<div class="property-content">
-									<div>
-										<span class="city d-block mb-3">실새삼</span>
-										<span class="d-block mb-2 text-black-50">메꽃과</span>
-										<span class="d-block mb-2 text-black-50">길이 50cm 내외이다.</span>
-									</div>
-								</div>
-							</div> <!-- .item -->
-
-							<div class="property-item">
-
-								<a class="img-fluid">
-									<img src="https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2" alt="Image" class="img-flower">
-								</a>
-
-								<div class="property-content">
-									<div>
-										<span class="city d-block mb-3">실새삼</span>
-										<span class="d-block mb-2 text-black-50">메꽃과</span>
-										<span class="d-block mb-2 text-black-50">길이 50cm 내외이다.</span>
-									</div>
-								</div>
-							</div> <!-- .item -->
-
-							<div class="property-item">
-
-								<a class="img-fluid">
-									<img src="https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2" alt="Image" class="img-flower">
-								</a>
-
-								<div class="property-content">
-									<div>
-										<span class="city d-block mb-3">실새삼</span>
-										<span class="d-block mb-2 text-black-50">메꽃과</span>
-										<span class="d-block mb-2 text-black-50">길이 50cm 내외이다.</span>
-									</div>
-								</div>
-							</div> <!-- .item -->
+							<?php
+								#DB 연결 - 식생종 정보 받아오는 코드
+								#res 더미 데이터
+								$res = [["url" => "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2","kr_name"=>"실새삼", "kr_family_name"=>"메꽃과", "size"=>"길이 50cm 내외이다."],
+									["url" => "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2","kr_name"=>"실새삼", "kr_family_name"=>"메꽃과", "size"=>"길이 50cm 내외이다."],
+									["url" => "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2","kr_name"=>"실새삼", "kr_family_name"=>"메꽃과", "size"=>"길이 50cm 내외이다."],
+									["url" => "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2","kr_name"=>"실새삼", "kr_family_name"=>"메꽃과", "size"=>"길이 50cm 내외이다."]];
+								if($res){
+									#mysql 함수로 변경해야함
+									foreach($res as $row){
+										$url = $row["url"];
+										$kr_name = $row["kr_name"];
+										$kr_family_name = $row["kr_family_name"];
+										$size = $row["size"];
+										echo '<div class="property-item">
+												<a class="img-fluid">
+													<img src="'.$url.'" alt="Image" class="img-flower">
+												</a>
+												<div class="property-content">
+													<div>
+														<span class="city d-block mb-3">'.$kr_name.'</span>
+														<span class="d-block mb-2 text-black-50">'.$kr_family_name.'</span>
+														<span class="d-block mb-2 text-black-50">'.$size.'</span>
+													</div>
+												</div>
+											</div>';
+									}	
+								}
+								
+							?>
 						</div>
-
-
 						<div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
 							<span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
 							<span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
@@ -304,54 +338,36 @@
 			</div>
 			<div class="testimonial-slider-wrap">
 				<div class="testimonial-slider">
-					<div class="item">
-						<div class="testimonial">
-							<h3 class="h5 text-primary mb-3">띵호와 식당</h3>
-							<p class="text-black">중식</p>
-							<blockquote>
-								대표 메뉴 | 옛날짬뽕,삼선짬뽕<br>
-								강원도 인제군 인제읍 상동리 258-4<br>
-							</blockquote>
-							<p class="text-black-50">전화번호) 334618582</p>
-						</div>
-					</div>
-
-					<div class="item">
-						<div class="testimonial">
-							<h3 class="h5 text-primary mb-3">띵호와 식당</h3>
-							<p class="text-black">중식</p>
-							<blockquote>
-								대표 메뉴 | 옛날짬뽕,삼선짬뽕<br>
-								강원도 인제군 인제읍 상동리 258-4<br>
-							</blockquote>
-							<p class="text-black-50">전화번호) 334618582</p>
-						</div>
-					</div>
-
-					<div class="item">
-						<div class="testimonial">
-							<h3 class="h5 text-primary mb-3">띵호와 식당</h3>
-							<p class="text-black">중식</p>
-							<blockquote>
-								대표 메뉴 | 옛날짬뽕,삼선짬뽕<br>
-								강원도 인제군 인제읍 상동리 258-4<br>
-							</blockquote>
-							<p class="text-black-50">전화번호) 334618582</p>
-						</div>
-					</div>
-
-					<div class="item">
-						<div class="testimonial">
-							<h3 class="h5 text-primary mb-3">띵호와 식당</h3>
-							<p class="text-black">중식</p>
-							<blockquote>
-								대표 메뉴 | 옛날짬뽕,삼선짬뽕<br>
-								강원도 인제군 인제읍 상동리 258-4<br>
-							</blockquote>
-							<p class="text-black-50">전화번호) 334618582</p>
-						</div>
-					</div>
-
+					<?php
+						#DB 연결 - 식당 정보 받아오는 코드
+						#res 더미 데이터
+						$res = [["rest_name" => "띵호와 식당","menu_type"=>"중식", "menu"=>"옛날짬뽕,삼선짬뽕", "address"=>"강원도 인제군 인제읍 상동리 258-4", "tel"=>"334618582"],
+						["rest_name" => "띵호와 식당","menu_type"=>"중식", "menu"=>"옛날짬뽕,삼선짬뽕", "address"=>"강원도 인제군 인제읍 상동리 258-4", "tel"=>"334618582"],
+						["rest_name" => "띵호와 식당","menu_type"=>"중식", "menu"=>"옛날짬뽕,삼선짬뽕", "address"=>"강원도 인제군 인제읍 상동리 258-4", "tel"=>"334618582"],
+						["rest_name" => "띵호와 식당","menu_type"=>"중식", "menu"=>"옛날짬뽕,삼선짬뽕", "address"=>"강원도 인제군 인제읍 상동리 258-4", "tel"=>"334618582"]];
+						if($res){
+							#mysql 함수로 변경해야함
+							foreach($res as $row){
+								$rest_name = $row["rest_name"];
+								$menu_type = $row["menu_type"];
+								$menu = $row["menu"];
+								$address = $row["address"];
+								$tel = $row["tel"];
+								echo '<div class="item">
+										<div class="testimonial">
+											<h3 class="h5 text-primary mb-3">'.$rest_name.'</h3>
+											<p class="text-black">'.$menu_type.'</p>
+											<blockquote>
+												대표 메뉴 | '.$menu.'<br>
+												'.$address.'<br>
+											</blockquote>
+											<p class="text-black-50">전화번호) 0'.$tel.'</p>
+										</div>
+									</div>';
+							}	
+						}
+						
+					?>
 				</div>
 			</div>
 		</div>
