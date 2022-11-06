@@ -106,11 +106,12 @@ CREATE TABLE `team08`.`safety_rules` (
   `frst_aid_venom` TINYTEXT NULL,
   `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
-CREATE TABLE `team08`.`user` (
-  `user_id` VARCHAR(25) NULL,
-  `user_pw` VARCHAR(25) NULL,
-  `user_name` VARCHAR(25) NULL,
-  `recent_search` VARCHAR(25) NULL);
+  CREATE TABLE `team08`.`user` (
+  `user_id` VARCHAR(25) NOT NULL,
+  `user_pw` VARCHAR(25) NOT NULL,
+  `user_name` VARCHAR(25) NOT NULL,
+  `recent_search` VARCHAR(50) NULL,
+  PRIMARY KEY (`user_id`));
 
 CREATE TABLE `team08`.`mtn_review` (
   `review_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
