@@ -1,11 +1,9 @@
 -- DB 생성 ("team08")
 CREATE DATABASE team08 default CHARACTER SET UTF8;
 
-
 -- 사용자 추가 (user id: "team08", password: "team08")
 GRANT ALL PRIVILEGES ON team08.* TO team08@localhost IDENTIFIED BY 'team08';
 USE team08;
-
 
 -- Tables 생성
 CREATE TABLE `team08`.`mtn_location` (
