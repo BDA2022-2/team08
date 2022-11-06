@@ -1,11 +1,9 @@
 -- DB 생성 ("team08")
 CREATE DATABASE team08 default CHARACTER SET UTF8;
 
-
 -- 사용자 추가 (user id: "team08", password: "team08")
 GRANT ALL PRIVILEGES ON team08.* TO team08@localhost IDENTIFIED BY 'team08';
 USE team08;
-
 
 -- Tables 생성
 CREATE TABLE `team08`.`mtn_location` (
@@ -40,7 +38,7 @@ CREATE TABLE `team08`.`mtn_weather` (
   `two_meter_hmdt` DECIMAL(5,2) NULL,
   `two_meter_wndrc` DECIMAL(5,2) NULL,
   `two_meter_wdsp` DECIMAL(2,1) NULL,
-  `occrr_dtm` INT NULL, --이상함
+  `occrr_dtm` INT NULL,
   `df_obsrt_tm_date` DATE NULL,
   `df_obsrt_tm_time` TIME NULL);
 
@@ -106,11 +104,12 @@ CREATE TABLE `team08`.`safety_rules` (
   `frst_aid_venom` TINYTEXT NULL,
   `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
-CREATE TABLE `team08`.`user` (
-  `user_id` VARCHAR(25) NULL,
-  `user_pw` VARCHAR(25) NULL,
-  `user_name` VARCHAR(25) NULL,
-  `recent_search` VARCHAR(25) NULL);
+  CREATE TABLE `team08`.`user` (
+  `user_id` VARCHAR(25) NOT NULL,
+  `user_pw` VARCHAR(25) NOT NULL,
+  `user_name` VARCHAR(25) NOT NULL,
+  `recent_search` VARCHAR(50) NULL,
+  PRIMARY KEY (`user_id`));
 
 CREATE TABLE `team08`.`mtn_review` (
   `review_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -127,12 +126,6 @@ CREATE TABLE `team08`.`img` (
   `url` TINYTEXT NULL
 );
 
-
--- https://www.engedi.kr/node/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=5034388&t=board
-SHOW VARIABLES LIKE 'local_inflie';
-SET GLOBAL local_infile = 1;
-
-
 -- csv 파일 넣기
 LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/mtn_location.csv"
 INTO TABLE mtn_location FIELDS TERMINATED BY "," IGNORE 1 LINES;
@@ -146,7 +139,6 @@ INTO TABLE mtn_accident FIELDS TERMINATED BY "," IGNORE 1 LINES;
 LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/landslide_fc.csv"
 INTO TABLE landslide_fc FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
--- 한글텍스트 데이터 깨지는 거 해결해야됨.
 LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/fire_fc.csv"
 INTO TABLE fire_fc FIELDS TERMINATED BY "," IGNORE 1 LINES; 
 
@@ -155,20 +147,27 @@ INTO TABLE restaurants FIELDS TERMINATED BY ","
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
 
--- 오류 ㅜㅜ
 LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/plant_species.csv" 
 INTO TABLE plant_species FIELDS TERMINATED BY ","
-OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
 
--- 오류 ㅜㅜ
 LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/safety_rules.csv" 
 INTO TABLE safety_rules FIELDS TERMINATED BY ","
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
 
--- 오류 ㅜㅜ
 LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/img.csv" 
 INTO TABLE img FIELDS TERMINATED BY ","
 OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES;
+
+-- 데이터 확인
+select * from mtn_location;
+select * from mtn_weather;
+select * from mtn_accident;
+select * from landslide_fc;
+select * from fire_fc;
+select * from restaurants;
+select * from plant_species;
+select * from safety_rules;
+select * from img;
