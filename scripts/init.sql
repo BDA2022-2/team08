@@ -118,7 +118,8 @@ CREATE TABLE `team08`.`mtn_review` (
   `visit_date` DATE NULL,
   `mtn_rate` INT NULL,
   `comment` TEXT NULL,
-  `created` TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created` TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE `team08`.`img` (
