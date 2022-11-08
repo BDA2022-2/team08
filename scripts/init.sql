@@ -7,7 +7,7 @@ USE team08;
 
 -- Tables 생성
 CREATE TABLE `team08`.`mtn_location` (
-  `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `mtn_name` VARCHAR(25) NULL,
   `mtn_height` DECIMAL(5,1) UNSIGNED NULL,
   `mtn_y_coord` DECIMAL(8,2) UNSIGNED NULL,
@@ -22,7 +22,7 @@ CREATE TABLE `team08`.`mtn_location` (
   `mtn_rate` DECIMAL(3,2) UNSIGNED NULL);
 
 CREATE TABLE `team08`.`mtn_weather` (
-  `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `spot_no` INT NULL,
   `obsrt_mntn_nm` VARCHAR(10) NULL,
   `obsrt_spot_arcd` INT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `team08`.`mtn_accident` (
   `accident_spot` TEXT NULL,
   `accident_spot_code` VARCHAR(25) NULL,
   `accident_type` VARCHAR(6) NULL,
-  `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
 CREATE TABLE `team08`.`landslide_fc` (
   `fc_id` INT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE `team08`.`landslide_fc` (
   `start_time` TIME NULL,
   `end_date` DATE NULL,
   `end_time` TIME NULL,
-  `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
 CREATE TABLE `team08`.`fire_fc` (
   `fc_id` DATE NULL,
@@ -67,7 +67,7 @@ CREATE TABLE `team08`.`fire_fc` (
   `effective_humidity` DECIMAL(3,1) UNSIGNED NULL,
   `wind_speed` DECIMAL(2,1) UNSIGNED NULL,
   `fc_grade` VARCHAR(5) NULL,
-  `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
 CREATE TABLE `team08`.`restaurants` (
   `rest_name` VARCHAR(25) NULL,
@@ -78,7 +78,7 @@ CREATE TABLE `team08`.`restaurants` (
   `menu_type` VARCHAR(20) NULL,
   `menu` VARCHAR(20) NULL,
   `tel` INT UNSIGNED NULL,
-  `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
 CREATE TABLE `team08`.`plant_species` (
   `id` INT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE `team08`.`safety_rules` (
   `frst_aid_hypothermy` TINYTEXT NULL,
   `frst_aid_sunstroke` TINYTEXT NULL,
   `frst_aid_venom` TINYTEXT NULL,
-  `index` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
   CREATE TABLE `team08`.`user` (
   `user_id` VARCHAR(25) NOT NULL,
