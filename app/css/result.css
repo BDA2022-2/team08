@@ -6,12 +6,34 @@
 /* 필터 버튼 & 정렬 드롭다운*/
 .filter-and-sort {
   display: flex;
+  margin: 2em 0;
+}
+.filter-and-sort input {
+  background-color: white;
+  color: gray;
+  font-weight: 600;
+  border: 1.5px solid gray;
+  border-radius: 15px;
+  padding: 8px 15px;
+}
+.filter-and-sort input:hover {
+  background-color: #f1eee9;
+  color: #a37551;
+  border: 1.5px solid #f1eee9;
+  transition: 0.3s;
 }
 #filter-rate {
+  flex: none;
+  margin-right: 15px;
 }
 #filter_visitor {
+  flex: none;
 }
 #sort {
+  margin-left: auto;
+}
+#sort select {
+  padding: 8px 10px;
 }
 
 /* icomoon 아이콘 변경 */

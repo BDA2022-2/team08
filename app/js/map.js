@@ -1,7 +1,7 @@
 const mapContainer = document.getElementById("map"), // 지도를 표시할 div
   mapOption = {
     center: new kakao.maps.LatLng(37.54699, 127.09598), // 지도의 중심좌표
-    level: 8, // 지도의 확대 레벨
+    level: 7, // 지도의 확대 레벨
   };
 
 const map = new kakao.maps.Map(mapContainer, mapOption);
@@ -32,18 +32,10 @@ if (navigator.geolocation) {
   });
 } else {
   // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-  const userPosition = new kakao.maps.LatLng(37.559285765296, 126.94568079431); //학교 주소로 설정해두었습니다.
+  const userPosition = new kakao.maps.LatLng(37.5668522, 126.9488277); //학교 주소로 설정해두었습니다.
 
   displayMarker(positions, userPosition);
 }
-
-// // 마커 이미지 주소
-// const imageSrc =
-//   "https://user-images.githubusercontent.com/65700066/199877130-73ec9c56-980f-4a11-925d-3bd40dd624c6.png";
-// // 마커 이미지 크기
-// const imageSize = new kakao.maps.Size(30, 35);
-// // 마커 이미지 생성
-// const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
 function displayMarker(positions, userPosition) {
   // 사용자 위치 마커 생성 및 표시
@@ -78,22 +70,3 @@ function displayMarker(positions, userPosition) {
   // 지도 중심좌표를 접속위치로 변경합니다
   map.setCenter(userPosition);
 }
-
-// // 지도를 표시하는 div 크기를 변경하는 함수입니다
-// function resizeMap() {
-//   const mapContainer = document.getElementById("map");
-//   mapContainer.style.width = "50%";
-//   mapContainer.style.height = "50%";
-//   mapContainer.style.position = "absolute";
-
-//   mapContainer.style.overflow = "visible";
-// }
-
-// function relayout() {
-//   // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
-//   // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다
-//   // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
-//   map.relayout();
-// }
-// resizeMap();
-// relayout();
