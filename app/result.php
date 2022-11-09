@@ -28,6 +28,32 @@
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
+    <!-- search.php에서 넘어온 변수 -->
+    <?php
+      if (isset($_GET['mtn_name'])) {
+        $mtn_name = $_GET['mtn_name'];
+      } else {$mtn_name = "";}
+      if (isset($_GET['region_1depth_name'])) {
+        $region_1depth_name = $_GET['region_1depth_name'];
+      } else {$region_1depth_name = "";}
+      if (isset($_GET['region_2depth_name'])) {
+        $region_2depth_name = $_GET['region_2depth_name'];
+      } else {$region_2depth_name = "";}
+      if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
+      } else {$sort = "sort_init";}
+    ?>
+    <!-- 더미 데이터 -->
+    <?php
+      $dummy_mtn_name = "도봉산";
+      $dummy_region_1depth_name = "서울";
+      $dummy_region_2depth_name = "서대문구";
+      
+      $dummy_mtn_height = "399.9m";
+      $dummy_mtn_address = "대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉";
+      $dummy_mtn_rate = "3.5";
+    ?>
+
     <div include-html="html/nav.html"></div>
     <script>
       includeHTML();
@@ -66,16 +92,7 @@
       - 필터 버튼 누르면, 조건에 맞게 목록 보여주고, 버튼은 선택된 상태로 유지 (css로 표현할 듯)
       - select 값 누르면, 조건에 맞게 목록 보여주고, option 선택된 상태로 유지
       - 둘 다 선택되면, 어떻게 구성할지 생각해봐야 하는데 ...
-    -->
-
-    <!-- 더미 데이터 -->
-    <?php
-    $dummy_mtn_name = "도봉산";
-    $dummy_mtn_height = "399.9m";
-    $dummy_mtn_address = "대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉";
-    $dummy_mtn_rate = "3.5";
-    $keyword = "도봉산";
-    ?>
+    -->    
 
     <!-- 결과 보여주는 영역 -->
     <div class="section">
@@ -83,27 +100,28 @@
         <div class="col-lg-6">
           <?php
           echo"<h2 class=\"font-weight-bold text-primary heading\">
-          검색어: ".$keyword."</h2>";          
+          검색어: '".$dummy_mtn_name."'</h2>";          
           ?>
         </div>
         <!-- 필터링 버튼 & 정렬 드롭다운박스 -->
         <div class="filter-and-sort">
-          <form id="filter-rate" class="filter-rate" method="post">
+          <form id="filter-rate" class="filter-rate" method="get">
             <input
               type="submit"
               name="filter_rate"              
               value="방문 평점 3.5 이상"
             />
           </form>
-          <form id="filter-visitor" class="filter-visitor" method="post">
+          <form id="filter-visitor" class="filter-visitor" method="get">
             <input
               type="submit"
               name="filter_visitor"              
               value="최근 방문 1K 이상"
             />
           </form>
-          <form id="sort" class="sort" method="post">
+          <form id="sort" class="sort" method="get">
             <select name="sort" onChange="this.form.submit();">
+              <option value="sort_init">-- 정렬 --</option>
               <option value="sort_rating">별점 순</option>
               <option value="sort_visitor">방문자 순</option>
             </select>
@@ -112,7 +130,7 @@
 
         <!-- 디폴트 -->
         <?php
-            if(!array_key_exists('filter_rate',$_POST) and !array_key_exists('filter_visitor',$_POST)){
+            if(!array_key_exists('filter_rate',$_GET) and !array_key_exists('filter_visitor',$_GET)){
             ?>
             <!-- 산 카드 리스트 -->
             <div class="property-item" style="margin-top:120px; margin-bottom:120px">
@@ -208,7 +226,7 @@
 
         <!-- '방문 평점 3.5 이상' 필터링 결과 -->
         <?php
-            if(array_key_exists('filter_rate',$_POST)){
+            if(array_key_exists('filter_rate',$_GET)){
             ?>
             <!-- 산 카드 리스트 -->
             <div class="property-item" style="margin-top:120px; margin-bottom:120px">
@@ -303,7 +321,7 @@
             ?>
         <!-- '최근 방문 1K 이상' 필터링 결과 -->
         <?php
-            if(array_key_exists('filter_visitor',$_POST)){
+            if(array_key_exists('filter_visitor',$_GET)){
             ?>
             <!-- 산 카드 리스트 -->
             <div class="property-item" style="margin-top:120px; margin-bottom:120px">
