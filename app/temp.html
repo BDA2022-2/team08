@@ -1,0 +1,31 @@
+<html>
+<head></head>
+
+<body>
+<?php
+echo "<h3>mysqli_connect 함수 사용하기</h3>";
+echo "<hr>";
+
+$db_host="localhost";
+$db_user="root";
+$db_password="";
+
+$conn=mysqli_connect($db_host,$db_user,$db_password); //mysqli 관리자 계정으로 접속
+
+if($conn){
+    echo "성공적으로 연결되었습니다";
+    echo "호스트:";
+    echo "사용자:";
+    echo "패스워드";
+    echo "<hr>";
+}
+else{
+    echo "접속이 안 됩니다";
+}
+
+if(is_resource($conn)){
+    mysqli_close($conn); //mysqli 접속을 종료한다
+}
+?>
+</body>
+</html>
