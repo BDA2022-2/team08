@@ -20,7 +20,8 @@ CREATE TABLE `team08`.`mtn_location` (
   `mtn_degree_n` DECIMAL(10,6) NULL,
   `mtn_address` TEXT NULL,
   `mtn_rate` DECIMAL(3,2) UNSIGNED NULL,
-  PRIMARY KEY (`idx`, `mtn_name`));
+  PRIMARY KEY (`idx`, `mtn_name`)
+  );
 
 CREATE TABLE `team08`.`mtn_weather` (
   `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -41,7 +42,8 @@ CREATE TABLE `team08`.`mtn_weather` (
   `two_meter_wdsp` DECIMAL(2,1) NULL,
   `occrr_dtm` INT NULL,
   `df_obsrt_tm_date` DATE NULL,
-  `df_obsrt_tm_time` TIME NULL);
+  `df_obsrt_tm_time` TIME NULL
+  );
 
 CREATE TABLE `team08`.`mtn_accident` (
   `report_date` DATE NULL,
@@ -49,7 +51,8 @@ CREATE TABLE `team08`.`mtn_accident` (
   `accident_spot` TEXT NULL,
   `accident_spot_code` VARCHAR(25) NULL,
   `accident_type` VARCHAR(6) NULL,
-  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  );
 
 CREATE TABLE `team08`.`landslide_fc` (
   `fc_id` INT NULL,
@@ -59,7 +62,8 @@ CREATE TABLE `team08`.`landslide_fc` (
   `start_time` TIME NULL,
   `end_date` DATE NULL,
   `end_time` TIME NULL,
-  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  );
 
 CREATE TABLE `team08`.`fire_fc` (
   `fc_id` DATE NULL,
@@ -68,7 +72,8 @@ CREATE TABLE `team08`.`fire_fc` (
   `effective_humidity` DECIMAL(3,1) UNSIGNED NULL,
   `wind_speed` DECIMAL(2,1) UNSIGNED NULL,
   `fc_grade` VARCHAR(5) NULL,
-  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  );
 
 CREATE TABLE `team08`.`restaurants` (
   `rest_name` VARCHAR(25) NULL,
@@ -79,7 +84,8 @@ CREATE TABLE `team08`.`restaurants` (
   `menu_type` VARCHAR(20) NULL,
   `menu` VARCHAR(20) NULL,
   `tel` INT UNSIGNED NULL,
-  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  );
 
 CREATE TABLE `team08`.`plant_species` (
   `id` INT NULL,
@@ -91,7 +97,8 @@ CREATE TABLE `team08`.`plant_species` (
   `falloff` INT UNSIGNED NULL,
   `is_protected` CHAR(1) NULL,
   `is_special` CHAR(1) NULL,
-  `size` TINYTEXT NULL);
+  `size` TINYTEXT NULL
+  );
 
 CREATE TABLE `team08`.`safety_rules` (
   `safety_rule` TINYTEXT NULL,
@@ -103,14 +110,18 @@ CREATE TABLE `team08`.`safety_rules` (
   `frst_aid_hypothermy` TINYTEXT NULL,
   `frst_aid_sunstroke` TINYTEXT NULL,
   `frst_aid_venom` TINYTEXT NULL,
-  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);
+  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  );
 
   CREATE TABLE `team08`.`user` (
   `user_id` VARCHAR(25) NOT NULL,
   `user_pw` VARCHAR(25) NOT NULL,
   `user_name` VARCHAR(25) NOT NULL,
-  `recent_search` VARCHAR(50) NULL,
-  PRIMARY KEY (`user_id`));
+  `search_mtn` VARCHAR(45) NULL,
+  `search_location1` VARCHAR(45) NULL,
+  `search_location2` VARCHAR(45) NULL,
+  PRIMARY KEY (`user_id`)
+  );
 
 CREATE TABLE `team08`.`mtn_review` (
   `review_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
