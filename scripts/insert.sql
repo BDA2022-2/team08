@@ -2,6 +2,9 @@
 LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/mtn_location.csv"
 INTO TABLE mtn_location FIELDS TERMINATED BY "," IGNORE 1 LINES;
 
+LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/spot_no.csv" 
+INTO TABLE spot_no FIELDS TERMINATED BY "," IGNORE 1 LINES;
+
 LOAD DATA LOCAL INFILE "C:/xampp/htdocs/data/mtn_weather.csv"
 INTO TABLE mtn_weather FIELDS TERMINATED BY "," IGNORE 1 LINES;
 

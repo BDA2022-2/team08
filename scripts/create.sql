@@ -23,9 +23,18 @@ CREATE TABLE `team08`.`mtn_location` (
   PRIMARY KEY (`idx`, `mtn_name`)
   );
 
+CREATE TABLE `team08`.`spot_no` (
+  `city` VARCHAR(10) NOT NULL,
+  `mtn_name` VARCHAR(25) NOT NULL,
+  `spot_no` INT NOT NULL PRIMARY KEY,  
+  `mtn_degree_n` DECIMAL(10,6) NULL,
+  `mtn_degree_e` DECIMAL(10,6) NULL,
+  `mtn_altitude` INT NOT NULL
+  );
+
 CREATE TABLE `team08`.`mtn_weather` (
   `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `spot_no` INT NULL,
+  `spot_no` INT NOT NULL,  
   `obsrt_mntn_nm` VARCHAR(10) NULL,
   `obsrt_spot_arcd` INT NULL,
   `ten_meter_tprt` DECIMAL(2,1) NULL,
@@ -42,7 +51,8 @@ CREATE TABLE `team08`.`mtn_weather` (
   `two_meter_wdsp` DECIMAL(2,1) NULL,
   `occrr_dtm` INT NULL,
   `df_obsrt_tm_date` DATE NULL,
-  `df_obsrt_tm_time` TIME NULL
+  `df_obsrt_tm_time` TIME NULL,
+  FOREIGN KEY (`spot_no`) REFERENCES `spot_no` (`spot_no`) ON UPDATE CASCADE ON DELETE CASCADE
   );
 
 CREATE TABLE `team08`.`mtn_accident` (
