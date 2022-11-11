@@ -45,36 +45,82 @@
 			<div class="col-lg-9 text-center mt-5">
 				<h1 class="heading" data-aos="fade-up">
 					<?php
-						echo($_GET['mtnname'])
+						$mtn_name = $_GET['mtn_name'];
+						$mtn_index = $_GET['mtn_index'];
+						echo($mtn_name);
 					?>
 				</h1>
 
 				<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 					<ol class="breadcrumb text-center justify-content-center h5">
 						<?php
-							#DB 연결 - 산 정보 받아오는 코드
-							$review_num = 123;
-							$mtn_rate_avg = "4.4"; #더미 데이터
-							$star_n = (int)$mtn_rate_avg;
-							echo '<li class="breadcrumb-item text-white">';
-							for($i=0; $i<$star_n; $i=$i+1)
-								{
-									echo '<span class="icon-star text-white"></span>';
-								}
-							if ((float)$mtn_rate_avg - $star_n >= 0.5){
-								echo '<span class="icon-star-half-o text-white"></span>';
-								for($i=0; $i<5-$star_n-1; $i=$i+1)
-								{
-									echo '<span class="icon-star-o text-white"></span>';
-								}
+							$mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
+							if(mysqli_connect_errno()){
+								printf("Connection failed: %s\n", mysqli_connect_error());
+								exit();
 							}
 							else {
-								for($i=0; $i<5-$star_n; $i=$i+1)
-								{
-									echo '<span class="icon-star-o text-white"></span>';
+								$sql1 = "SELECT * FROM mtn_location WHERE mtn_name = '".$mtn_name."' AND idx = '".$mtn_index."'";
+								$res1 = mysqli_query($mysqli, $sql1);
+								if($res1) {
+									$mtn_info = mysqli_fetch_array($res1,MYSQLI_ASSOC);
+									$mtn_degree_e = (string)round((float)$mtn_info['mtn_degree_e']);
+									$mtn_degree_n = (string)round((float)$mtn_info['mtn_degree_n']);
+									$mtn_rate = $mtn_info['mtn_rate'];
 								}
+								else {
+									printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+								}
+								//리뷰 테이블 산 인덱스 칼럼 맞춰서 수정해야함
+								$sql2 = "SELECT count(*) AS review_count FROM mtn_review WHERE mtn_name = '".$mtn_name."'";
+								$res2 = mysqli_query($mysqli, $sql2);
+								if($res2) {
+									$mtn_review = mysqli_fetch_array($res2,MYSQLI_ASSOC);
+									$review_num = $mtn_review['review_count'];
+								}
+								else {
+									printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+								}
+
+								mysqli_free_result($res1);
+								mysqli_free_result($res2);
+								mysqli_close($mysqli);
 							}
-							echo ' (' . $mtn_rate_avg . ')</li>';
+
+							// $mtn_degree_e = (string)126;
+							// $mtn_degree_n = (string)37;
+							//$review_num = 123;
+							//$mtn_rate = "4.4"; #더미 데이터
+							if ($mtn_rate){
+								$star_n = (int)$mtn_rate;
+								echo '<li class="breadcrumb-item text-white">';
+								for($i=0; $i<$star_n; $i=$i+1)
+									{
+										echo '<span class="icon-star text-white"></span>';
+									}
+								if ((float)$mtn_rate - $star_n >= 0.5){
+									echo '<span class="icon-star-half-o text-white"></span>';
+									for($i=0; $i<5-$star_n-1; $i=$i+1)
+									{
+										echo '<span class="icon-star-o text-white"></span>';
+									}
+								}
+								else {
+									for($i=0; $i<5-$star_n; $i=$i+1)
+									{
+										echo '<span class="icon-star-o text-white"></span>';
+									}
+								}
+								echo ' (' . $mtn_rate . ')</li>';
+							}
+							else {
+								echo '<li class="breadcrumb-item text-white-50">';
+								for($i=0; $i<5; $i=$i+1)
+									{
+										echo '<span class="icon-star text-white-50"></span>';
+									}
+								echo ' (0.0)</li>';
+							}
 							echo '<li class="breadcrumb-item text-white text-opacity-75" aria-current="page">최근 방문 수 ' . $review_num . '</li>';
 						?>
 					</ol>
@@ -90,7 +136,7 @@
 				<div class="col-lg-6">
 					<h2 class="font-weight-bold text-start heading mt-5 mb-3">
 						<?php
-							echo($_GET['mtnname'])
+							echo($mtn_name);
 						?> 기상 정보
 					</h2>
 				</div>
@@ -98,18 +144,96 @@
 				  <div class="row my-3">
 					<?php
 						date_default_timezone_set('Asia/Seoul');
-						#API로 날씨 받아오는 코드 넣기
-						$SKY = "1";
-						$TMP = "11";
-						$TMN = "0";
-						$TMX = "13";
-						$RN1 = "0";
-						$REH = "46";
-						$POP = "20";
-						$PCP = "0";
-						$PTY = "3";
-						$WSD = "1"; #더미 데이터
-						if ($PTY == "0") {
+						#API로 날씨 받아오는 코드
+						if ((int)date("i",time()) < 45){
+							$H = (int)(date("H",time()))-1;
+							if ($H == -1) {
+								$H = 23;
+								$base_date = date('Ymd', time()-86400);
+							}
+							else {
+								$H = (string)$H;
+								$base_date = date("Ymd",time());
+							}
+						}
+						else {
+							$H = date("H",time());
+							$base_date = date("Ymd",time());
+						}
+						$ch = curl_init();
+						$url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'; /*URL*/
+						$queryParams = '?' . urlencode('serviceKey') . '=PLM%2FTnlUf%2BzzHw3XZNg97c1vQJ3frT%2BRyoCkq%2FtEoFplOMT0KjvIgVZFPwVTyD%2F8GctHGBnwLXiaHNAm9ZSqLA%3D%3D'; /*Service Key*/
+						$queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1'); /**/
+						$queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('1000'); /**/
+						$queryParams .= '&' . urlencode('dataType') . '=' . urlencode('XML'); /**/
+						$queryParams .= '&' . urlencode('base_date') . '=' . urlencode($base_date); /**/
+						$queryParams .= '&' . urlencode('base_time') . '=' . urlencode(str_pad($H, 2, "0", STR_PAD_LEFT)."30"); /**/
+						$queryParams .= '&' . urlencode('nx') . '=' . urlencode($mtn_degree_n); /**/
+						$queryParams .= '&' . urlencode('ny') . '=' . urlencode($mtn_degree_e); /**/
+
+						curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+						curl_setopt($ch, CURLOPT_HEADER, FALSE);
+						curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+						$response = curl_exec($ch);
+
+						$object = simplexml_load_string($response);
+						$items = $object->body->items->item;
+						$tmp = "";
+						foreach ($items as $item) {
+							if ($tmp != (string)$item->category){
+								$tmp = (string)$item->category;
+								${$tmp} = (string)$item->fcstValue;
+							}
+						}
+						
+						$H = date("H",time());
+
+						$ch = curl_init();
+						$url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'; /*URL*/
+						$queryParams = '?' . urlencode('serviceKey') . '=PLM%2FTnlUf%2BzzHw3XZNg97c1vQJ3frT%2BRyoCkq%2FtEoFplOMT0KjvIgVZFPwVTyD%2F8GctHGBnwLXiaHNAm9ZSqLA%3D%3D'; /*Service Key*/
+						$queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1'); /**/
+						$queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('1000'); /**/
+						$queryParams .= '&' . urlencode('dataType') . '=' . urlencode('XML'); /**/
+						$queryParams .= '&' . urlencode('base_date') . '=' . urlencode($base_date); /**/
+						$queryParams .= '&' . urlencode('base_time') . '=' . urlencode("0200"); /**/
+						$queryParams .= '&' . urlencode('nx') . '=' . urlencode($mtn_degree_n); /**/
+						$queryParams .= '&' . urlencode('ny') . '=' . urlencode($mtn_degree_e); /**/
+						
+						curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+						curl_setopt($ch, CURLOPT_HEADER, FALSE);
+						curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+						$response = curl_exec($ch);
+						curl_close($ch);
+						
+						$object = simplexml_load_string($response);
+						$items = $object->body->items->item;
+						$TMX = "";
+						$TMN = "";
+						$POP = "";
+						$PCP = "";
+						$ctgs = ["TMX", "TMN", "POP", "PCP"];
+
+						foreach ($items as $item) {
+							$tmp = (string)$item->category;
+							$f_time = (string)$item->fcstTime;
+							if (in_array($tmp, $ctgs)){
+								if ($tmp == "POP" | $tmp == "PCP"){
+									if($f_time == $H."00"){
+										${$tmp} = (string)$item->fcstValue;
+									}
+								}
+								else{
+									${$tmp} = (string)$item->fcstValue;
+								}
+							}
+							if ($TMX & $TMN & $POP & $PCP) {
+								break;
+							}
+						}
+
+						if ($PTY == "0" | $PCP == "강수없음") {
 							if ($SKY == "1") {
 								print('<div class="col-8 col-lg-4">
 											<img src="images/sunny.svg" class="weather-icon svg">
@@ -139,7 +263,7 @@
 										<span class="icon-opacity text-black-50"></span> 현재 습도 %s%%<br><br>
 										<span class="icon-toys text-black-50"></span> 현재 풍속 %sm/s<br><br> 
 										<span class="icon-tint text-black-50"></span> &nbsp강수 확률 %s%%
-									</div>', $TMP, $TMX, $TMN, $REH, $WSD, $PCP);
+									</div>', $T1H, $TMX, $TMN, $REH, $WSD, $POP);
 						}
 						else {
 							if($PTY=="1") {
@@ -154,7 +278,7 @@
 									</div>'
 									);
 							}
-							else if($PTY=="2") {
+							else if($PTY=="3") {
 								print('<div class="col-8 col-lg-4">
 										<img src="images/snowfall.svg" class="weather-icon svg">
 									</div>'
@@ -177,7 +301,7 @@
 										<span class="icon-opacity text-black-50"></span> 현재 습도 %s%%<br><br>
 										<span class="icon-toys text-black-50"></span> 현재 풍속 %sm/s<br><br> 
 										<span class="icon-tint text-black-50"></span> &nbsp강수량&nbsp %smm
-									</div>', $TMP, $TMX, $TMN, $REH, $WSD, $POP);
+									</div>', $T1H, $TMX, $TMN, $REH, $WSD, $PCP);
 						}
 					?>
 				  </div>
@@ -396,6 +520,5 @@
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
-	<script src="js/chart.js"></script>
   </body>
   </html>
