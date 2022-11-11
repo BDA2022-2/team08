@@ -60,44 +60,67 @@
 								exit();
 							}
 							else {
-								$sql = "SELECT * FROM mtn_location WHERE mtn_name = '".$mtn_name."'";
-								$res = mysqli_query($mysqli, $sql);
-								if($res) {
-									$mtn_info = mysqli_fetch_array($res,MYSQLI_ASSOC);
+								$sql1 = "SELECT * FROM mtn_location WHERE mtn_name = '".$mtn_name."' AND idx = '".$mtn_index."'";
+								$res1 = mysqli_query($mysqli, $sql1);
+								if($res1) {
+									$mtn_info = mysqli_fetch_array($res1,MYSQLI_ASSOC);
 									$mtn_degree_e = (string)round((float)$mtn_info['mtn_degree_e']);
 									$mtn_degree_n = (string)round((float)$mtn_info['mtn_degree_n']);
+									$mtn_rate = $mtn_info['mtn_rate'];
 								}
 								else {
 									printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
 								}
-								mysqli_free_result($res);
+								//리뷰 테이블 산 인덱스 칼럼 맞춰서 수정해야함
+								$sql2 = "SELECT count(*) AS review_count FROM mtn_review WHERE mtn_name = '".$mtn_name."'";
+								$res2 = mysqli_query($mysqli, $sql2);
+								if($res2) {
+									$mtn_review = mysqli_fetch_array($res2,MYSQLI_ASSOC);
+									$review_num = $mtn_review['review_count'];
+								}
+								else {
+									printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+								}
+
+								mysqli_free_result($res1);
+								mysqli_free_result($res2);
 								mysqli_close($mysqli);
 							}
 
 							// $mtn_degree_e = (string)126;
 							// $mtn_degree_n = (string)37;
-							$review_num = 123;
-							$mtn_rate_avg = "4.4"; #더미 데이터
-							$star_n = (int)$mtn_rate_avg;
-							echo '<li class="breadcrumb-item text-white">';
-							for($i=0; $i<$star_n; $i=$i+1)
-								{
-									echo '<span class="icon-star text-white"></span>';
+							//$review_num = 123;
+							//$mtn_rate = "4.4"; #더미 데이터
+							if ($mtn_rate){
+								$star_n = (int)$mtn_rate;
+								echo '<li class="breadcrumb-item text-white">';
+								for($i=0; $i<$star_n; $i=$i+1)
+									{
+										echo '<span class="icon-star text-white"></span>';
+									}
+								if ((float)$mtn_rate - $star_n >= 0.5){
+									echo '<span class="icon-star-half-o text-white"></span>';
+									for($i=0; $i<5-$star_n-1; $i=$i+1)
+									{
+										echo '<span class="icon-star-o text-white"></span>';
+									}
 								}
-							if ((float)$mtn_rate_avg - $star_n >= 0.5){
-								echo '<span class="icon-star-half-o text-white"></span>';
-								for($i=0; $i<5-$star_n-1; $i=$i+1)
-								{
-									echo '<span class="icon-star-o text-white"></span>';
+								else {
+									for($i=0; $i<5-$star_n; $i=$i+1)
+									{
+										echo '<span class="icon-star-o text-white"></span>';
+									}
 								}
+								echo ' (' . $mtn_rate . ')</li>';
 							}
 							else {
-								for($i=0; $i<5-$star_n; $i=$i+1)
-								{
-									echo '<span class="icon-star-o text-white"></span>';
-								}
+								echo '<li class="breadcrumb-item text-white-50">';
+								for($i=0; $i<5; $i=$i+1)
+									{
+										echo '<span class="icon-star text-white-50"></span>';
+									}
+								echo ' (0.0)</li>';
 							}
-							echo ' (' . $mtn_rate_avg . ')</li>';
 							echo '<li class="breadcrumb-item text-white text-opacity-75" aria-current="page">최근 방문 수 ' . $review_num . '</li>';
 						?>
 					</ol>
