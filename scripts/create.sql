@@ -107,7 +107,8 @@ CREATE TABLE `team08`.`plant_species` (
   `falloff` INT UNSIGNED NULL,
   `is_protected` CHAR(1) NULL,
   `is_special` CHAR(1) NULL,
-  `size` TINYTEXT NULL
+  `size` TINYTEXT NULL,
+  `img_url` TINYTEXT NULL
   );
 
 CREATE TABLE `team08`.`safety_rules` (
