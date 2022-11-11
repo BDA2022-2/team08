@@ -1,4 +1,7 @@
-<html lang="en">
+<?php
+include("./dbconn.php");
+?>
+<html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,6 +20,8 @@
 
     <link rel="stylesheet" href="fonts/icomoon/style.css" />
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+
+    <link rel="stylesheet" href="css/search.css" />
 
     <link rel="stylesheet" href="css/tiny-slider.css" />
     <link rel="stylesheet" href="css/aos.css" />
@@ -64,66 +69,67 @@
     <!--상세 검색 페이지-->
     <div class="section">
       <div class="container">
-        <div class="search_boxes">
-          <p>지역별</p>
-          <div class="search_box">
-            <select name="" id="" onchange="categoryChange(this)">
-              <option value>시/도 선택</option>
-              <option value="all">전체</option>
-              <!--전체값 추가됨-->
-              <option value="seoul">서울</option>
-              <option value="busan">부산</option>
-              <option value="daegu">대구</option>
-              <option value="incheon">인천</option>
-              <option value="gwangju">광주</option>
-              <option value="daejeon">대전</option>
-              <option value="ulsan">울산</option>
-              <option value="sejong">세종</option>
-              <option value="gyeonggi">경기</option>
-              <option value="gangwon">강원</option>
-              <option value="chungbuk">충북</option>
-              <option value="chungnam">충남</option>
-              <option value="jeonbuk">전북</option>
-              <option value="jeonnam">전남</option>
-              <option value="gyeongbuk">경북</option>
-              <option value="gyeongnam">경남</option>
-              <option value="jeju">제주</option>
-            </select>
+        <form action="./result.php" method="GET">
+          <div class="search_boxes">
+            <span>지역별</span>
+            <div class="search_box">
+              <select name="region_1depth_name" id="" onchange="categoryChange(this)">
+                <option value="">시/도 선택</option>
+                <option value="all">전체</option>
+                <option value="seoul">서울</option>
+                <option value="busan">부산</option>
+                <option value="daegu">대구</option>
+                <option value="incheon">인천</option>
+                <option value="gwangju">광주</option>
+                <option value="daejeon">대전</option>
+                <option value="ulsan">울산</option>
+                <option value="sejong">세종</option>
+                <option value="gyeonggi">경기</option>
+                <option value="gangwon">강원</option>
+                <option value="chungbuk">충북</option>
+                <option value="chungnam">충남</option>
+                <option value="jeonbuk">전북</option>
+                <option value="jeonnam">전남</option>
+                <option value="gyeongbuk">경북</option>
+                <option value="gyeongnam">경남</option>
+                <option value="jeju">제주</option>
+              </select>
+            </div>
+            <div class="search_box">
+              <select name="region_2depth_name" id="state">
+                <option value="">시/군/구 선택</option>
+              </select>
+            </div>
+
+            <span>산 검색</span>
+            <input type="text" name="mtn_name" class="form-control px-4" />
+            <button type="submit" class="btn btn-primary">검색</button>
           </div>
-
-          <div class="search_box">
-            <select name="" id="state">
-              <option>시/군/구 선택</option>
-            </select>
-          </div>
-
-          <p>산 검색</p>
-          <form
-            action="#"
-            class="narrow-w form-search d-flex align-items-stretch mb-3"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <input type="text" class="form-control px-4" />
-          </form>
-
-          <button type="submit" class="btn btn-primary">검색</button>
-          <button type="submit" class="btn btn-primary">초기화</button> <!--그냥 복붙만-->
-
-          <!--최근 검색, 방문 산 내역-->
-          <div>
-            최근에 검색한 산<a href=""></a></br>
-            최근에 방문한 산<a href=""></a>
-          </div>
-        </div>
+        </form>
+  
+        <?php
+          $mtn_name = "ㄱ산";
+          $mtn_index = "234";
+          //[sql]최근 검색한 산 $recent_search 불러오기
+          echo '<div>최근에 검색한 산</div>';
+          echo '<a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a>';
+          //[sql]최근 방문한 산 $recent_visit 불러오기
+          echo '<div>최근에 방문한 산</div>';
+          echo '<a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a>';
+        ?>
 
         <h2>현재 사용자들이 많이 방문한 산</h2>
-            <ol>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
+          <ol>
+            <?php
+              $mtn_name = "ㄱ산";
+              $mtn_index = "234";
+              $i=1;
+              while($i<6) {
+                //방문 $i위 산 mtn_name, mtn_idx 불러오기
+                echo '<li><a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a></li>';
+                $i++;
+              }
+            ?>
             </ol>
       </div>
     </div>
@@ -143,7 +149,7 @@
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
-    <script src="js/aos.js"></script>
+    <script src="js/aos.js"></script>\
 
     <script src="js/search.js"></script>
 

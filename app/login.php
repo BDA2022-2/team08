@@ -1,4 +1,7 @@
-<html lang="en">
+<?php
+include("./dbconn.php");
+?>
+<html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,6 +27,22 @@
     <script src="js/includeHTML.js"></script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
+    <style>
+      form {
+        margin: 0px 300px;
+      }
+      .login-buttons {
+        diplay: inline;
+        position: relative;
+        left: 120px;
+      }
+      button {
+        margin: 10px;
+      }
+      a {
+        margin: 10px;
+      }
+    </style>
   </head>
   <body>
     <div include-html="html/nav.html"></div>
@@ -41,7 +60,7 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">산 검색하기</h1>
+            <h1 class="heading" data-aos="fade-up">로그인</h1>
             <nav
               aria-label="breadcrumb"
               data-aos="fade-up"
@@ -52,7 +71,6 @@
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
                 >
-                  지역이나 검색어로 산을 찾을 수 있습니다.
                 </li>
               </ol>
             </nav>
@@ -61,70 +79,28 @@
       </div>
     </div>
 
-    <!--상세 검색 페이지-->
     <div class="section">
       <div class="container">
-        <div class="search_boxes">
-          <p>지역별</p>
-          <div class="search_box">
-            <select name="" id="" onchange="categoryChange(this)">
-              <option value>시/도 선택</option>
-              <option value="all">전체</option>
-              <!--전체값 추가됨-->
-              <option value="seoul">서울</option>
-              <option value="busan">부산</option>
-              <option value="daegu">대구</option>
-              <option value="incheon">인천</option>
-              <option value="gwangju">광주</option>
-              <option value="daejeon">대전</option>
-              <option value="ulsan">울산</option>
-              <option value="sejong">세종</option>
-              <option value="gyeonggi">경기</option>
-              <option value="gangwon">강원</option>
-              <option value="chungbuk">충북</option>
-              <option value="chungnam">충남</option>
-              <option value="jeonbuk">전북</option>
-              <option value="jeonnam">전남</option>
-              <option value="gyeongbuk">경북</option>
-              <option value="gyeongnam">경남</option>
-              <option value="jeju">제주</option>
-            </select>
+        <form action="./login_check.php" method="GET"> 
+          <div class="user-login">
+            <label for="user_id">아이디</label>
+            <input type="text" id="user_id" name="user_id" class="form-control" />
           </div>
-
-          <div class="search_box">
-            <select name="" id="state">
-              <option>시/군/구 선택</option>
-            </select>
+          <div class="user-login">
+            <label for="user_pw">비밀번호</label>
+            <input
+              type="text"
+              id="user_pw"
+              name="user_pw"
+              class="form-control"
+            />
           </div>
-
-          <p>산 검색</p>
-          <form
-            action="#"
-            class="narrow-w form-search d-flex align-items-stretch mb-3"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <input type="text" class="form-control px-4" />
-          </form>
-
-          <button type="submit" class="btn btn-primary">검색</button>
-          <button type="submit" class="btn btn-primary">초기화</button> <!--그냥 복붙만-->
-
-          <!--최근 검색, 방문 산 내역-->
-          <div>
-            최근에 검색한 산<a href=""></a></br>
-            최근에 방문한 산<a href=""></a>
-          </div>
-        </div>
-
-        <h2>현재 사용자들이 많이 방문한 산</h2>
-            <ol>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-            </ol>
+          <br>
+          <div class="login-buttons">
+            <button type="submit" class="btn btn-primary">로그인</button>
+            <a href="./makeAccount.php" class="btn btn-primary">회원가입</a>
+          </div>         
+        </form>
       </div>
     </div>
 
