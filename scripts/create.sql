@@ -16,8 +16,8 @@ CREATE TABLE `team08`.`mtn_location` (
   `height_origin` CHAR(4) NULL,
   `map_no` INT UNSIGNED NULL,
   `map_name` CHAR(5) NULL,
-  `mtn_degree_e` DECIMAL(10,6) NULL,
-  `mtn_degree_n` DECIMAL(10,6) NULL,
+  `mtn_degree_e` DECIMAL(13,10) NULL,
+  `mtn_degree_n` DECIMAL(13,10) NULL,
   `mtn_address` TEXT NULL,
   `mtn_rate` DECIMAL(3,2) UNSIGNED NULL,
   PRIMARY KEY (`idx`, `mtn_name`)
@@ -37,19 +37,19 @@ CREATE TABLE `team08`.`mtn_weather` (
   `spot_no` INT NOT NULL,  
   `obsrt_mntn_nm` VARCHAR(10) NULL,
   `obsrt_spot_arcd` INT NULL,
-  `ten_meter_tprt` DECIMAL(2,1) NULL,
+  `ten_meter_tprt` DECIMAL(3,1) NULL,
   `ten_meter_hmdt` DECIMAL(5,2) NULL,
   `ten_meter_wndrc` DECIMAL(5,2) NULL,
   `ten_meter_wdsp` DECIMAL(2,1) NULL,
   `elrt_rain_qntt` DECIMAL(2,1) NULL,
   `wght_rain_qntt` DECIMAL(5,2) NULL,
-  `spot_atmpr` DECIMAL(5,2) NULL,
-  `esrf_tmprt` DECIMAL(2,1) NULL,
-  `two_meter_tprt` DECIMAL(2,1) NULL,
+  `spot_atmpr` DECIMAL(6,2) NULL,
+  `esrf_tmprt` DECIMAL(3,1) NULL,
+  `two_meter_tprt` DECIMAL(3,1) NULL,
   `two_meter_hmdt` DECIMAL(5,2) NULL,
   `two_meter_wndrc` DECIMAL(5,2) NULL,
   `two_meter_wdsp` DECIMAL(2,1) NULL,
-  `occrr_dtm` INT NULL,
+  `occrr_dtm` BIGINT NULL,
   `df_obsrt_tm_date` DATE NULL,
   `df_obsrt_tm_time` TIME NULL,
   FOREIGN KEY (`spot_no`) REFERENCES `spot_no` (`spot_no`) ON UPDATE CASCADE ON DELETE CASCADE
@@ -86,21 +86,21 @@ CREATE TABLE `team08`.`fire_fc` (
   );
 
 CREATE TABLE `team08`.`restaurants` (
-  `rest_name` VARCHAR(25) NULL,
+  `rest_name` VARCHAR(45) NULL,
   `road_base_add` TINYTEXT NULL,
   `address` TINYTEXT NULL,
   `status_code` INT UNSIGNED NULL,
   `status` VARCHAR(5) NULL,
   `menu_type` VARCHAR(20) NULL,
   `menu` VARCHAR(20) NULL,
-  `tel` INT UNSIGNED NULL,
+  `tel` TEXT NULL,
   `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
   );
 
 CREATE TABLE `team08`.`plant_species` (
   `id` INT NULL,
   `kr_name` VARCHAR(45) NOT NULL PRIMARY KEY,
-  `sci_name` VARCHAR(65) NULL,
+  `sci_name` TINYTEXT NULL,
   `kr_family_name` VARCHAR(45) NULL,
   `sci_family_name` VARCHAR(65) NULL,
   `blossom` INT UNSIGNED NULL,
@@ -112,15 +112,15 @@ CREATE TABLE `team08`.`plant_species` (
   );
 
 CREATE TABLE `team08`.`safety_rules` (
-  `safety_rule` TINYTEXT NULL,
-  `season_spring` TINYTEXT NULL,
-  `season_summer` TINYTEXT NULL,
-  `season_fall` TINYTEXT NULL,
-  `season_winter` TINYTEXT NULL,
-  `frst_aid_frostbite` TINYTEXT NULL,
-  `frst_aid_hypothermy` TINYTEXT NULL,
-  `frst_aid_sunstroke` TINYTEXT NULL,
-  `frst_aid_venom` TINYTEXT NULL,
+  `safety_rule` TEXT NULL,
+  `season_spring` TEXT NULL,
+  `season_summer` TEXT NULL,
+  `season_fall` TEXT NULL,
+  `season_winter` TEXT NULL,
+  `frst_aid_frostbite` TEXT NULL,
+  `frst_aid_hypothermy` TEXT NULL,
+  `frst_aid_sunstroke` TEXT NULL,
+  `frst_aid_venom` TEXT NULL,
   `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
   );
 
