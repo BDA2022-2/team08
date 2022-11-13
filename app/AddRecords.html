@@ -44,21 +44,20 @@
 		<div class="container">
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
-					<a href="index.html" class="logo m-0 float-start">Account</a>
+					<a href="MyRecords.html" class="logo m-0 float-start">My Records</a>
 
 					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 						<li><a href="index.html">Home</a></li>
-						<li><a href="services.html">Services</a></li>
 						<li><a href="properties.html">Properties</a></li>
-						<li><a href="MyRecords.html">My Records</a></li>
+						<li><a href="services.html">Services</a></li>
 						<li class="has-children active">
-							<a href="#">Account</a>
+							<a href="#">My Records</a>
 							<ul class="dropdown">
-								<li><a href="makeAccount.html">make Account</a></li>
-								<li><a href="changeAccount.html">change Account</a></li>
-								<li><a href="deleteAccount.html">delete Account</a></li>
+								<li><a href="MyRecords.html">My Records</a></li>
+								<li><a href="AddRecords.html">Add Records</a></li>
 							</ul>
 						</li>
+						<li><a href="makeAccount.html">Account</a></li>
 					</ul>
 
 					<a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
@@ -75,13 +74,12 @@
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up">Change Account</h1>
+					<h1 class="heading" data-aos="fade-up">Add Records</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
-						<ol class="breadcrumb text-center justify-content-center">
-							<li class="breadcrumb-item "><a href="MakeAccount.html">Make Account</a></li>
-							<li class="breadcrumb-item active text-white-50" aria-current="page">Change Account</li>
-							<li class="breadcrumb-item "><a href="DeleteAccount.html">Delete Account</a></li>
+						<ol class="breadcrumb text-center justify-content-center">			
+							<li class="breadcrumb-item "><a href="MyRecords.html">My Records</a></li>
+							<li class="breadcrumb-item active text-white-50" aria-current="page">Add Records</li>
 						</ol>
 					</nav>
 				</div>
@@ -126,35 +124,38 @@
 					</div>
 				</div>
 				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-					<form action="changeUser.php" method="post">
+					<form action="AddRecords_user.php" method="post">
 						<div class="row">
-							<text>가입시 입력한 아이디</text>
 							<div class="col-12 mb-3">
-								<input type="text" class="form-control" name="user_id" placeholder="이름">
-							</div>
-							
-							<text>이전 이름과 비밀번호</text>
-							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="before_name" placeholder="before_name">
+								산이름
+								<input type="text" name="mtn_name" class="form-control" placeholder="mountain name">
 							</div>
 							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="before_pw" placeholder="before_pw">
+								별점
+								<select id="별점" name="mtn_rate" class="form-control">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
 							</div>
-							
-							<text>바꿀 이름과 비밀번호</text>
 							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="after_name" placeholder="after_name">
+								방문날짜
+								<input type="date" name="visit_date" class="form-control" placeholder="visited date">
 							</div>
-							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="after_pw" placeholder="after_pw">
+							<div class="col-12 mb-3">
+								<textarea name="comment" id="comment" cols="30" rows="7" class="form-control" placeholder="weather comment"></textarea>
 							</div>
 
 							<div class="col-12">
-								<input type="submit" value="Send Message" class="btn btn-primary">
+								<input type="submit" value="Add Record" class="btn btn-primary">
 								<input type="reset" value="Reset" class="btn btn-primary">
 							</div>
 						</div>
 					</form>
+
+					
 				</div>
 			</div>
 		</div>

@@ -1,8 +1,5 @@
 <!-- /*
-* Template Name: Property
-* Template Author: Untree.co
-* Template URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
+http://localhost:8080/team08/app/makeAccount.html
 */ -->
 <!doctype html>
 <html lang="en">
@@ -75,12 +72,12 @@
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up">Change Account</h1>
+					<h1 class="heading" data-aos="fade-up">Make Account</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">
-							<li class="breadcrumb-item "><a href="MakeAccount.html">Make Account</a></li>
-							<li class="breadcrumb-item active text-white-50" aria-current="page">Change Account</li>
+							<li class="breadcrumb-item active text-white-50" aria-current="page">Make Account</li>
+							<li class="breadcrumb-item "><a href="ChangeAccount.html">Change Account</a></li>
 							<li class="breadcrumb-item "><a href="DeleteAccount.html">Delete Account</a></li>
 						</ol>
 					</nav>
@@ -126,32 +123,25 @@
 					</div>
 				</div>
 				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-					<form action="changeUser.php" method="post">
+					<form action="makeAccount_user.php" method="post">
 						<div class="row">
-							<text>가입시 입력한 아이디</text>
 							<div class="col-12 mb-3">
-								<input type="text" class="form-control" name="user_id" placeholder="이름">
-							</div>
-							
-							<text>이전 이름과 비밀번호</text>
-							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="before_name" placeholder="before_name">
+								<input type="text" class="form-control" name="user_name" placeholder="이름">
 							</div>
 							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="before_pw" placeholder="before_pw">
-							</div>
-							
-							<text>바꿀 이름과 비밀번호</text>
-							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="after_name" placeholder="after_name">
+								<input type="text" class="form-control" name="user_id" placeholder="ID">
 							</div>
 							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="after_pw" placeholder="after_pw">
+								<input type="text" class="form-control" name="user_pw" placeholder="PW">
+							</div>
+							<div class="col-12 mb-3">
+								<textarea name="search_mtn" id="search_mtn" cols="30" rows="7" class="form-control" placeholder="최근 방문한 산 이름"></textarea>
 							</div>
 
 							<div class="col-12">
 								<input type="submit" value="Send Message" class="btn btn-primary">
 								<input type="reset" value="Reset" class="btn btn-primary">
+								
 							</div>
 						</div>
 					</form>
