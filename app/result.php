@@ -30,6 +30,10 @@
   <body>
     <!-- result.php로 넘어오는 변수들 -->
     <?php
+      // 세션에서 user_id 받아오기
+      session_start();
+      $user_id = $_SESSION['ss_id'];
+      // result.php로 넘어오는 변수들
       $mtn_name = $_GET['mtn_name'];
       $region_1depth_name = $_GET['region_1depth_name'];
       $region_2depth_name = $_GET['region_2depth_name'];
@@ -155,23 +159,30 @@
             printf("Connect failed");
             exit();
           } else {
-            $sql = "
-            select idx, mtn_name, mtn_degree_e, mtn_degree_n, mtn_address, mtn_height, ifnull(avg_rate,0) as avg_rate, ifnull(cnt,0) as cnt, dense_rank() over (order by ".$sort.") as ranking
-            from mtn_location
-            left join (select mtn_idx, avg(mtn_review.mtn_rate) as avg_rate, count(*) as cnt 
-              from mtn_review
-              group by mtn_idx) as agg
-            on agg.mtn_idx = mtn_location.idx
-            where mtn_name like '%".$mtn_name."%'
-            and mtn_address like '%".$region_1depth_name."%'
-            and mtn_address like '%".$region_2depth_name."%'
-            and ifnull(avg_rate,0) >= ".$filter_rate."
-            and ifnull(cnt,0) >= ".$filter_visitor.";
+            $sql1 = "
+            UPDATE user 
+            SET search_mtn = '".$mtn_name."', search_location1 = '".$region_1depth_name."', search_location2 = '".$region_2depth_name."'
+            WHERE user_id = '".$user_id."';
             ";
-            $res = mysqli_query($mysqli, $sql);
+            $res1 = mysqli_query($mysqli, $sql1);
 
-            if ($res) {
-              while ($newArray = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+            $sql2 = "
+            SELECT idx, mtn_name, mtn_degree_e, mtn_degree_n, mtn_address, mtn_height, ifnull(avg_rate,0) AS avg_rate, ifnull(cnt,0) AS cnt, DENSE_RANK() OVER (ORDER BY ".$sort.") AS ranking
+            FROM mtn_location
+            LEFT JOIN (SELECT mtn_idx, avg(mtn_review.mtn_rate) AS avg_rate, count(*) AS cnt 
+              FROM mtn_review
+              GROUP BY mtn_idx) AS agg
+            ON agg.mtn_idx = mtn_location.idx
+            WHERE mtn_name like '%".$mtn_name."%'
+            AND mtn_address like '%".$region_1depth_name."%'
+            AND mtn_address like '%".$region_2depth_name."%'
+            AND ifnull(avg_rate,0) >= ".$filter_rate."
+            AND ifnull(cnt,0) >= ".$filter_visitor.";
+            ";
+            $res2 = mysqli_query($mysqli, $sql2);
+
+            if ($res2) {
+              while ($newArray = mysqli_fetch_array($res2, MYSQLI_ASSOC)) {
                 $mtn_index = $newArray['idx'];
                 $mtn_name = $newArray['mtn_name']; 
                 $mtn_degree_e = $newArray['mtn_degree_e']; 
@@ -218,7 +229,8 @@
               printf("error");
             }
           }
-          mysqli_free_result($res);
+          mysqli_free_result($res1);
+          mysqli_free_result($res2);
           mysqli_close($mysqli);
           ?>
         </div>
