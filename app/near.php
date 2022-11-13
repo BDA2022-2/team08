@@ -62,9 +62,35 @@
       </div>
     </div>
 
+    <!-- geolocation으로 사용자 위치 좌표 받아와, php 변수로 저장 -->
+    <?php
+    if (isset($_POST['userLat'])) {
+      $userLat = $_POST['userLat'];
+      $userLon = $_POST['userLon'];
+      //echo $userLat;
+    } else {
+      echo "
+      <script type=\"text/javascript\">
+        window.addEventListener('DOMCountentLoaded', navigator.geolocation.getCurrentPosition(success, failed));
+        function success(pos) {
+          const coord = pos.coords;
+          userLat = coord.latitude;
+          userLon = coord.longitude;
+          document.write('<form action=\"near.php\" id=\"sbm_form\" method=\"post\"><input type=\"hidden\" name=\"userLat\" value=\"' + userLat + '\"><input type=\"hidden\" name=\"userLon\" value=\"' + userLon + '\"></form>');
+          document.getElementById('sbm_form').submit();
+        }
+        function failed(err) {
+          console.log(\"geoloc 실패\");
+        }
+      </script>
+      ";
+    }
+    ?>
     <!-- 카카오 REST API로 사용자 좌표>주소 변경 -->
     <?php
-    require("coord2address.php");
+    $_POST['userLat'] = $userLat;
+    $_POST['userLon'] = $userLon;
+    include "coord2address.php";
     ?>
     <!-- db에서 해당 주소값으로 근처 산 검색 -->
     <?php
@@ -73,32 +99,28 @@
       printf("Connect failed");
       exit();
     } else {
-      $sql = "select idx, mtn_name, mtn_degree_e, mtn_degree_n, mtn_address, mtn_height, mtn_rate from mtn_location
+      $sql = "select idx, mtn_name, mtn_degree_e, mtn_degree_n, mtn_address, mtn_height, ifnull(avg_rate,0) as avg_rate, ifnull(cnt,0) as cnt
+      from mtn_location
+      left join (select mtn_idx, avg(mtn_review.mtn_rate) as avg_rate, count(*) as cnt
+        from mtn_review
+        group by mtn_idx) as agg
+      on agg.mtn_idx = mtn_location.idx
       where mtn_address like '%".$region_1depth_name."%'
       and mtn_address like '%".$region_2depth_name."%';";
       $res = mysqli_query($mysqli, $sql);
-      
+      // 지도 위에 오버레이 올리기 위해 sql 실행 결과값을 php 배열 $positions에 저장.
+      $positions = array();
       if ($res) {
         while ($newArray = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
-          $mtn_index = $newArray['idx']; 
-          $mtn_name = $newArray['mtn_name']; 
-          $mtn_degree_e = $newArray['mtn_degree_e']; 
-          $mtn_degree_n = $newArray['mtn_degree_n']; 
-          $mtn_address = $newArray['mtn_address']; 
-          $mtn_height = $newArray['mtn_height']; 
-          $mtn_rate = $newArray['mtn_rate'];
-          echo "<div>".$mtn_index."</div>";
-          echo "<div>".$mtn_name."</div>";
-          echo "<div>".$mtn_degree_e."</div>";
-          echo "<div>".$mtn_degree_n."</div>";
-          echo "<div>".$mtn_address."</div>";
-          echo "<div>".$mtn_height."</div>";
-          echo "<div>".$mtn_rate."</div>";
+          array_push($positions, [$newArray['idx'], $newArray['mtn_name'], $newArray['mtn_degree_e'], $newArray['mtn_degree_n'], $newArray['mtn_address'], $newArray['mtn_height'], $newArray['avg_rate']]);
         }
+        //echo var_dump($positions);
       } else {
         printf("error");
       }
     }
+    mysqli_free_result($res);
+    mysqli_close($mysqli);
     ?>
 
     <div class="section section-4 bg-light">
@@ -106,7 +128,7 @@
         <div class="row justify-content-between mb-5">
           <div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
             <div class="img-about dots">
-              <!-- 지도 api-->
+              <!-- 카카오 지도 api -->
               <div
                 id="map"
                 style="
@@ -127,61 +149,50 @@
             <!-- 산 리스트 카드 -->
             <div
               class="property-item"
-              style="margin-top: 120px; margin-bottom: 120px;"
+              style="margin-top: 29px; margin-bottom: 120px;"
             >
-              <!-- db에서 해당 주소값으로 근처 산 검색, 출력 -->
+              <!-- $positions arr에서 foreach로 값 출력 -->
               <?php
-              $mysqli = mysqli_connect("localhost","team08","team08","team08");
-              if (mysqli_connect_errno()) {
-                printf("Connect failed");
-                exit();
-              } else {
-                $sql = "select idx, mtn_name, mtn_degree_e, mtn_degree_n, mtn_address, mtn_height, mtn_rate from mtn_location
-                where mtn_address like '%".$region_1depth_name."%'
-                and mtn_address like '%".$region_2depth_name."%';";
-                $res = mysqli_query($mysqli, $sql);
-                
-                if ($res) {
-                  while ($newArray = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
-                    $mtn_index = $newArray['idx']; 
-                    $mtn_name = $newArray['mtn_name']; 
-                    $mtn_degree_e = $newArray['mtn_degree_e']; 
-                    $mtn_degree_n = $newArray['mtn_degree_n']; 
-                    $mtn_address = $newArray['mtn_address']; 
-                    $mtn_height = $newArray['mtn_height']; 
-                    $mtn_rate = $newArray['mtn_rate'];
-                    echo "<div class=\"property-content\" style=\"margin-bottom:120px\">
-                    <div class=\"price mb-2\"><span>".$mtn_name."</span></div>
-                    <div>
-                      <span class=\"d-block mb-2 text-black-50\">
-                        ".$mtn_address."
+              foreach ($positions as $position) {
+                $mtn_index = $position[0]; 
+                $mtn_name = $position[1]; 
+                $mtn_degree_e = $position[2]; 
+                $mtn_degree_n = $position[3]; 
+                $mtn_address = $position[4]; 
+                $mtn_height = $position[5]; 
+                $mtn_rate = number_format((float)$position[6],2);
+                $review_count = (int) $position[7];                    
+                echo "
+                <div class=\"property-content\" style=\"margin-bottom:45px\">
+                  <div class=\"price mb-2\"><span>".$mtn_name."</span></div>
+                  <div>
+                    <span class=\"d-block mb-2 text-black-50\">".$mtn_address."</span>
+                    <div class=\"specs d-flex mb-4\">
+                      <span class=\"d-block d-flex align-items-center me-3\">
+                        <span class=\"icon-arrow-circle-up me-2\"></span>
+                        <span class=\"caption\">".$mtn_height."m</span>
                       </span>
-                      <div class=\"specs d-flex mb-4\">
-                        <span class=\"d-block d-flex align-items-center me-3\">
-                          <span class=\"icon-bed me-2\"></span>
-                          <span class=\"caption\">".$mtn_height."m</span>
-                        </span>
-                        <span class=\"d-block d-flex align-items-center\">
-                          <span class=\"icon-bath me-2\"></span>
-                          <span class=\"caption\">".$mtn_rate."</span>
-                        </span>
-                      </div>
-                      <!-- info.php에 mtn_name, mtn_index 보내기 -->
-                      <form action=\"info.php\" method=\"get\">
-                        <input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />
-                        <input type=\"hidden\" name=\"mtn_index\" value=\"".$mtn_index."\" />
-                        <input
-                          class=\"btn btn-primary py-2 px-3\"
-                          type=\"submit\"
-                          value=\"See details\"
-                        />
-                      </form>
+                      <span class=\"d-block d-flex align-items-center\" style=\"margin-right:20px;\">
+                        <span class=\"icon-star2 me-2\"></span>
+                        <span class=\"caption\" style=\"margin-left:-4px;\">".$mtn_rate."점</span>
+                      </span>
+                      <span class=\"d-block d-flex align-items-center\">
+                        <span class=\"icon-pencil me-2\"></span>
+                        <span class=\"caption\">".$review_count."개</span>
+                      </span>
                     </div>
-                  </div>";
-                  }
-                } else {
-                  printf("error");
-                }
+                    <form action=\"info.php\" method=\"get\">
+                    <input type=\"hidden\" name=\"mtn_index\" value=\"".$mtn_index."\"/>
+                    <input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\"/>
+                      <input
+                        class=\"btn btn-primary py-2 px-3\"
+                        type=\"submit\"
+                        value=\"See details\"
+                      />
+                    </form>
+                  </div>
+                </div>
+              ";
               }
               ?>
             </div>
@@ -210,6 +221,48 @@
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/navbar.js"></script>
-    <script src="js/map.js"></script>
+    <!-- 카카오 지도 표시 js script -->
+    <script>
+      const userLat = "<?php echo $userLat; ?>";
+      const userLon = "<?php echo $userLon; ?>";
+      const positions = <?php echo json_encode($positions); ?>;
+      console.log(positions);
+      const userPosition = new kakao.maps.LatLng(userLat, userLon);
+      // 지도 생성
+      const mapContainer = document.getElementById("map");
+      const mapOption = {
+        center: new kakao.maps.LatLng(userLat, userLon),
+        level: 7,
+      };
+      const map = new kakao.maps.Map(mapContainer, mapOption);
+      // 사용자 위치 마커
+      displayMarker(positions, userPosition);
+      function displayMarker(positions, userPosition) {
+        const marker = new kakao.maps.Marker({
+          map: map,
+          position: userPosition,
+        });
+        marker.setMap(map);
+      }
+      // 근처 산들 커스텀 오버레이
+      for (let i = 0; i < positions.length; i++) {
+        const content =
+          '<div class="customoverlay">' +
+          `  <a href="http://localhost/team08/app/info.php?mtn_index=${Number(positions[i][0])}&mtn_name=${positions[i][1]}">` +
+          `    <span class="title">${positions[i][1]}</span>` +
+          "  </a>" +
+          "</div>";
+        const latlng = new kakao.maps.LatLng(Number(positions[i][3]), Number(positions[i][2]));
+        const customOverlay = new kakao.maps.CustomOverlay({
+          map: map,
+          position: latlng,
+          content: content,
+          yAnchor: 1,
+        });
+        customOverlay.setMap(map);
+      }
+      map.setCenter(userPosition);
+    </script>
+    <!-- <script src="js/map.js"></script> -->
   </body>
 </html>

@@ -2,10 +2,15 @@
     // https://developers.kakao.com/docs/latest/ko/local/dev-guide#coord-to-address
     // https://dreamaz.tistory.com/35
 
+    $userLat = $_POST['userLat'];
+    $userLon = $_POST['userLon'];
+
     $kakao_restapi_key = "9c64e752a5fc407d416ba6bd2dbd6ef6";
     $url = 'https://dapi.kakao.com/v2/local/geo/coord2address'; // URL
-    $queryParams = '?' . urlencode('x') . '=' . urlencode('126.9488277'); // user 경도
-    $queryParams .= '&' . urlencode('y') . '=' . urlencode('37.5668522'); // user 위도
+    $queryParams = '?' . urlencode('x') . '=' . urlencode($userLon); // user 경도
+    $queryParams .= '&' . urlencode('y') . '=' . urlencode($userLat); // user 위도
+    // $queryParams = '?' . urlencode('x') . '=' . urlencode('126.9488277'); // user 경도
+    // $queryParams .= '&' . urlencode('y') . '=' . urlencode('37.5668522'); // user 위도
 
     $header_data = [];
     $header_data[] = 'Authorization: KakaoAK '.$kakao_restapi_key;
