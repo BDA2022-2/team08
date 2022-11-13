@@ -12,7 +12,7 @@
 		die("error: could not connect".mysqli_connect_error());
 	}else{
 		//prepare an insert statement
-        $sql="INSERT IGNORE INTO `team08`.`user`(`user_id`,`user_pw`,`user_name`) VALUES (?,?,?)";
+        $sql="DELETE FROM `team08`.`user` WHERE user_id=? and user_pw=? and user_name=?";
 		
 		if($stmt=mysqli_prepare($link,$sql)){
 			//bind variables to the prepared stmt as parameters
@@ -25,29 +25,26 @@
 
 			if (!$user_id||!$user_pw||!$user_name) {
 				echo "<script>alert('id, pw, name 모두 입력해 주세요');</script>";
-				echo "<script>location.replace('./makeAccount.php');</script>";
+				echo "<script>location.replace('./deleteAccount.php');</script>";
 				exit;
 			}
 			
 			//attempt to execute the prepared statement
 			
 			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
-				echo "<script>alert('Records inserted successfully');</script>";
-				echo "<script>location.replace('./makeAccount.php');</script>";
-				exit;
+				echo "<script>alert('Records deleted successfully');</script>";
+				echo "<script>location.replace('./deleteAccount.php');</script>";
 			}else if(mysqli_affected_rows($link)<1){
-				echo "<script>alert('ERROR: 이미 동일한 id가 존재합니다');</script>";
+				echo "<script>alert('ERROR: 잘못된 유저정보 입니다');</script>";
 				echo "<script>location.replace('./makeAccount.php');</script>";
 				exit;
 			}else{
 				echo "<script>alert('ERROR: Could not execute query');</script>";
-				echo "<script>location.replace('./makeAccount.php');</script>";
-				exit;
+				echo "<script>location.replace('./deletemakeAccount.php');</script>";
 			}
 		}else{
 			echo "<script>alert('ERROR: Could not prepare query');</script>";
-			echo "<script>location.replace('./makeAccount.php');</script>";
-			exit;
+			echo "<script>location.replace('./deletemakeAccount.php');</script>";
 		}
 	}
 	//close statement

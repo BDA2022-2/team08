@@ -12,42 +12,40 @@
 		die("error: could not connect".mysqli_connect_error());
 	}else{
 		//prepare an insert statement
-        $sql="INSERT IGNORE INTO `team08`.`user`(`user_id`,`user_pw`,`user_name`) VALUES (?,?,?)";
+		$sql="UPDATE `team08`.`user` SET user_name=?, user_pw=? WHERE user_name=? and user_pw=? and user_id=?";
 		
 		if($stmt=mysqli_prepare($link,$sql)){
 			//bind variables to the prepared stmt as parameters
-			mysqli_stmt_bind_param($stmt,"sss",$user_id,$user_pw,$user_name);
+			mysqli_stmt_bind_param($stmt,"sssss",$after_name,$after_pw,$before_name,$before_pw,$user_id);
 			
 			//set parameters
+			$before_name=trim($_POST['before_name']);
+			$before_pw=trim($_POST['before_pw']);
+			$after_name=trim($_POST['after_name']);
+			$after_pw=trim($_POST['after_pw']);
 			$user_id=trim($_POST['user_id']);
-			$user_pw=trim($_POST['user_pw']);
-			$user_name=trim($_POST['user_name']);
 
-			if (!$user_id||!$user_pw||!$user_name) {
+			if (!$user_id||!$before_pw||!$after_pw||!$before_name||!$after_name){
 				echo "<script>alert('id, pw, name 모두 입력해 주세요');</script>";
-				echo "<script>location.replace('./makeAccount.php');</script>";
+				echo "<script>location.replace('./changeAccount.php');</script>";
 				exit;
 			}
 			
 			//attempt to execute the prepared statement
-			
 			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
-				echo "<script>alert('Records inserted successfully');</script>";
-				echo "<script>location.replace('./makeAccount.php');</script>";
-				exit;
+				echo "<script>alert('Records changed successfully');</script>";
+				echo "<script>location.replace('./changeAccount.php');</script>";
 			}else if(mysqli_affected_rows($link)<1){
-				echo "<script>alert('ERROR: 이미 동일한 id가 존재합니다');</script>";
+				echo "<script>alert('ERROR: 잘못된 유저정보 입니다');</script>";
 				echo "<script>location.replace('./makeAccount.php');</script>";
 				exit;
 			}else{
 				echo "<script>alert('ERROR: Could not execute query');</script>";
-				echo "<script>location.replace('./makeAccount.php');</script>";
-				exit;
+				echo "<script>location.replace('./changeAccount.php');</script>";
 			}
 		}else{
 			echo "<script>alert('ERROR: Could not prepare query');</script>";
-			echo "<script>location.replace('./makeAccount.php');</script>";
-			exit;
+			echo "<script>location.replace('./changeAccount.php');</script>";
 		}
 	}
 	//close statement
