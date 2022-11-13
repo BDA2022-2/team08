@@ -112,7 +112,7 @@
       $positions = array();
       if ($res) {
         while ($newArray = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
-          array_push($positions, [$newArray['idx'], $newArray['mtn_name'], $newArray['mtn_degree_e'], $newArray['mtn_degree_n'], $newArray['mtn_address'], $newArray['mtn_height'], $newArray['avg_rate']]);
+          array_push($positions, [$newArray['idx'], $newArray['mtn_name'], $newArray['mtn_degree_e'], $newArray['mtn_degree_n'], $newArray['mtn_address'], $newArray['mtn_height'], $newArray['avg_rate'], $newArray['cnt']]);
         }
         //echo var_dump($positions);
       } else {
@@ -149,7 +149,7 @@
             <!-- 산 리스트 카드 -->
             <div
               class="property-item"
-              style="margin-top: 29px; margin-bottom: 120px;"
+              style="margin-top: 112px; margin-bottom: 120px;"
             >
               <!-- $positions arr에서 foreach로 값 출력 -->
               <?php

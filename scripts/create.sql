@@ -33,7 +33,7 @@ CREATE TABLE `team08`.`spot_no` (
   );
 
 CREATE TABLE `team08`.`mtn_weather` (
-  `idx` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `idx` INT NOT NULL PRIMARY KEY,
   `spot_no` INT NOT NULL,  
   `obsrt_mntn_nm` VARCHAR(10) NULL,
   `obsrt_spot_arcd` INT NULL,
