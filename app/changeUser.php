@@ -1,7 +1,12 @@
 <?php
 	$db_host="localhost";
+<<<<<<< HEAD
 	$db_user="root";
 	$db_password="";
+=======
+	$db_user="team08";
+	$db_password="team08";
+>>>>>>> bf36dd1848449fa30f2f858c831dd81c8d131ef2
 	$db_name="team08";
 
     //connect to the database

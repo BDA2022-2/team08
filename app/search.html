@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Untree.co" />
+    <link rel="shortcut icon" href="favicon.png" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap5" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/includeHTML.js"></script>
+
+    <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
+  </head>
+  <body>
+    <div include-html="html/nav.html"></div>
+    <script>
+      includeHTML();
+    </script>
+    <div class="hero">
+      <div class="hero-slide">
+        <div
+          class="img overlay"
+          style="background-image: url('images/hero_bg_3.jpg')"
+        ></div>
+        <div
+          class="img overlay"
+          style="background-image: url('images/hero_bg_2.jpg')"
+        ></div>
+        <div
+          class="img overlay"
+          style="background-image: url('images/hero_bg_1.jpg')"
+        ></div>
+      </div>
+
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center">
+            <h1 class="heading" data-aos="fade-up">원하는 산 검색하기</h1>
+
+            <!--지역 선택 select box-->
+            <div class="search_boxes">
+                <div class="search_box">
+                  <select name="" id="" onchange="categoryChange(this)">
+                    <option value>시/도 선택</option>
+                    <option value="all">전체</option> <!--전체값 추가됨-->
+                    <option value="seoul">서울</option>
+                    <option value="busan">부산</option>
+                    <option value="daegu">대구</option>
+                    <option value="incheon">인천</option>
+                    <option value="gwangju">광주</option>
+                    <option value="daejeon">대전</option>
+                    <option value="ulsan">울산</option>
+                    <option value="sejong">세종</option>
+                    <option value="gyeonggi">경기</option>
+                    <option value="gangwon">강원</option>
+                    <option value="chungbuk">충북</option>
+                    <option value="chungnam">충남</option>
+                    <option value="jeonbuk">전북</option>
+                    <option value="jeonnam">전남</option>
+                    <option value="gyeongbuk">경북</option>
+                    <option value="gyeongnam">경남</option>
+                    <option value="jeju">제주</option>
+                  </select>
+                </div>
+                
+                <div class="search_box">
+                  <select name="" id="state">
+                    <option>시/군/구 선택</option>
+                  </select>
+                </div>
+
+            <form
+              action="#"
+              class="narrow-w form-search d-flex align-items-stretch mb-3"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <input
+                type="text"
+                class="form-control px-4"
+                placeholder="산 이름을 입력하세요."
+              />
+              <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+            <!--최근 검색, 방문 산 내역-->
+            <div>
+              최근에 검색한 산<a href=""></a></br>
+              최근에 방문한 산<a href=""></a>
+            </div>
+
+            <br>
+
+            <h2>현재 사용자들이 많이 방문한 산</h2>
+            <ol>
+              <li><a href=""></a></li>
+              <li><a href=""></a></li>
+              <li><a href=""></a></li>
+              <li><a href=""></a></li>
+              <li><a href=""></a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <footer include-html="html/footer.html"></footer>
+    <script defer>
+      includeHTML();
+    </script>
+
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/aos.js"></script>
+
+    <script src="js/search.js"></script>
+
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/navbar.js"></script>
+  </body>
+</html>
