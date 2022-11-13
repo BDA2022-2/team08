@@ -18,7 +18,7 @@ CREATE TABLE `team08`.`mtn_location` (
   `map_name` CHAR(5) NULL,
   `mtn_degree_e` DECIMAL(13,10) NULL,
   `mtn_degree_n` DECIMAL(13,10) NULL,
-  `mtn_address` TEXT NULL,
+  `mtn_address` TINYTEXT NULL,
   `mtn_rate` DECIMAL(3,2) UNSIGNED NULL,
   PRIMARY KEY (`idx`, `mtn_name`)
   );
@@ -151,3 +151,6 @@ CREATE TABLE `team08`.`img` (
   `img_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `url` TINYTEXT NULL
 );
+
+-- 인덱스 생성
+CREATE INDEX mtn_loc_idx ON mtn_location (mtn_name, mtn_address);

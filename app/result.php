@@ -28,30 +28,20 @@
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
-    <!-- search.php에서 넘어온 변수 -->
+    <!-- result.php로 넘어오는 변수들 -->
     <?php
-      if (isset($_GET['mtn_name'])) {
-        $mtn_name = $_GET['mtn_name'];
-      } else {$mtn_name = "";}
-      if (isset($_GET['region_1depth_name'])) {
-        $region_1depth_name = $_GET['region_1depth_name'];
-      } else {$region_1depth_name = "";}
-      if (isset($_GET['region_2depth_name'])) {
-        $region_2depth_name = $_GET['region_2depth_name'];
-      } else {$region_2depth_name = "";}
+      $mtn_name = $_GET['mtn_name'];
+      $region_1depth_name = $_GET['region_1depth_name'];
+      $region_2depth_name = $_GET['region_2depth_name'];
       if (isset($_GET['sort'])) {
         $sort = $_GET['sort'];
-      } else {$sort = "sort_init";}
-    ?>
-    <!-- 더미 데이터 -->
-    <?php
-      $dummy_mtn_name = "도봉산";
-      $dummy_region_1depth_name = "서울";
-      $dummy_region_2depth_name = "서대문구";
-      
-      $dummy_mtn_height = "399.9m";
-      $dummy_mtn_address = "대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉";
-      $dummy_mtn_rate = "3.5";
+      } else {$sort = "idx";}
+      if (isset($_GET['filter_rate'])) {
+        $filter_rate = 3.5;
+      } else {$filter_rate = 0;}
+      if (isset($_GET['filter_visitor'])) {
+        $filter_visitor = 5;
+      } else {$filter_visitor = 0;}
     ?>
 
     <div include-html="html/nav.html"></div>
@@ -88,335 +78,152 @@
       </div>
     </div>
 
-    <!-- 
-      - 필터 버튼 누르면, 조건에 맞게 목록 보여주고, 버튼은 선택된 상태로 유지 (css로 표현할 듯)
-      - select 값 누르면, 조건에 맞게 목록 보여주고, option 선택된 상태로 유지
-      - 둘 다 선택되면, 어떻게 구성할지 생각해봐야 하는데 ...
-    -->    
-
     <!-- 결과 보여주는 영역 -->
     <div class="section">
       <div class="container">
         <div class="col-lg-6">
           <?php
-          echo"<h2 class=\"font-weight-bold text-primary heading\">
-          검색어: '".$dummy_mtn_name."'</h2>";          
+          echo"<h2 class=\"font-weight-bold text-primary heading\">".$region_1depth_name." ".$region_2depth_name." ".$mtn_name."</h2>";
           ?>
         </div>
         <!-- 필터링 버튼 & 정렬 드롭다운박스 -->
         <div class="filter-and-sort">
+          <form id="undo" class="undo" method="get" <?php echo (($filter_rate==0 and $filter_visitor==0) ? "style=\"display: none\"" : "");?>>
+            <?php
+              echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
+              echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
+              echo "<input type=\"hidden\" name=\"region_2depth_name\" value=\"".$region_2depth_name."\" />";
+              echo "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\" />"
+            ?>
+            <span class="icon-undo me-2"></span>
+            <button
+              type="button"
+              onClick = "this.form.submit();"
+            >초기화
+            </button>
+          </form>
           <form id="filter-rate" class="filter-rate" method="get">
+            <?php
+              echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
+              echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
+              echo "<input type=\"hidden\" name=\"region_2depth_name\" value=\"".$region_2depth_name."\" />";
+              echo "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\" />"
+            ?>
             <input
+              <?php echo (array_key_exists('filter_rate',$_GET) ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
               type="submit"
               name="filter_rate"              
               value="방문 평점 3.5 이상"
             />
           </form>
           <form id="filter-visitor" class="filter-visitor" method="get">
+            <?php
+              echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
+              echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
+              echo "<input type=\"hidden\" name=\"region_2depth_name\" value=\"".$region_2depth_name."\" />";
+              echo "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\" />"
+            ?>
             <input
+              <?php echo (array_key_exists('filter_visitor',$_GET) ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
               type="submit"
               name="filter_visitor"              
-              value="최근 방문 1K 이상"
+              value="방문 리뷰 5개 이상"
             />
           </form>
           <form id="sort" class="sort" method="get">
+            <?php
+            echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
+            echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
+            echo "<input type=\"hidden\" name=\"region_2depth_name\" value=\"".$region_2depth_name."\" />";
+            echo ($filter_rate ? "<input type=\"hidden\" name=\"filter_rate\" value=\"".$filter_rate."\" />" : "");
+            echo ($filter_visitor ? "<input type=\"hidden\" name=\"filter_rate\" value=\"".$filter_visitor."\" />" : "");
+            ?>
             <select name="sort" onChange="this.form.submit();">
-              <option value="sort_init">-- 정렬 --</option>
-              <option value="sort_rating">별점 순</option>
-              <option value="sort_visitor">방문자 순</option>
+              <option value="idx">-- 정렬 --</option>
+              <option value="avg_rate desc" <?php echo ($sort == "avg_rate desc" ? "selected" : "");?>>별점 순</option>
+              <option value="cnt desc" <?php echo ($sort == "cnt desc" ? "selected" : "");?>>방문 리뷰 순</option>
             </select>
           </form>
         </div>
 
-        <!-- 디폴트 -->
-        <?php
-            if(!array_key_exists('filter_rate',$_GET) and !array_key_exists('filter_visitor',$_GET)){
-            ?>
-            <!-- 산 카드 리스트 -->
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>디폴트 화면</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
-                  </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>도봉산</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
-                  </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>도봉산</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
-                  </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-        <?php
-            }
-            ?>
+        <!-- 산 카드 리스트 -->        
+        <div class="property-item" style="margin-top:120px; margin-bottom:120px">
+          <!-- db에서 데이터 출력 -->
+          <?php
+          $mysqli = mysqli_connect("localhost","team08","team08","team08");
+          if (mysqli_connect_errno()){
+            printf("Connect failed");
+            exit();
+          } else {
+            $sql = "
+            select idx, mtn_name, mtn_degree_e, mtn_degree_n, mtn_address, mtn_height, ifnull(avg_rate,0) as avg_rate, ifnull(cnt,0) as cnt, dense_rank() over (order by ".$sort.") as ranking
+            from mtn_location
+            left join (select mtn_idx, avg(mtn_review.mtn_rate) as avg_rate, count(*) as cnt 
+              from mtn_review
+              group by mtn_idx) as agg
+            on agg.mtn_idx = mtn_location.idx
+            where mtn_name like '%".$mtn_name."%'
+            and mtn_address like '%".$region_1depth_name."%'
+            and mtn_address like '%".$region_2depth_name."%'
+            and ifnull(avg_rate,0) >= ".$filter_rate."
+            and ifnull(cnt,0) >= ".$filter_visitor.";
+            ";
+            $res = mysqli_query($mysqli, $sql);
 
-        <!-- '방문 평점 3.5 이상' 필터링 결과 -->
-        <?php
-            if(array_key_exists('filter_rate',$_GET)){
-            ?>
-            <!-- 산 카드 리스트 -->
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>3.5 이상 필터</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
+            if ($res) {
+              while ($newArray = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+                $mtn_index = $newArray['idx'];
+                $mtn_name = $newArray['mtn_name']; 
+                $mtn_degree_e = $newArray['mtn_degree_e']; 
+                $mtn_degree_n = $newArray['mtn_degree_n']; 
+                $mtn_address = $newArray['mtn_address']; 
+                $mtn_height = $newArray['mtn_height']; 
+                $mtn_rate = number_format($newArray['avg_rate'],2);
+                $review_count = $newArray['cnt'];
+                $ranking = $newArray['ranking'];
+
+                echo "
+                <div class=\"property-content\" style=\"margin-bottom:120px\">
+                  <div class=\"price mb-2\"><span>".$mtn_name."</span></div>
+                  <div>
+                    <span class=\"d-block mb-2 text-black-50\">".$mtn_address."</span>
+                    <div class=\"specs d-flex mb-4\">
+                      <span class=\"d-block d-flex align-items-center me-3\">
+                        <span class=\"icon-arrow-circle-up me-2\"></span>
+                        <span class=\"caption\">".$mtn_height."m</span>
+                      </span>
+                      <span class=\"d-block d-flex align-items-center\" style=\"margin-right:20px;\">
+                        <span class=\"icon-star2 me-2\"></span>
+                        <span class=\"caption\" style=\"margin-left:-4px;\">".$mtn_rate."점</span>
+                      </span>
+                      <span class=\"d-block d-flex align-items-center\">
+                        <span class=\"icon-pencil me-2\"></span>
+                        <span class=\"caption\">".$review_count."개</span>
+                      </span>
+                    </div>
+                    <form action=\"info.php\" method=\"get\">
+                    <input type=\"hidden\" name=\"mtn_index\" value=\"".$mtn_index."\"/>
+                    <input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\"/>
+                      <input
+                        class=\"btn btn-primary py-2 px-3\"
+                        type=\"submit\"
+                        value=\"See details\"
+                      />
+                    </form>
                   </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
                 </div>
-              </div>
-            </div>
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>도봉산</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
-                  </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>도봉산</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
-                  </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-        <?php
+                ";
+              }
+            } else {
+              printf("error");
             }
-            ?>
-        <!-- '최근 방문 1K 이상' 필터링 결과 -->
-        <?php
-            if(array_key_exists('filter_visitor',$_GET)){
-            ?>
-            <!-- 산 카드 리스트 -->
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>방문 1K이상 필터</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
-                  </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>인왕산</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
-                  </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="property-item" style="margin-top:120px; margin-bottom:120px">
-              <div class="property-content">
-                <div class="price mb-2"><span>인왕산</span></div>
-                <div>
-                  <span class="d-block mb-2 text-black-50">
-                    대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉
-                    </span>
-                  <span class="city d-block mb-3">대한민국 서울특별시 도봉구 도봉동 산31 도봉산 선인봉</span>
-                  <div class="specs d-flex mb-4">
-                    <span class="d-block d-flex align-items-center me-3">
-                      <span class="icon-bed me-2"></span>
-                      <span class="caption">1234.56m</span>
-                    </span>
-                    <span class="d-block d-flex align-items-center">
-                      <span class="icon-bath me-2"></span>
-                      <span class="caption">4.5</span>
-                    </span>
-                  </div>
-                  <form action="info.php" method="get">
-                    <input type="hidden" name="mtnname" value="도봉산"/>
-                    <input
-                      class="btn btn-primary py-2 px-3"
-                      type="submit"
-                      value="See details"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-        <?php
-            }
-            ?>
+          }
+          mysqli_free_result($res);
+          mysqli_close($mysqli);
+          ?>
+        </div>
       </div>
     </div>
-    
 
     <footer include-html="html/footer.html"></footer>
     <script defer>
