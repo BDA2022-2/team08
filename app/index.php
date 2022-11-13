@@ -98,7 +98,7 @@
                     if($res) {
                         while($row = mysqli_fetch_array($res,MYSQLI_NUM)){
                           $i = 0;
-                          while($i<count($row))
+                          while($i<count($row)-1)
                           {
                             if ($row[$i]) {
                               array_push($rule_arr, $row[$i]);
