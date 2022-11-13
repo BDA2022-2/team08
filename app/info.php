@@ -66,6 +66,7 @@
 									$mtn_info = mysqli_fetch_array($res1,MYSQLI_ASSOC);
 									$mtn_degree_e = (string)round((float)$mtn_info['mtn_degree_e']);
 									$mtn_degree_n = (string)round((float)$mtn_info['mtn_degree_n']);
+									$mtn_addr = $mtn_info['mtn_address'];
 									$mtn_rate = $mtn_info['mtn_rate'];
 								}
 								else {
@@ -84,7 +85,6 @@
 
 								mysqli_free_result($res1);
 								mysqli_free_result($res2);
-								mysqli_close($mysqli);
 							}
 
 							// $mtn_degree_e = (string)126;
@@ -144,94 +144,105 @@
 				  <div class="row my-3">
 					<?php
 						date_default_timezone_set('Asia/Seoul');
-						#API로 날씨 받아오는 코드
-						if ((int)date("i",time()) < 45){
-							$H = (int)(date("H",time()))-1;
-							if ($H == -1) {
-								$H = 23;
-								$base_date = date('Ymd', time()-86400);
-							}
-							else {
-								$H = (string)$H;
-								$base_date = date("Ymd",time());
-							}
-						}
-						else {
-							$H = date("H",time());
-							$base_date = date("Ymd",time());
-						}
-						$ch = curl_init();
-						$url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'; /*URL*/
-						$queryParams = '?' . urlencode('serviceKey') . '=PLM%2FTnlUf%2BzzHw3XZNg97c1vQJ3frT%2BRyoCkq%2FtEoFplOMT0KjvIgVZFPwVTyD%2F8GctHGBnwLXiaHNAm9ZSqLA%3D%3D'; /*Service Key*/
-						$queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1'); /**/
-						$queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('1000'); /**/
-						$queryParams .= '&' . urlencode('dataType') . '=' . urlencode('XML'); /**/
-						$queryParams .= '&' . urlencode('base_date') . '=' . urlencode($base_date); /**/
-						$queryParams .= '&' . urlencode('base_time') . '=' . urlencode(str_pad($H, 2, "0", STR_PAD_LEFT)."30"); /**/
-						$queryParams .= '&' . urlencode('nx') . '=' . urlencode($mtn_degree_n); /**/
-						$queryParams .= '&' . urlencode('ny') . '=' . urlencode($mtn_degree_e); /**/
+						#더미데이터
+						$SKY = "1";
+						$T1H = "11";
+						$TMN = "0";
+						$TMX = "13";
+						$RN1 = "0";
+						$REH = "36";
+						$POP = "20";
+						$PCP = "0";
+						$PTY = "0";
+						$WSD = "7.3";
+						// #API로 날씨 받아오는 코드
+						// if ((int)date("i",time()) < 45){
+						// 	$H = (int)(date("H",time()))-1;
+						// 	if ($H == -1) {
+						// 		$H = 23;
+						// 		$base_date = date('Ymd', time()-86400);
+						// 	}
+						// 	else {
+						// 		$H = (string)$H;
+						// 		$base_date = date("Ymd",time());
+						// 	}
+						// }
+						// else {
+						// 	$H = date("H",time());
+						// 	$base_date = date("Ymd",time());
+						// }
+						// $ch = curl_init();
+						// $url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'; /*URL*/
+						// $queryParams = '?' . urlencode('serviceKey') . '=PLM%2FTnlUf%2BzzHw3XZNg97c1vQJ3frT%2BRyoCkq%2FtEoFplOMT0KjvIgVZFPwVTyD%2F8GctHGBnwLXiaHNAm9ZSqLA%3D%3D'; /*Service Key*/
+						// $queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1'); /**/
+						// $queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('1000'); /**/
+						// $queryParams .= '&' . urlencode('dataType') . '=' . urlencode('XML'); /**/
+						// $queryParams .= '&' . urlencode('base_date') . '=' . urlencode($base_date); /**/
+						// $queryParams .= '&' . urlencode('base_time') . '=' . urlencode(str_pad($H, 2, "0", STR_PAD_LEFT)."30"); /**/
+						// $queryParams .= '&' . urlencode('nx') . '=' . urlencode($mtn_degree_n); /**/
+						// $queryParams .= '&' . urlencode('ny') . '=' . urlencode($mtn_degree_e); /**/
 
-						curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
-						curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-						curl_setopt($ch, CURLOPT_HEADER, FALSE);
-						curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-						$response = curl_exec($ch);
+						// curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+						// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+						// curl_setopt($ch, CURLOPT_HEADER, FALSE);
+						// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+						// $response = curl_exec($ch);
 
-						$object = simplexml_load_string($response);
-						$items = $object->body->items->item;
-						$tmp = "";
-						foreach ($items as $item) {
-							if ($tmp != (string)$item->category){
-								$tmp = (string)$item->category;
-								${$tmp} = (string)$item->fcstValue;
-							}
-						}
+						// $object = simplexml_load_string($response);
+						// $items = $object->body->items->item;
+						// $tmp = "";
+						// foreach ($items as $item) {
+						// 	if ($tmp != (string)$item->category){
+						// 		$tmp = (string)$item->category;
+						// 		${$tmp} = (string)$item->fcstValue;
+						// 	}
+						// }
 						
-						$H = date("H",time());
+						// $H = date("H",time());
 
-						$ch = curl_init();
-						$url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'; /*URL*/
-						$queryParams = '?' . urlencode('serviceKey') . '=PLM%2FTnlUf%2BzzHw3XZNg97c1vQJ3frT%2BRyoCkq%2FtEoFplOMT0KjvIgVZFPwVTyD%2F8GctHGBnwLXiaHNAm9ZSqLA%3D%3D'; /*Service Key*/
-						$queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1'); /**/
-						$queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('1000'); /**/
-						$queryParams .= '&' . urlencode('dataType') . '=' . urlencode('XML'); /**/
-						$queryParams .= '&' . urlencode('base_date') . '=' . urlencode($base_date); /**/
-						$queryParams .= '&' . urlencode('base_time') . '=' . urlencode("0200"); /**/
-						$queryParams .= '&' . urlencode('nx') . '=' . urlencode($mtn_degree_n); /**/
-						$queryParams .= '&' . urlencode('ny') . '=' . urlencode($mtn_degree_e); /**/
+						// $ch = curl_init();
+						// $url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'; /*URL*/
+						// $queryParams = '?' . urlencode('serviceKey') . '=PLM%2FTnlUf%2BzzHw3XZNg97c1vQJ3frT%2BRyoCkq%2FtEoFplOMT0KjvIgVZFPwVTyD%2F8GctHGBnwLXiaHNAm9ZSqLA%3D%3D'; /*Service Key*/
+						// $queryParams .= '&' . urlencode('pageNo') . '=' . urlencode('1'); /**/
+						// $queryParams .= '&' . urlencode('numOfRows') . '=' . urlencode('1000'); /**/
+						// $queryParams .= '&' . urlencode('dataType') . '=' . urlencode('XML'); /**/
+						// $queryParams .= '&' . urlencode('base_date') . '=' . urlencode($base_date); /**/
+						// $queryParams .= '&' . urlencode('base_time') . '=' . urlencode("0200"); /**/
+						// $queryParams .= '&' . urlencode('nx') . '=' . urlencode($mtn_degree_n); /**/
+						// $queryParams .= '&' . urlencode('ny') . '=' . urlencode($mtn_degree_e); /**/
 						
-						curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
-						curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-						curl_setopt($ch, CURLOPT_HEADER, FALSE);
-						curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-						$response = curl_exec($ch);
-						curl_close($ch);
+						// curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
+						// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+						// curl_setopt($ch, CURLOPT_HEADER, FALSE);
+						// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+						// $response = curl_exec($ch);
+						// curl_close($ch);
 						
-						$object = simplexml_load_string($response);
-						$items = $object->body->items->item;
-						$TMX = "";
-						$TMN = "";
-						$POP = "";
-						$PCP = "";
-						$ctgs = ["TMX", "TMN", "POP", "PCP"];
+						// $object = simplexml_load_string($response);
+						// $items = $object->body->items->item;
+						// $TMX = "";
+						// $TMN = "";
+						// $POP = "";
+						// $PCP = "";
+						// $ctgs = ["TMX", "TMN", "POP", "PCP"];
 
-						foreach ($items as $item) {
-							$tmp = (string)$item->category;
-							$f_time = (string)$item->fcstTime;
-							if (in_array($tmp, $ctgs)){
-								if ($tmp == "POP" | $tmp == "PCP"){
-									if($f_time == $H."00"){
-										${$tmp} = (string)$item->fcstValue;
-									}
-								}
-								else{
-									${$tmp} = (string)$item->fcstValue;
-								}
-							}
-							if ($TMX & $TMN & $POP & $PCP) {
-								break;
-							}
-						}
+						// foreach ($items as $item) {
+						// 	$tmp = (string)$item->category;
+						// 	$f_time = (string)$item->fcstTime;
+						// 	if (in_array($tmp, $ctgs)){
+						// 		if ($tmp == "POP" | $tmp == "PCP"){
+						// 			if($f_time == $H."00"){
+						// 				${$tmp} = (string)$item->fcstValue;
+						// 			}
+						// 		}
+						// 		else{
+						// 			${$tmp} = (string)$item->fcstValue;
+						// 		}
+						// 	}
+						// 	if ($TMX & $TMN & $POP & $PCP) {
+						// 		break;
+						// 	}
+						// }
 
 						if ($PTY == "0" | $PCP == "강수없음") {
 							if ($SKY == "1") {
@@ -300,7 +311,7 @@
 										<br>
 										<span class="icon-opacity text-black-50"></span> 현재 습도 %s%%<br><br>
 										<span class="icon-toys text-black-50"></span> 현재 풍속 %sm/s<br><br> 
-										<span class="icon-tint text-black-50"></span> &nbsp강수량&nbsp %smm
+										<span class="icon-tint text-black-50"></span> &nbsp강수량&nbsp %s
 									</div>', $T1H, $TMX, $TMN, $REH, $WSD, $PCP);
 						}
 					?>
@@ -332,6 +343,7 @@
 										$res = "1245"; #더미 데이터
 										echo (int)$res;
 									?>
+									<span class="caption h5 text-black text-opacity-75">회</span>
 								</span></span>
 							</div>
 						</div>
@@ -344,9 +356,23 @@
 								<span class="number"><span class="countup text-primary">
 									<?php
 										#DB 연결 - 발생횟수 가져오기
-										$res = "7192"; #더미 데이터
-										echo (int)$res;
+										$mtn_addr_arr = explode(' ', $mtn_addr);
+										$WS_L = [(int)$WSD, (int)$WSD + 0.9];
+										$sql = "SELECT COUNT(*) as cou FROM fire_fc WHERE address LIKE '".$mtn_addr_arr[1]."%' AND effective_humidity >= ".$REH." AND wind_speed BETWEEN ".$WS_L[0]." AND ".$WS_L[1].";";
+										$res = mysqli_query($mysqli, $sql);
+										if($res) {
+											while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
+												$count = $row["cou"];
+											}
+										}
+										else {
+											printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+										}
+										mysqli_free_result($res);
+										#$res = "1245"; #더미 데이터
+										echo $count;
 									?>
+									<span class="caption h5 text-black text-opacity-75">회</span>
 								</span></span>
 							</div>
 						</div>
@@ -354,26 +380,48 @@
 				</div>
 				<?php
 					# DB 연결 - 산악 사고 관련 데이터 받아오기
-					$res = [["Accident_type","count"],["실족추락",125],["저체온증",56],["개인질환",37],["기타산악",71],["탈진탈수",49],["일반조난",11]];
+					$arr = [["Accident_type","count"]];
+					$sql = "SELECT accident_type, MONTH(report_date) AS acci_month, COUNT(*) as cou FROM mtn_accident WHERE accident_spot LIKE '".$mtn_addr_arr[1]."%' GROUP BY acci_month, accident_type WITH ROLLUP;";
+					$res = mysqli_query($mysqli, $sql);
+					if($res) {
+						while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
+							$accident_type = $row["accident_type"];
+							$acci_month = $row["acci_month"];
+							$count = $row["cou"];
+							if ($accident_type == null) {
+								$total = $count;
+							}
+							else if((string)$acci_month == (string)(date("m",time()))) {
+								array_push($arr, [$accident_type, (int)$count]);
+							};
+						}
+					}
+					else {
+						printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+					}
+					mysqli_free_result($res);
+					//$res = [["Accident_type","count"],["실족추락",125],["저체온증",56],["개인질환",37],["기타산악",71],["탈진탈수",49],["일반조난",11]];
 				?>
 				<div class="col-8 col-lg-8"  data-aos="fade-up" data-aos-delay="600">
 						<div id="acc_piechart" style="width: 900px; height: 500px;"></div>
 						<script type="text/javascript">
 							google.load("visualization", "1", {packages:["corechart"]});
 							google.setOnLoadCallback(drawChart);
+							var now = new Date();
+							var month = now.getMonth() + 1;
 							function drawChart() 
 							{
 								var data = google.visualization.arrayToDataTable(
 									<?php
-										echo json_encode($res);
+										echo json_encode($arr);
 									?>
 								);
 								var options = {
-									title: '산악 사고',
+									title: month+'월 산악 사고',
 									titleTextStyle: {color: '#00462a', fontName: "Work Sans", fontSize: '20', bold: 0,},
-									pieHole: 0.4,
+									pieHole: 0.3,
 									pieSliceText: 'label',
-									sliceVisibilityThreshold: .1,
+									sliceVisibilityThreshold: .05,
 									legend: 'none',
 									colors: ['#F19292','#2D604C','#697F69','#A0937D','#F0BB62', '#EFE5C5']
 								};
@@ -398,15 +446,12 @@
 						<div class="property-slider">
 							<?php
 								#DB 연결 - 식생종 정보 받아오는 코드
-								#res 더미 데이터
-								$res = [["url" => "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2","kr_name"=>"실새삼", "kr_family_name"=>"메꽃과", "size"=>"길이 50cm 내외이다."],
-									["url" => "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2","kr_name"=>"실새삼", "kr_family_name"=>"메꽃과", "size"=>"길이 50cm 내외이다."],
-									["url" => "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2","kr_name"=>"실새삼", "kr_family_name"=>"메꽃과", "size"=>"길이 50cm 내외이다."],
-									["url" => "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2","kr_name"=>"실새삼", "kr_family_name"=>"메꽃과", "size"=>"길이 50cm 내외이다."]];
-								if($res){
-									#mysql 함수로 변경해야함
-									foreach($res as $row){
-										$url = $row["url"];
+								$sql = "SELECT * FROM plant_species WHERE blossom <= ".(int)date("m",time())." AND falloff >= ".(int)date("m",time())."";
+								$res = mysqli_query($mysqli, $sql);
+								if($res) {
+									while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
+										//url만 수정하기
+										$url = "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2";
 										$kr_name = $row["kr_name"];
 										$kr_family_name = $row["kr_family_name"];
 										$size = $row["size"];
@@ -422,9 +467,12 @@
 													</div>
 												</div>
 											</div>';
-									}	
+									}
 								}
-								
+								else {
+									printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+								}
+								mysqli_free_result($res);
 							?>
 						</div>
 						<div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
@@ -464,17 +512,23 @@
 				<div class="testimonial-slider">
 					<?php
 						#DB 연결 - 식당 정보 받아오는 코드
-						#res 더미 데이터
-						$res = [["rest_name" => "띵호와 식당","menu_type"=>"중식", "menu"=>"옛날짬뽕,삼선짬뽕", "address"=>"강원도 인제군 인제읍 상동리 258-4", "tel"=>"334618582"],
-						["rest_name" => "띵호와 식당","menu_type"=>"중식", "menu"=>"옛날짬뽕,삼선짬뽕", "address"=>"강원도 인제군 인제읍 상동리 258-4", "tel"=>"334618582"],
-						["rest_name" => "띵호와 식당","menu_type"=>"중식", "menu"=>"옛날짬뽕,삼선짬뽕", "address"=>"강원도 인제군 인제읍 상동리 258-4", "tel"=>"334618582"],
-						["rest_name" => "띵호와 식당","menu_type"=>"중식", "menu"=>"옛날짬뽕,삼선짬뽕", "address"=>"강원도 인제군 인제읍 상동리 258-4", "tel"=>"334618582"]];
-						if($res){
-							#mysql 함수로 변경해야함
-							foreach($res as $row){
+						$sql = "SELECT * FROM restaurants WHERE address LIKE '".$mtn_addr_arr[1]." ".$mtn_addr_arr[2]." ".$mtn_addr_arr[3]."%'";
+						$res = mysqli_query($mysqli, $sql);
+						if($res) {
+							while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
 								$rest_name = $row["rest_name"];
 								$menu_type = $row["menu_type"];
+								if ($menu_type == null) {
+									$menu_type = "기타";
+								}
 								$menu = $row["menu"];
+								if ($menu == null) {
+									$menu = " ";
+								}
+								if ($menu == '한식' | $menu == '일식' | $menu == '중식' | $menu == '양식') {
+									$menu_type = $menu;
+									$menu = " ";
+								}
 								$address = $row["address"];
 								$tel = $row["tel"];
 								echo '<div class="item">
@@ -488,9 +542,13 @@
 											<p class="text-black-50">전화번호) 0'.$tel.'</p>
 										</div>
 									</div>';
-							}	
+							}
 						}
-						
+						else {
+							printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+						}
+						mysqli_free_result($res);
+						mysqli_close($mysqli);
 					?>
 				</div>
 			</div>
