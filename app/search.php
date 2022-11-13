@@ -4,9 +4,8 @@ if(mysqli_connect_errno()){
   printf("Connection failed: %s\n", mysqli_connect_error());
   exit();
 }
-$user_id = 'hahyeong18';
-//session_start();
-//$user_id = $_SESSION['ss_id'];
+session_start();
+$user_id = $_SESSION["ss_id"];
 ?>
 <html>
   <head>
