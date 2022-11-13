@@ -1,7 +1,6 @@
 function categoryChange(e) {
     const state = document.getElementById("state"); //시/군/구 선택
 
-    const 전체 = ["전체"];
     const 서울 = ["전체", "종로구", "중구", "용산구", "성동구", "광진구", "동대문구", "중랑구", "성북구", "강북구", "도봉구", "노원구", "은평구", "서대문구", "마포구", "양천구", "강서구", "구로구", "금천구", "영등포구", "동작구", "관악구", "서초구", "강남구", "송파구", "강동구"];
     const 부산 = ["전체", "중구", "서구", "동구", "영도구", "부산진구", "동래구", "남구", "북구", "해운대구", "사하구", "금정구", "강서구", "연제구", "수영구", "사상구", "기장군"];
     const 대구 = ["전체", "중구", "동구", "서구", "남구", "북구", "수성구", "달서구", "달성군"];
@@ -20,9 +19,7 @@ function categoryChange(e) {
     const 경남 = ["전체", "창원시", "진주시", "통영시", "사천시", "김해시", "밀양시", "거제시", "양산시", "의령군", "함안군", "창녕군", "고성군", "남해군", "하동군", "산청군", "함양군", "거창군", "합천군"];
     const 제주 = ["전체", "제주시", "서귀포시"];
     
-    if (e.value == "전체") {
-      add = 전체;
-    } else if (e.value == "서울") {
+    if (e.value == "서울") {
       add = 서울;
     } else if (e.value == "부산") {
       add = 부산;
@@ -62,9 +59,7 @@ function categoryChange(e) {
   
       for (property in add) {
           let opt = document.createElement("option");
-          if(add[property]=="전체") {
-            opt.value = "";
-          } else {
+          if(!(property === "전체")) {
             opt.value = add[property];
           }
           opt.innerHTML = add[property];
