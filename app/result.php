@@ -229,7 +229,7 @@
               printf("error");
             }
           }
-          mysqli_free_result($res1);
+          //mysqli_free_result($res1);
           mysqli_free_result($res2);
           mysqli_close($mysqli);
           ?>
