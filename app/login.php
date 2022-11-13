@@ -1,5 +1,9 @@
 <?php
-include("./dbconn.php");
+$mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
+if(mysqli_connect_errno()){
+  printf("Connection failed: %s\n", mysqli_connect_error());
+  exit();
+}
 ?>
 <html>
   <head>
@@ -88,12 +92,7 @@ include("./dbconn.php");
           </div>
           <div class="user-login">
             <label for="user_pw">비밀번호</label>
-            <input
-              type="text"
-              id="user_pw"
-              name="user_pw"
-              class="form-control"
-            />
+            <input type="password" id="user_pw" name="user_pw" class="form-control">
           </div>
           <br>
           <div class="login-buttons">

@@ -1,5 +1,12 @@
 <?php
-include("./dbconn.php");
+$mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
+if(mysqli_connect_errno()){
+  printf("Connection failed: %s\n", mysqli_connect_error());
+  exit();
+}
+$user_id = 'hahyeong18';
+//session_start();
+//$user_id = $_SESSION['ss_id'];
 ?>
 <html>
   <head>
@@ -66,7 +73,7 @@ include("./dbconn.php");
       </div>
     </div>
 
-    <!--상세 검색 페이지-->
+    <!--상세 검색(지역1, 지역2, 검색어-->
     <div class="section">
       <div class="container">
         <form action="./result.php" method="GET">
@@ -74,30 +81,30 @@ include("./dbconn.php");
             <span>지역별</span>
             <div class="search_box">
               <select name="region_1depth_name" id="" onchange="categoryChange(this)">
-                <option value="">시/도 선택</option>
-                <option value="all">전체</option>
-                <option value="seoul">서울</option>
-                <option value="busan">부산</option>
-                <option value="daegu">대구</option>
-                <option value="incheon">인천</option>
-                <option value="gwangju">광주</option>
-                <option value="daejeon">대전</option>
-                <option value="ulsan">울산</option>
-                <option value="sejong">세종</option>
-                <option value="gyeonggi">경기</option>
-                <option value="gangwon">강원</option>
-                <option value="chungbuk">충북</option>
-                <option value="chungnam">충남</option>
-                <option value="jeonbuk">전북</option>
-                <option value="jeonnam">전남</option>
-                <option value="gyeongbuk">경북</option>
-                <option value="gyeongnam">경남</option>
-                <option value="jeju">제주</option>
+                <option value="null">시/도 선택</option>
+                <option value="">전체</option>
+                <option value="서울">서울</option>
+                <option value="부산">부산</option>
+                <option value="대구">대구</option>
+                <option value="인천">인천</option>
+                <option value="광주">광주</option>
+                <option value="대전">대전</option>
+                <option value="울산">울산</option>
+                <option value="세종">세종</option>
+                <option value="경기">경기</option>
+                <option value="강원">강원</option>
+                <option value="충북">충북</option>
+                <option value="충남">충남</option>
+                <option value="전북">전북</option>
+                <option value="전남">전남</option>
+                <option value="경북">경북</option>
+                <option value="경남">경남</option>
+                <option value="제주">제주</option>
               </select>
             </div>
             <div class="search_box">
               <select name="region_2depth_name" id="state">
-                <option value="">시/군/구 선택</option>
+                <option value="null">시/군/구 선택</option>
               </select>
             </div>
 
@@ -106,26 +113,48 @@ include("./dbconn.php");
             <button type="submit" class="btn btn-primary">검색</button>
           </div>
         </form>
-  
+
+        <!-- 최근 검색 및 최근 방문 기록 -->
         <?php
-          $mtn_name = "ㄱ산";
-          $mtn_index = "234";
-          //[sql]최근 검색한 산 $recent_search 불러오기
-          echo '<div>최근에 검색한 산</div>';
-          echo '<a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a>';
-          //[sql]최근 방문한 산 $recent_visit 불러오기
+          $sql2 = "SELECT * FROM user WHERE user_id = '".$user_id."'";
+          $res2 = mysqli_query($mysqli, $sql2);
+          if($res2) {
+            $user_info = mysqli_fetch_array($res2,MYSQLI_ASSOC);
+            $search_name = $user_info["search_mtn"];
+            $search_region1 = $user_info["search_location1"];
+            $search_region2 = $user_info["search_location2"];
+          }
+          else {
+            printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+          }
+          echo '<div>최근 검색어</div>';
+          echo '<a href="./result.php?region_1depth_name='.$search_region1.'&region_2depth_name='.$search_region2.'&mtn_name='.$search_name.'">'.$search_region1.' '.$search_region2.' '.$search_name.'</a>';
+
+          $sql3 = "SELECT * FROM mtn_review WHERE user_id = '".$user_id."' ORDER BY visit_date DESC LIMIT 1";
+          $res3 = mysqli_query($mysqli, $sql3);
+          if($res3) {
+            $review_info = mysqli_fetch_array($res3,MYSQLI_ASSOC);
+            $mtn_name = $review_info['mtn_name'];
+            $mtn_idx = $review_info['mtn_idx'];
+          }
+          else {
+            printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+          }
           echo '<div>최근에 방문한 산</div>';
-          echo '<a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a>';
+          echo '<a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_idx.'">'.$mtn_name.'</a>';
         ?>
 
+        <!-- 사용자들이 가장 많이 방문한 산 TOP 5 -->
         <h2>현재 사용자들이 많이 방문한 산</h2>
           <ol>
             <?php
-              $mtn_name = "ㄱ산";
-              $mtn_index = "234";
-              $i=1;
-              while($i<6) {
-                //방문 $i위 산 mtn_name, mtn_idx 불러오기
+              $sql4 ="SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN NOW() AND DATE_ADD(NOW(),INTERVAL 1 WEEK) GROUP BY mtn_idx";
+              $res4 = mysqli_query($mysqli, $sql4);
+              $i = 1;
+              while ($i <= 5) {
+                $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
+                $mtn_name = $mtn_rank["mtn_name"];
+                $mtn_index = $mtn_rank["mtn_idx"];
                 echo '<li><a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a></li>';
                 $i++;
               }
