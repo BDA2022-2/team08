@@ -72,20 +72,30 @@
     <script>
       includeHTML();
     </script>
-    <div class="hero">
-      <div class="hero-slide">
-        <div
-          class="img overlay"
-          style="background-image: url('images/hero_bg_3.jpg')"
-        ></div>
-        <div
-          class="img overlay"
-          style="background-image: url('images/hero_bg_2.jpg')"
-        ></div>
-        <div
-          class="img overlay"
-          style="background-image: url('images/hero_bg_1.jpg')"
-        ></div>
+    <div
+      class="hero page-inner overlay"
+      style="
+        background-image: url('https://images.unsplash.com/photo-1438786657495-640937046d18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80');
+      ">
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center mt-5">
+            <h1 class="heading" data-aos="fade-up">야생화 정보 수정</h1>
+            <nav
+              aria-label="breadcrumb"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <ol class="breadcrumb text-center justify-content-center">
+                <li
+                  class="breadcrumb-item active text-white-50"
+                  aria-current="page"
+                >
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
       </div>
     </div>
 

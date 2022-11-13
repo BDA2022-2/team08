@@ -52,8 +52,8 @@
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
             >
-              <li class="active"><a href="admin.html">야생화 정보 수정하기</a></li>
-              <li><a href="admin_rest.html">음식점 정보 수정하기</a></li>
+              <li><a href="admin.html">야생화 정보 수정하기</a></li>
+              <li class="active"><a href="admin_rest.html">음식점 정보 수정하기</a></li>
             </ul>
 
             <a

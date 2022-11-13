@@ -4,6 +4,7 @@ if(mysqli_connect_errno()){
   printf("Connection failed: %s\n", mysqli_connect_error());
   exit();
 }
+
 ?>
 <html>
   <head>
@@ -59,8 +60,7 @@ if(mysqli_connect_errno()){
       class="hero page-inner overlay"
       style="
         background-image: url('https://images.unsplash.com/photo-1438786657495-640937046d18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80');
-      "
-    >
+      ">
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
