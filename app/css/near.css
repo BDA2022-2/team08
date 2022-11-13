@@ -1,0 +1,125 @@
+/* 커스텀 오버레이 */
+.customoverlay {
+  position: relative;
+  bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ddd;
+  float: left;
+}
+.customoverlay:nth-of-type(n) {
+  border: 0;
+  box-shadow: 0px 1px 2px #888;
+}
+.customoverlay a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  overflow: hidden;
+  background: #00462a;
+  background: #00462a
+    url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
+    no-repeat right 14px center;
+}
+.customoverlay .title {
+  display: block;
+  text-align: center;
+  background: #fff;
+  margin-right: 35px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.customoverlay:after {
+  content: "";
+  position: absolute;
+  margin-left: -12px;
+  left: 50%;
+  bottom: -12px;
+  width: 22px;
+  height: 12px;
+  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+
+.section-4 {
+  background-color: #fff;
+}
+.section-4 .img-about {
+  background-size: cover;
+  background-position: center center;
+}
+
+/* 지도 */
+.section .heading {
+  font-weight: 600;
+}
+.section-4 .img-about div {
+  z-index: 2;
+}
+.section-4 h2 {
+  margin-top: 100px;
+}
+
+/* 산 리스트 */
+.feature-h {
+  margin: 20px 0;
+}
+.feature-h .feature-text {
+  margin-top: 0;
+  padding: 20px 30px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  -webkit-transition: 0.3s all ease;
+  -o-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+}
+.feature-h .feature-text .heading {
+  color: #00462a;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.feature-h:hover .feature-text,
+.feature-h:focus .feature-text {
+  border: 1px solid #00462a;
+  background-color: transparent;
+  -webkit-transform: scale(1.07);
+  -ms-transform: scale(1.07);
+  transform: scale(1.07);
+}
+
+.text-black-50 {
+  margin-bottom: 5px;
+}
+
+/* 리스트&지도 배치 space-between -> center 바꾸기*/
+.justify-content-between {
+  -webkit-box-pack: justify !important;
+  -ms-flex-pack: justify !important;
+  /* justify-content: space-between !important; */
+  justify-content: center !important;
+}
+
+/* 리스트&지도 좌우 배치 순서 바꾸기 */
+@media (min-width: 992px) {
+  .col-lg-4 {
+    -webkit-box-ordinal-group: 3 !important;
+    -ms-flex-order: 2 !important;
+    order: 2 !important;
+  }
+  .order-lg-2 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    align-self: flex-start;
+  }
+}
+
+.img-about.dots::after {
+  right: 40%;
+  width: 63%;
+}
