@@ -57,7 +57,7 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center">
-            <h1 class="heading mt-5" data-aos="fade-up">
+            <h1 class="heading mt-5">
               <img src="images/logo_main.png" class="img-icon">
             </h1>
             <div class="row justify-content-center align-items-center">
@@ -84,6 +84,38 @@
                 </div>
               </div>
             </div>
+            <span class="text-white">
+              <?php
+                $rule_arr = [];
+                $mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
+                if(mysqli_connect_errno()){
+                    printf("Connection failed: %s\n", mysqli_connect_error());
+                    exit();
+                }
+                else {
+                    $sql = "SELECT * FROM safety_rules ORDER BY rand();";
+                    $res = mysqli_query($mysqli, $sql);
+                    if($res) {
+                        while($row = mysqli_fetch_array($res,MYSQLI_NUM)){
+                          $i = 0;
+                          while($i<count($row))
+                          {
+                            if ($row[$i]) {
+                              array_push($rule_arr, $row[$i]);
+                            }
+                            $i = $i + 1;
+                          }
+                        }
+                    }
+                    else {
+                        printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+                    }
+                    mysqli_free_result($res);
+                    mysqli_close($mysqli);
+                    echo $rule_arr[rand()%count($rule_arr)];
+                }
+              ?>
+            </span>
           </div>
         </div>
       </div>
