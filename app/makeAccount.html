@@ -1,5 +1,8 @@
 <!-- /*
-http://localhost:8080/team08/app/makeAccount.html
+* Template Name: Property
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
 */ -->
 <!doctype html>
 <html lang="en">
@@ -24,9 +27,15 @@ http://localhost:8080/team08/app/makeAccount.html
 	<link rel="stylesheet" href="css/aos.css">
 	<link rel="stylesheet" href="css/style.css">
 
+	<script src="js/includeHTML.js"></script>
 	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
+	
 </head>
 <body>
+	<div include-html="html/nav.html"></div>
+    <script>
+      includeHTML();
+    </script>
 
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -45,17 +54,24 @@ http://localhost:8080/team08/app/makeAccount.html
 
 					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 						<li><a href="index.html">Home</a></li>
-						<li><a href="services.html">Services</a></li>
-						<li><a href="properties.html">Properties</a></li>
-						<li><a href="MyRecords.html">My Records</a></li>
-						<li class="has-children active">
-							<a href="#">Account</a>
+						<li class="has-children">
+							<a href="properties.html">Properties</a>
 							<ul class="dropdown">
-								<li><a href="makeAccount.html">make Account</a></li>
-								<li><a href="changeAccount.html">change Account</a></li>
-								<li><a href="deleteAccount.html">delete Account</a></li>
+								<li><a href="#">Buy Property</a></li>
+								<li><a href="#">Sell Property</a></li>
+								<li class="has-children">
+									<a href="#">Dropdown</a>
+									<ul class="dropdown">
+										<li><a href="#">Sub Menu One</a></li>
+										<li><a href="#">Sub Menu Two</a></li>
+										<li><a href="#">Sub Menu Three</a></li>
+									</ul>
+								</li>
 							</ul>
 						</li>
+						<li><a href="services.html">Services</a></li>
+						<li><a href="MyRecords.html">My Records</a></li>
+						<li class="active"><a href="contact.html">Account</a></li>
 					</ul>
 
 					<a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
@@ -123,47 +139,23 @@ http://localhost:8080/team08/app/makeAccount.html
 					</div>
 				</div>
 				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-<<<<<<< HEAD
-<<<<<<< HEAD
-					<form action="makeAccount_user.php" method="post">
-=======
-					<form action="makeInput.php" method="post">
->>>>>>> bf36dd1848449fa30f2f858c831dd81c8d131ef2
-=======
-					<form action="makeInput.php" method="post">
->>>>>>> bf36dd1848449fa30f2f858c831dd81c8d131ef2
+					<form action="#">
 						<div class="row">
 							<div class="col-12 mb-3">
-								<input type="text" class="form-control" name="user_name" placeholder="이름">
+								<input type="text" class="form-control" placeholder="이름">
 							</div>
 							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="user_id" placeholder="ID">
+								<input type="text" class="form-control" placeholder="ID">
 							</div>
 							<div class="col-6 mb-3">
-								<input type="text" class="form-control" name="user_pw" placeholder="PW">
+								<input type="email" class="form-control" placeholder="PW">
 							</div>
 							<div class="col-12 mb-3">
-<<<<<<< HEAD
-<<<<<<< HEAD
-								<textarea name="search_mtn" id="search_mtn" cols="30" rows="7" class="form-control" placeholder="최근 방문한 산 이름"></textarea>
-=======
-								<textarea name="recent_search" cols="30" rows="7" class="form-control" placeholder="관심분야 및 가입목적"></textarea>
->>>>>>> bf36dd1848449fa30f2f858c831dd81c8d131ef2
-=======
-								<textarea name="recent_search" cols="30" rows="7" class="form-control" placeholder="관심분야 및 가입목적"></textarea>
->>>>>>> bf36dd1848449fa30f2f858c831dd81c8d131ef2
+								<textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="관심분야 및 가입목적"></textarea>
 							</div>
 
 							<div class="col-12">
 								<input type="submit" value="Send Message" class="btn btn-primary">
-								<input type="reset" value="Reset" class="btn btn-primary">
-<<<<<<< HEAD
-<<<<<<< HEAD
-								
-=======
->>>>>>> bf36dd1848449fa30f2f858c831dd81c8d131ef2
-=======
->>>>>>> bf36dd1848449fa30f2f858c831dd81c8d131ef2
 							</div>
 						</div>
 					</form>
@@ -262,5 +254,9 @@ http://localhost:8080/team08/app/makeAccount.html
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
+	<footer include-html="html/footer.html"></footer>
+   <script defer>
+       includeHTML();
+     </script>
   </body>
   </html>

@@ -89,39 +89,83 @@
 
 	<div class="section section-properties">
 		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">z
-					<div class="property-item mb-30">
+			<?php
+				$db_host="localhost";
+				$db_user="team08";
+				$db_password="team08";
+				$db_name="team08";
 
-						<a href="property-single.html" class="img">
-							<img src="images/img_1.jpg" alt="Image" class="img-fluid">
-						</a>
+				//connect to the database
+				$link=mysqli_connect($db_host,$db_user,$db_password,$db_name);
+				
+				//check connection
+				if($link===false){
+					die("error: could not connect".mysqli_connect_error());
+				}else{
+					//prepare an insert statement
+					//$sql="INSERT INTO `team08`.`mtn_review`(`review_id`,`mtn_idx`,`mtn_name`,`user_id`,`visit_date`,`mtn_rate`,`comment`,`created`) VALUES (?,?,?,?,?,?,?,?)";
+					//$sql="INSERT INTO `team08`.`mtn_review`(`mtn_idx`,`mtn_name`,`user_id`,`visit_date`,`mtn_rate`,`comment`,`created`) VALUES (?,?,?,?,?,?,?)";
+					$sql="select * from `team08`.`mtn_review`";
+					$res=mysqli_query($link,$sql);
+					
+					if($res){			
+						if($res){
+							while($newArray=mysqli_fetch_array($res,MYSQLI_ASSOC)){
+								$mtn_idx=$newArray['mtn_idx'];
+								$mtn_name=$newArray['mtn_name'];
+								$user_id=$newArray['user_id'];
+								$visit_date=$newArray['visit_date'];
+								$mtn_rate=$newArray['mtn_rate'];
+								$comment=$newArray['comment'];
+								$created=$newArray['created'];
 
-						<div class="property-content">
-							<div class="price mb-2"><span>설악산</span></div>
-							<div>
-								<span class="d-block mb-2 text-black-50">2022-11-05</span>
-								<span class="city d-block mb-3">매우 추우니 다음에는 패딩 가져가기</span>
+								echo
+									'<div class="row">
+										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+											<div class="property-item mb-30">
 
-								<div class="specs d-flex mb-4">
-									<span class="d-block d-flex align-items-center me-3">
-										<span class="icon-map-marker"></span>
-										
-										<span class="caption">대한민국 강원도 속초시·양양군·인제군</span>
-									</span>
-								</div>
+												<a href="property-single.html" class="img">
+													<img src="images/img_1.jpg" alt="Image" class="img-fluid">
+												</a>
 
-								<div class="specs d-flex mb-4">
-									<span class="d-block d-flex align-items-center">
-										<span class="icon-star"></span>
-										<span class="caption">3점</span>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div> <!-- .item -->
-				</div>
-			</div>
+												<div class="property-content">
+													<div class="price mb-2"><span>'.$mtn_name.'</span></div>
+													<div>
+														<span class="d-block mb-2 text-black-50">'.$visit_date.'</span>
+														<span class="city d-block mb-3">'.$comment.'</span>
+
+														<div class="specs d-flex mb-4">
+															<span class="d-block d-flex align-items-center me-3">
+																<span class="icon-map-marker"></span>
+																
+																<span class="caption">'.$created.'</span>
+															</span>
+														</div>
+
+														<div class="specs d-flex mb-4">
+															<span class="d-block d-flex align-items-center">
+																<span class="icon-star"></span>
+																<span class="caption">'.$mtn_rate.'</span>
+															</span>
+														</div>
+													</div>
+												</div>
+											</div> <!-- .item -->
+										</div>';
+								
+								
+							}
+						}
+					}else{
+						echo "ERROR: Could not retrieve records: $sql".mysqli_error($link);
+					}
+				}
+				//close statement
+				mysqli_free_result($res);
+				//close connection
+				mysqli_close($link);
+			?>
+		</div>
 			<div class="row align-items-center py-5">
 				<div class="col-lg-3">
 					Pagination (1 of 10)
