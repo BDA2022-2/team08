@@ -81,8 +81,7 @@ $user_id = 'hahyeong18';
             <span>지역별</span>
             <div class="search_box">
               <select name="region_1depth_name" id="" onchange="categoryChange(this)">
-                <option value="null">시/도 선택</option>
-                <option value="">전체</option>
+                <option value="">시/도 선택</option>
                 <option value="서울">서울</option>
                 <option value="부산">부산</option>
                 <option value="대구">대구</option>
@@ -104,7 +103,7 @@ $user_id = 'hahyeong18';
             </div>
             <div class="search_box">
               <select name="region_2depth_name" id="state">
-                <option value="null">시/군/구 선택</option>
+                <option value="">시/군/구 선택</option>
               </select>
             </div>
 
