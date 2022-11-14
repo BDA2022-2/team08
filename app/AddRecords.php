@@ -45,46 +45,17 @@
 		<div class="site-mobile-menu-body"></div>
 	</div>
 
-	<nav class="site-nav">
-		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<a href="MyRecords.html" class="logo m-0 float-start">My Records</a>
-
-					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-						<li><a href="index.html">Home</a></li>
-						<li><a href="properties.html">Properties</a></li>
-						<li><a href="services.html">Services</a></li>
-						<li class="has-children active">
-							<a href="MyRecords.html">My Records</a>
-							<ul class="dropdown">
-								<li><a href="MyRecords.html">My Records</a></li>
-								<li><a href="AddRecords.html">Add Records</a></li>
-							</ul>
-						</li>
-						<li><a href="makeAccount.html">Account</a></li>
-					</ul>
-
-					<a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
-						<span></span>
-					</a>
-
-				</div>
-			</div>
-		</div>
-	</nav>
-
 	<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_1.jpg');">
 
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up">Add Records</h1>
+					<h1 class="heading" data-aos="fade-up">산행기록 적기</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">			
-							<li class="breadcrumb-item "><a href="MyRecords.html">My Records</a></li>
-							<li class="breadcrumb-item active text-white-50" aria-current="page">Add Records</li>
+							<li class="breadcrumb-item "><a href="MyRecords.php">나의 산행기록</a></li>
+							<li class="breadcrumb-item "><a href="AddRecords.php">산행기록 적기</a></li>
 						</ol>
 					</nav>
 				</div>
@@ -95,46 +66,27 @@
 
 	<div class="section">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
-					<div class="contact-info">
-
-						<div class="address mt-2">
-							<i class="icon-room"></i>
-							<h4 class="mb-2">Location:</h4>
-							<p>03760 서울특별시 서대문구 이화여대길 52,<br>이화여자대학교</p>
-						</div>
-
-						<div class="open-hours mt-4">
-							<i class="icon-clock-o"></i>
-							<h4 class="mb-2">개발자 연락 가능 시간:</h4>
-							<p>
-								Sunday-Friday:<br>
-								11:00 AM - 17:00 PM
-							</p>
-						</div>
-
-						<div class="email mt-4">
-							<i class="icon-envelope"></i>
-							<h4 class="mb-2">Email:</h4>
-							<p>mutjin23@naver.com</p>
-						</div>
-
-						<div class="phone mt-4">
-							<i class="icon-phone"></i>
-							<h4 class="mb-2">Call:</h4>
-							<p>010-9811-5202</p>
-						</div>
-
-					</div>
-				</div>
 				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-					<form action="AddRecords_user.php" method="post">
+					<form action="AddRecords_mtn.php" method="post">
 						<div class="row">
 							<div class="col-12 mb-3">
 								산이름
-								<input type="text" name="mtn_name" class="form-control" placeholder="mountain name">
+								<input type="text" name="mtn_name" class="form-control" placeholder="OO산">
 							</div>
+							
+							<div class="col-12">
+								<input type="submit" value="산 이름으로 검색" class="btn btn-primary">
+								<input type="reset" value="Reset" class="btn btn-primary">
+							</div>
+						</div>
+					</form>	
+				</div>
+
+
+			<!--
+				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+					<form action="AddRecords_user.php" method="post">
+						<div class="row">
 							<div class="col-6 mb-3">
 								별점
 								<select id="별점" name="mtn_rate" class="form-control">
@@ -158,10 +110,25 @@
 								<input type="reset" value="Reset" class="btn btn-primary">
 							</div>
 						</div>
-					</form>
-
-					
+					</form>	
 				</div>
+			-->
+			<br><br><br>
+			<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+					<form action="AddRecords_user.php" method="post">
+						<div class="row">
+							<div class="col-6 mb-3">
+								동명인 산 선택
+								<select name="mtn_rate" class="form-control">
+									<?php
+									
+									?>
+								</select>
+							</div>
+						</div>
+					</form>	
+				</div>
+				
 			</div>
 		</div>
 	</div> <!-- /.untree_co-section -->

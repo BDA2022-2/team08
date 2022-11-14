@@ -32,7 +32,7 @@
 			//attempt to execute the prepared statement
 			
 			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
-				echo "<script>alert('Records inserted successfully');</script>";
+				echo "<script>alert('회원가입이 성공적으로 완료되었습니다');</script>";
 				echo "<script>location.replace('./makeAccount.php');</script>";
 				exit;
 			}else if(mysqli_affected_rows($link)<1){

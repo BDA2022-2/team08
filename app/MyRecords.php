@@ -27,9 +27,14 @@
 	<link rel="stylesheet" href="css/aos.css">
 	<link rel="stylesheet" href="css/style.css">
 
+	<script src="js/includeHTML.js"></script>
 	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
 <body>
+	<div include-html="html/nav.html"></div>
+    <script>
+      includeHTML();
+    </script>
 
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -40,46 +45,17 @@
 		<div class="site-mobile-menu-body"></div>
 	</div>
 
-	<nav class="site-nav">
-		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<a href="index.html" class="logo m-0 float-start">My Records</a>
-
-					<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-						<li><a href="index.html">Home</a></li>
-						<li><a href="properties.html">Properties</a></li>
-						<li><a href="services.html">Services</a></li>
-						<li class="has-children active">
-							<a href="#">My Records</a>
-							<ul class="dropdown">
-								<li><a href="MyRecords.html">My Records</a></li>
-								<li><a href="AddRecords.html">Add Records</a></li>
-							</ul>
-						</li>
-						<li><a href="makeAccount.html">Account</a></li>
-					</ul>
-
-					<a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
-						<span></span>
-					</a>
-
-				</div>
-			</div>
-		</div>
-	</nav>
-
 	<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_1.jpg');">
 
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up">My Records</h1>
+					<h1 class="heading" data-aos="fade-up">나의 산행기록</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">
-							<li class="breadcrumb-item active text-white-50" aria-current="page">My Records</li>
-							<li class="breadcrumb-item "><a href="AddRecords.html">Add Records</a></li>
+							<li class="breadcrumb-item "><a href="MyRecords.php">나의 산행기록</a></li>
+							<li class="breadcrumb-item "><a href="AddRecords.php">산행기록 적기</a></li>
 						</ol>
 					</nav>
 				</div>
@@ -273,5 +249,8 @@
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
+	<script defer>
+       includeHTML();
+     </script>
   </body>
   </html>

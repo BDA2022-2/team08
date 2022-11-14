@@ -14,9 +14,6 @@
 			if($link===false){
 				die("error: could not connect".mysqli_connect_error());
 			}else{
-				//prepare an insert statement
-				//$sql="INSERT INTO `team08`.`mtn_review`(`review_id`,`mtn_idx`,`mtn_name`,`user_id`,`visit_date`,`mtn_rate`,`comment`,`created`) VALUES (?,?,?,?,?,?,?,?)";
-				//$sql="INSERT INTO `team08`.`mtn_review`(`mtn_idx`,`mtn_name`,`user_id`,`visit_date`,`mtn_rate`,`comment`,`created`) VALUES (?,?,?,?,?,?,?)";
 				$sql="select * from `team08`.`mtn_review`";
 				$res=mysqli_query($link,$sql);
 				

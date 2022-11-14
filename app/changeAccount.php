@@ -28,7 +28,6 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/includeHTML.js"></script>
 	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
-	
 </head>
 <body>
 	<div include-html="html/nav.html"></div>
@@ -50,13 +49,13 @@
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up">Change Account</h1>
+					<h1 class="heading" data-aos="fade-up">계정 수정</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">
-							<li class="breadcrumb-item "><a href="makeAccount.php">Make Account</a></li>
-							<li class="breadcrumb-item "><a href="changeAccount.php">Change Account</a></li>
-							<li class="breadcrumb-item "><a href="deleteAccount.php">Delete Account</li>
+							<li class="breadcrumb-item "><a href="makeAccount.php">계정 생성</a></li>
+							<li class="breadcrumb-item "><a href="changeAccount.php">계정 수정</a></li>
+							<li class="breadcrumb-item "><a href="deleteAccount.php">계정 삭제</a></li>
 						</ol>
 					</nav>
 				</div>
@@ -225,5 +224,8 @@
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
+	<script defer>
+       includeHTML();
+     </script>
   </body>
   </html>

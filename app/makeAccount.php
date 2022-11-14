@@ -51,13 +51,13 @@
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up">Make Account</h1>
+					<h1 class="heading" data-aos="fade-up">계정 생성</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">
-							<li class="breadcrumb-item "><a href="makeAccount.php">Make Account</a></li>
-							<li class="breadcrumb-item "><a href="changeAccount.php">Change Account</a></li>
-							<li class="breadcrumb-item "><a href="deleteAccount.php">Delete Account</li>
+							<li class="breadcrumb-item "><a href="makeAccount.php">계정 생성</a></li>
+							<li class="breadcrumb-item "><a href="changeAccount.php">계정 수정</a></li>
+							<li class="breadcrumb-item "><a href="deleteAccount.php">계정 삭제</a></li>
 						</ol>
 					</nav>
 				</div>
@@ -111,11 +111,12 @@
 								<input type="text" name="user_id" class="form-control" placeholder="ID">
 							</div>
 							<div class="col-6 mb-3">
-								<input type="text" name="user_pw" class="form-control" placeholder="PW">
+								<input type="password" name="user_pw" class="form-control" placeholder="PW">
 							</div>
 
 							<div class="col-12">
 								<input type="submit" value="회원 가입하기" class="btn btn-primary">
+								<input type="reset" value="Reset" class="btn btn-primary">
 							</div>
 						</div>
 					</form>
@@ -215,7 +216,7 @@
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
 	<footer include-html="html/footer.html"></footer>
-   <script defer>
+	<script defer>
        includeHTML();
      </script>
   </body>

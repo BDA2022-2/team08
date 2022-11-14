@@ -37,7 +37,7 @@
 				echo "<script>location.replace('./changeAccount.php');</script>";
 			}else if(mysqli_affected_rows($link)<1){
 				echo "<script>alert('ERROR: 잘못된 유저정보 입니다');</script>";
-				echo "<script>location.replace('./makeAccount.php');</script>";
+				echo "<script>location.replace('./changeAccount.php');</script>";
 				exit;
 			}else{
 				echo "<script>alert('ERROR: Could not execute query');</script>";
