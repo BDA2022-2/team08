@@ -48,10 +48,9 @@
       } else {$filter_visitor = 0;}
     ?>
 
-    <div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+    <?php
+    include 'html/nav.php'
+    ?>
 
     <div
       class="hero page-inner overlay"
