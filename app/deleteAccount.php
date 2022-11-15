@@ -30,10 +30,9 @@
 	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
 <body>
-	<div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+<?php
+    include 'html/nav.php'
+?>
 
 	<div class="hero page-inner overlay" style="background-image: url('images/hero_bg_1.jpg');">
 

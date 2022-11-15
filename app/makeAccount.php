@@ -32,10 +32,9 @@
 	
 </head>
 <body>
-	<div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+<?php
+    include 'html/nav.php'
+?>
 
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">

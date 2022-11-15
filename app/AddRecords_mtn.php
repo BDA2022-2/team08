@@ -31,10 +31,9 @@
 	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
 </head>
 <body>
-	<div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+	<?php
+		include 'html/nav.php'
+	?>
 
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -87,6 +86,10 @@
 						}else{
 							$mtn_name=trim($_POST['mtn_name']);
 							$sql="SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name`= '$mtn_name'";
+							
+							/* Start transaction */
+							mysqli_begin_transaction($link);
+							try{
 							$result=mysqli_query($link,$sql);
 							$rowcount=mysqli_num_rows($result);
 					
@@ -118,7 +121,7 @@
 									echo "<br/>"."=============================================";
 								} 
 								else {
-									printf("Could not retrieve records: %s\n",mysqli_error($mysqli));
+									printf("Could not retrieve records: %s\n",mysqli_error($link));
 									echo "<script>location.replace('./AddRecords.php');</script>";
 									exit;
 								}
@@ -132,6 +135,11 @@
 								echo "<script>location.replace('./AddRecords.php');</script>";
 							}
 					
+						}
+						} catch (mysqli_sql_exception $exception) {
+							mysqli_rollback($link);
+						
+							throw $exception;
 						}
 						//close statement
 						mysqli_free_result($result);
