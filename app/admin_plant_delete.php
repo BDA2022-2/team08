@@ -110,7 +110,7 @@ if(mysqli_connect_errno()){
 
     <div class="section">
       <div class="container">
-        <form action="./delete_plant_data.php" method="GET"> 
+        <form action="./delete_plant_data.php" method="POST"> 
           <div class="search_flower">
             <label for="search_flower">야생화 이름(국명)</label>
             <input type="text" id="search_flower" name="search_flower_name" class="form-control" />

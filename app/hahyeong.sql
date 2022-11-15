@@ -4,7 +4,7 @@ SELECT * FROM user WHERE user_id = '.$id_input.'
 -- search.php
 SELECT * FROM user WHERE user_id = '.$user_id.'
 SELECT * FROM mtn_review WHERE user_id = '.$user_id.' ORDER BY visit_date DESC LIMIT 1
-SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN NOW() AND DATE_ADD(NOW(),INTERVAL 1 WEEK) GROUP BY mtn_idx
+SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN DATE_ADD(NOW(),INTERVAL 1 WEEK) AND NOW() GROUP BY mtn_idx
 
 -- delete_search.php
 UPDATE user SET search_mtn = '', search_location1 = '', search_location2 = '' WHERE user_id = '.$del.'

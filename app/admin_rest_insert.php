@@ -112,9 +112,9 @@ if(mysqli_connect_errno()){
 		  <div class="container">
         <div class="row">
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-            <form action="./insert_rest_data.php" method="GET">
+            <form action="./insert_rest_data.php" method="POST">
               <div class="row">
-                <input type="text" class="form-control" name="ID" placeholder="ID">
+                <input type="text" class="form-control" name="ID" placeholder="ID(필수)">
                 <input type="text" class="form-control" name="rest_name" placeholder="음식점 이름">
                 <input type="text" class="form-control" name="road_base_add" placeholder="도로명 주소">
                 <input type="text" class="form-control" name="address" placeholder="지번 주소">

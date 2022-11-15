@@ -7,7 +7,7 @@ if(mysqli_connect_errno()){
 session_start();
 $user_id = $_SESSION["ss_id"];
 
-$del = $_GET['del'];
+$del = $_POST['del'];
 
 $sql = "UPDATE user SET search_mtn = '', search_location1 = '', search_location2 = '' WHERE user_id = '".$del."'";
 $res = mysqli_query($mysqli, $sql);

@@ -112,9 +112,9 @@ if(mysqli_connect_errno()){
 		  <div class="container">
         <div class="row">
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-            <form action="./insert_plant_data.php" method="GET">
+            <form action="./insert_plant_data.php" method="POST">
               <div class="row">
-                <input type="text" class="form-control" name="ID" placeholder="ID">
+                <input type="text" class="form-control" name="ID" placeholder="ID(필수)">
                 <input type="text" class="form-control" name="kr_name" placeholder="국명">
                 <input type="text" class="form-control" name="sci_name" placeholder="학명">
                 <input type="text" class="form-control" name="kr_family_name" placeholder="과국명">
