@@ -233,7 +233,7 @@
       const mapContainer = document.getElementById("map");
       const mapOption = {
         center: new kakao.maps.LatLng(userLat, userLon),
-        level: 7,
+        level: 6,
       };
       const map = new kakao.maps.Map(mapContainer, mapOption);
       // 사용자 위치 마커
