@@ -11,6 +11,11 @@ and mtn_address like '%".$region_2depth_name."%';
 
 
 -- result.php
+-- 검색기록 UPDATE
+UPDATE user 
+SET search_mtn = '".$mtn_name."', search_location1 = '".$region_1depth_name."', search_location2 = '".$region_2depth_name."'
+WHERE user_id = '".$user_id."';
+
 -- 검색결과 통합 (완)
 select idx, mtn_name, mtn_degree_e, mtn_degree_n, mtn_address, mtn_height, ifnull(avg_rate,0) as avg_rate, ifnull(cnt,0) as cnt, dense_rank() over (order by ".$sort.") as ranking
 from mtn_location
