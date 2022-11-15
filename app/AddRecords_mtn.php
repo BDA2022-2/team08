@@ -50,12 +50,12 @@
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up"><?php echo $_POST['mtn_name']; ?> 산행기록 적기</h1>
+					<h1 class="heading" data-aos="fade-up"><?php echo $_POST['mtn_name']; ?> 산행 기록 추가</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">			
-							<li class="breadcrumb-item "><a href="MyRecords.php">나의 산행기록</a></li>
-							<li class="breadcrumb-item "><a href="AddRecords.php">산행기록 적기</a></li>
+							<li class="breadcrumb-item "><a href="MyRecords.php">나의 산행 기록</a></li>
+							<li class="breadcrumb-item "><a href="AddRecords.php">산행 기록 추가</a></li>
 						</ol>
 					</nav>
 				</div>
