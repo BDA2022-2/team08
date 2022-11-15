@@ -4,7 +4,7 @@
 	if (isset($_SESSION["ss_id"])) {
 		$login = TRUE;
 		$user_id = $_SESSION["ss_id"];
-		$user_name = $_SESSION["ss_name"];#마지막에 수정
+		$user_name = $_SESSION["ss_name"];
 	}
 ?>
 
@@ -31,7 +31,7 @@
 							<li><a href="near1.php">근처 산 찾기</a></li>
 							<li><a href="search.php">산 검색하기</a></li>
 							<li class="has-children">
-								<a href="MyRecords.php">산행 기록</a>
+								<a href="#">산행 기록</a>
 								<ul class="dropdown">
 									<li><a href="MyRecords.php">나의 산행 기록</a></li>
 									<li><a href="AddRecords.php">산행 기록 추가</a></li>
