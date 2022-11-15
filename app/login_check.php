@@ -22,9 +22,10 @@ $res = mysqli_query($mysqli, $sql);
 if($res) { //만약 아이디가 존재하면
     $user_row = mysqli_fetch_array($res,MYSQLI_ASSOC);
     if ($pw_input == $user_row['user_pw']) { //PW가 맞으면
-        $_SESSION["ss_id"] = $id_input;
+        $_SESSION["ss_id"] = $user_row['user_id'];
+        $_SESSION["ss_name"] = $user_row['user_name'];
         if($id_input == "admin" && $pw_input == "1111") {
-            echo "<script>location.replace('./admin.php');</script>";
+            echo "<script>location.replace('./admin_plant_insert.php');</script>";
         } else {
             echo "<script>location.replace('./index.php');</script>";
         }
@@ -37,5 +38,6 @@ if($res) { //만약 아이디가 존재하면
     echo "<script>location.replace('./login.php');</script>";
 }
 
-mysqli_close($mysqli); // 데이터베이스 접속 종료
+mysqli_free_result($res);
+mysqli_close($mysqli);
 ?>

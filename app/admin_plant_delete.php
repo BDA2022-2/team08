@@ -1,3 +1,10 @@
+<?php
+$mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
+if(mysqli_connect_errno()){
+  printf("Connection failed: %s\n", mysqli_connect_error());
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,8 +59,10 @@
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
             >
-              <li class="active"><a href="admin.html">야생화 정보 수정하기</a></li>
-              <li><a href="admin_rest.html">음식점 정보 수정하기</a></li>
+              <li><a href="admin_plant_insert.php">야생화 정보 생성하기</a></li>
+              <li><a href="admin_rest_insert.php">음식점 정보 생성하기</a></li>
+              <li class="active"><a href="admin_plant_delete.php">야생화 정보 삭제하기</a></li>
+              <li><a href="admin_rest_delete.php">음식점 정보 삭제하기</a></li>
             </ul>
 
             <a
@@ -80,7 +89,7 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">야생화 정보 수정</h1>
+            <h1 class="heading" data-aos="fade-up">야생화 정보 삭제하기</h1>
             <nav
               aria-label="breadcrumb"
               data-aos="fade-up"
@@ -99,8 +108,26 @@
       </div>
     </div>
 
-    야생화 정보수정 화면입니다.
+    <div class="section">
+      <div class="container">
+        <form action="./delete_plant_data.php" method="GET"> 
+          <div class="search_flower">
+            <label for="search_flower">야생화 이름(국명)</label>
+            <input type="text" id="search_flower" name="search_flower_name" class="form-control" />
+          </div>
+          <div class="search_flower">
+            <label for="search_flower">야생화 번호(ID)</label>
+            <input type="text" id="search_flower" name="search_flower_id" class="form-control" />
+          </div>
+          <div class="login-buttons">
+            <button type="submit" class="btn btn-primary">삭제하기</button>
+          </div>         
+        </form>
+      </div>
+    </div>
 
+    <?php mysqli_close($mysqli); ?>
+    
     <footer include-html="html/footer.html"></footer>
     <script defer>
       includeHTML();
