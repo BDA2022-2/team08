@@ -85,7 +85,7 @@
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
                 >
-                  검색하신 ~~~~ 결과입니다 교수님~~~~~
+                  <?php echo $user_name ?>님이 검색하신 결과입니다.
                 </li>
               </ol>
             </nav>
@@ -156,7 +156,7 @@
             ?>
             <select name="sort" onChange="this.form.submit();">
               <option value="idx">-- 정렬 --</option>
-              <option value="avg_rate desc" <?php echo ($sort == "avg_rate desc" ? "selected" : "");?>>별점 순</option>
+              <option value="avg_rate desc" <?php echo ($sort == "avg_rate desc" ? "selected" : "");?>>방문 평점 순</option>
               <option value="cnt desc" <?php echo ($sort == "cnt desc" ? "selected" : "");?>>방문 리뷰 순</option>
             </select>
           </form>
