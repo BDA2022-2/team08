@@ -1,49 +1,46 @@
-<html>
+<?php
+	$db_host="localhost";
+	$db_user="team08";
+	$db_password="team08";
+	$db_name="team08";
 
-	<body>
-		<?php
-			$db_host="localhost";
-			$db_user="team08";
-			$db_password="team08";
-			$db_name="team08";
-
-			//connect to the database
-			$link=mysqli_connect($db_host,$db_user,$db_password,$db_name);
+    //connect to the database
+	$link=mysqli_connect($db_host,$db_user,$db_password,$db_name);
+	
+	//check connection
+	if($link===false){
+		die("error: could not connect".mysqli_connect_error());
+	}else{
+		//prepare an insert statement
+        $sql="DELETE FROM `team08`.`mtn_review` WHERE review_id=?";
+		
+		if($stmt=mysqli_prepare($link,$sql)){
+			//bind variables to the prepared stmt as parameters
+			mysqli_stmt_bind_param($stmt,"s",$review_id);
 			
-			//check connection
-			if($link===false){
-				die("error: could not connect".mysqli_connect_error());
+			//set parameters
+			$review_id=trim($_POST['review_id']);
+			
+			//attempt to execute the prepared statement
+			
+			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
+				echo "<script>alert('기록 삭제가 성공적으로 이루어졌습니다. ');</script>";
+				echo "<script>location.replace('./MyRecords.php');</script>";
+			}else if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)<1){
+				echo "<script>alert('ERROR: 잘못된 접근입니다');</script>";
+				echo "<script>location.replace('./MyRecords.php');</script>";
+				exit;
 			}else{
-				$sql="select * from `team08`.`mtn_review`";
-				$res=mysqli_query($link,$sql);
-				
-				if($res){			
-					if($res){
-						while($newArray=mysqli_fetch_array($res,MYSQLI_ASSOC)){
-							$mtn_idx=$newArray['mtn_idx'];
-							$mtn_name=$newArray['mtn_name'];
-							$user_id=$newArray['user_id'];
-							$visit_date=$newArray['visit_date'];
-							$mtn_rate=$newArray['mtn_rate'];
-							$comment=$newArray['comment'];
-							$created=$newArray['created'];
-							
-							echo "	name={$mtn_name}";
-							echo "	comment={$comment}";
-							echo "	created={$created}";
-							echo "	<br>\n";
-							
-						}
-					}
-				}else{
-					echo "ERROR: Could not retrieve records: $sql".mysqli_error($link);
-				}
+				echo "<script>alert('ERROR: Could not execute query');</script>";
+				echo "<script>location.replace('./MyRecords.php');</script>";
 			}
-			//close statement
-			mysqli_free_result($res);
-			//close connection
-			mysqli_close($link);
-		?>
-	</body>
-
-</html>
+		}else{
+			echo "<script>alert('ERROR: Could not prepare query');</script>";
+			echo "<script>location.replace('./MyRecords.php');</script>";
+		}
+	}
+	//close statement
+	mysqli_stmt_close($stmt);
+	//close connection
+    mysqli_close($link);
+?>

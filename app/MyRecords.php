@@ -87,6 +87,7 @@
 					if($res){			
 						if($res){
 							while($newArray=mysqli_fetch_array($res,MYSQLI_ASSOC)){
+								$review_id=$newArray['review_id'];
 								$mtn_idx=$newArray['mtn_idx'];
 								$mtn_name=$newArray['mtn_name'];
 								$user_id=$newArray['user_id'];
@@ -124,8 +125,9 @@
 										</div>
 		
 										
-										<form action="" method="post">
+										<form action="MyRecords_user.php" method="post">
 											<input type="submit" value="기록 삭제하기" class="btn btn-primary">
+											<input type="hidden" name="review_id" value='.$review_id.'>
 										</form>
 									</div>
 								</div>
