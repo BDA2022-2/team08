@@ -34,10 +34,9 @@
 </head>
 <body>
 
-	<div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+<?php
+    include 'html/nav.php'
+?>
 
 <div class="hero page-inner overlay" style="background-image: url('https://images.unsplash.com/photo-1438786657495-640937046d18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");">
 	<div class="container">
@@ -60,6 +59,7 @@
 								exit();
 							}
 							else {
+								#location 테이블에서 산 정보 받아오기
 								$sql1 = "SELECT * FROM mtn_location WHERE mtn_name = '".$mtn_name."' AND idx = '".$mtn_index."'";
 								$res1 = mysqli_query($mysqli, $sql1);
 								if($res1) {
@@ -72,8 +72,8 @@
 								else {
 									printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
 								}
-								//리뷰 테이블 산 인덱스 칼럼 맞춰서 수정해야함
-								$sql2 = "SELECT count(*) AS review_count FROM mtn_review WHERE mtn_name = '".$mtn_name."'";
+								#review 테이블에서 리뷰 갯수 받아오기
+								$sql2 = "SELECT count(*) AS review_count FROM mtn_review WHERE mtn_name = '".$mtn_name."' AND mtn_idx = '".$mtn_index."'";
 								$res2 = mysqli_query($mysqli, $sql2);
 								if($res2) {
 									$mtn_review = mysqli_fetch_array($res2,MYSQLI_ASSOC);
@@ -87,10 +87,7 @@
 								mysqli_free_result($res2);
 							}
 
-							// $mtn_degree_e = (string)126;
-							// $mtn_degree_n = (string)37;
-							//$review_num = 123;
-							//$mtn_rate = "4.4"; #더미 데이터
+							#산 별점 출력
 							if ($mtn_rate){
 								$star_n = (int)$mtn_rate;
 								echo '<li class="breadcrumb-item text-white">';
@@ -144,7 +141,7 @@
 				  <div class="row my-3">
 					<?php
 						date_default_timezone_set('Asia/Seoul');
-						#더미데이터
+						// #더미데이터-1
 						$SKY = "1";
 						$T1H = "11";
 						$TMN = "0";
@@ -155,6 +152,19 @@
 						$PCP = "0";
 						$PTY = "0";
 						$WSD = "7.3";
+						
+						#더미데이터
+						// $SKY = "3";
+						// $T1H = "11";
+						// $TMN = "0";
+						// $TMX = "13";
+						// $RN1 = "0";
+						// $REH = "70";
+						// $POP = "100";
+						// $PCP = "20";
+						// $PTY = "4";
+						// $WSD = "7.3";
+
 						// #API로 날씨 받아오는 코드
 						// if ((int)date("i",time()) < 45){
 						// 	$H = (int)(date("H",time()))-1;
@@ -339,11 +349,58 @@
 								<span class="caption text-black text-opacity-75">발생 횟수</span>
 								<span class="number"><span class="countup text-primary">
 									<?php
-										#DB 연결 - 발생횟수 가져오기
-										$res = "1245"; #더미 데이터
-										echo (int)$res;
+										#DB 연결 - 산사태 발생횟수 가져오기
+										$mtn_addr_arr = explode(' ', $mtn_addr);
+										$WS_L = [(int)$WSD, (int)$WSD + 0.9];
+										$sql = "SELECT
+													tb_l.fc_type,
+													COUNT(*) AS cou
+												FROM
+													landslide_fc AS tb_l
+												INNER JOIN(
+													SELECT
+														t.df_obsrt_tm_date AS dat,
+														t.df_obsrt_tm_hour AS hou
+													FROM
+														(
+															(
+															SELECT
+																*,
+																HOUR(df_obsrt_tm_time) AS df_obsrt_tm_hour
+															FROM
+																mtn_weather
+															WHERE
+																spot_no IN(
+																SELECT
+																	spot_no
+																FROM
+																	spot_no
+																WHERE
+																	city LIKE '".$mtn_addr_arr[1]."%'
+																AND two_meter_tprt BETWEEN ".$WS_L[0]." AND ".$WS_L[1]." AND two_meter_wdsp <= ".$WSD." AND two_meter_hmdt <= ".$REH." AND wght_rain_qntt <= ".$PCP."
+															)
+														) AS t
+														)
+													GROUP BY
+														t.df_obsrt_tm_date,
+														t.df_obsrt_tm_hour
+												) AS tb_w
+												ON
+													tb_w.dat BETWEEN tb_l.start_date AND tb_l.end_date;";
+										$res = mysqli_query($mysqli, $sql);
+										if($res) {
+											while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
+												$type = $row["fc_type"];
+												$count = $row["cou"];
+												echo $count;
+											}
+										}
+										else {
+											printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+										}
+										mysqli_free_result($res);
 									?>
-									<span class="caption h5 text-black text-opacity-75">회</span>
+									<span class="h5 text-black text-opacity-75">회</span>
 								</span></span>
 							</div>
 						</div>
@@ -355,9 +412,7 @@
 								<span class="caption text-black text-opacity-75">발생 횟수</span>
 								<span class="number"><span class="countup text-primary">
 									<?php
-										#DB 연결 - 발생횟수 가져오기
-										$mtn_addr_arr = explode(' ', $mtn_addr);
-										$WS_L = [(int)$WSD, (int)$WSD + 0.9];
+										#DB 연결 - 산불 발생횟수 가져오기
 										$sql = "SELECT COUNT(*) as cou FROM fire_fc WHERE address LIKE '".$mtn_addr_arr[1]."%' AND effective_humidity >= ".$REH." AND wind_speed BETWEEN ".$WS_L[0]." AND ".$WS_L[1].";";
 										$res = mysqli_query($mysqli, $sql);
 										if($res) {
@@ -369,7 +424,6 @@
 											printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
 										}
 										mysqli_free_result($res);
-										#$res = "1245"; #더미 데이터
 										echo $count;
 									?>
 									<span class="caption h5 text-black text-opacity-75">회</span>
@@ -381,7 +435,7 @@
 				<?php
 					# DB 연결 - 산악 사고 관련 데이터 받아오기
 					$arr = [["Accident_type","count"]];
-					$sql = "SELECT accident_type, MONTH(report_date) AS acci_month, COUNT(*) as cou FROM mtn_accident WHERE accident_spot LIKE '".$mtn_addr_arr[1]."%' GROUP BY acci_month, accident_type WITH ROLLUP;";
+					$sql = "SELECT accident_type, MONTH(report_date) AS acci_month, COUNT(*) AS cou FROM mtn_accident WHERE accident_spot LIKE '".$mtn_addr_arr[1]."%' GROUP BY acci_month, accident_type WITH ROLLUP;";
 					$res = mysqli_query($mysqli, $sql);
 					if($res) {
 						while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
@@ -451,11 +505,12 @@
 								if($res) {
 									while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
 										//url만 수정하기
-										$url = "https://mblogthumb-phinf.pstatic.net/20130703_21/lucky21_1372831705463jzptt_JPEG/%B9%CC%B1%B9%BD%C7%BB%F5%BB%EF8.JPG?type=w2";
+										$url = $row["img_url"];
 										$kr_name = $row["kr_name"];
 										$kr_family_name = $row["kr_family_name"];
 										$size = $row["size"];
-										echo '<div class="property-item">
+										if ($kr_name){
+											echo '<div class="property-item">
 												<a class="img-fluid">
 													<img src="'.$url.'" alt="Image" class="img-flower">
 												</a>
@@ -467,6 +522,7 @@
 													</div>
 												</div>
 											</div>';
+										}
 									}
 								}
 								else {
@@ -556,7 +612,7 @@
 	</div>
 
 	<footer include-html="html/footer.html"></footer>
-	<script defer>
+	<script>
     	includeHTML();
   	</script>
 
