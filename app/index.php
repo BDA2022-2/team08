@@ -39,24 +39,39 @@
 
     <div class="hero">
       <div class="hero-slide">
-        <div
-          class="img overlay"
-          style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80')"
-        ></div>
-        <div
-          class="img overlay"
-          style="background-image: url('https://images.unsplash.com/uploads/141148589884100082977/a816dbd7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80)"
-        ></div>
-        <div
-          class="img overlay"
-          style="background-image: url('https://images.unsplash.com/photo-1542359649-31e03cd4d909?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80')"
-        ></div>
+        <?php
+          $mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
+          if(mysqli_connect_errno()){
+              printf("Connection failed: %s\n", mysqli_connect_error());
+              exit();
+          }
+          else {
+            #이미지 받아오기
+              $sql = "SELECT url FROM img ORDER BY rand();";
+              $res = mysqli_query($mysqli, $sql);
+              if($res) {
+                  $i = 0;
+                  while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
+                    echo '<div
+                          class="img overlay"
+                          style="background-image: url('.$row["url"].')"
+                        ></div>';
+                    $i = $i + 1;
+                    if ($i == 3) break;
+                  }
+              }
+              else {
+                  printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+              }
+              mysqli_free_result($res);
+          }
+        ?>
       </div>
 
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center">
-            <h1 class="heading mt-5">
+            <h1 class="heading">
               <img src="images/logo_main.png" class="img-icon">
             </h1>
             <div class="row justify-content-center align-items-center">
@@ -86,33 +101,26 @@
             <span class="text-white">
               <?php
                 $rule_arr = [];
-                $mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
-                if(mysqli_connect_errno()){
-                    printf("Connection failed: %s\n", mysqli_connect_error());
-                    exit();
+                $sql = "SELECT * FROM safety_rules ORDER BY rand();";
+                $res = mysqli_query($mysqli, $sql);
+                if($res) {
+                    while($row = mysqli_fetch_array($res,MYSQLI_NUM)){
+                      $i = 0;
+                      while($i<count($row)-1)
+                      {
+                        if ($row[$i]) {
+                          array_push($rule_arr, $row[$i]);
+                        }
+                        $i = $i + 1;
+                      }
+                    }
                 }
                 else {
-                    $sql = "SELECT * FROM safety_rules ORDER BY rand();";
-                    $res = mysqli_query($mysqli, $sql);
-                    if($res) {
-                        while($row = mysqli_fetch_array($res,MYSQLI_NUM)){
-                          $i = 0;
-                          while($i<count($row)-1)
-                          {
-                            if ($row[$i]) {
-                              array_push($rule_arr, $row[$i]);
-                            }
-                            $i = $i + 1;
-                          }
-                        }
-                    }
-                    else {
-                        printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
-                    }
-                    mysqli_free_result($res);
-                    mysqli_close($mysqli);
-                    echo $rule_arr[rand()%count($rule_arr)];
+                    printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
                 }
+                mysqli_free_result($res);
+                mysqli_close($mysqli);
+                echo $rule_arr[rand()%count($rule_arr)];
               ?>
             </span>
           </div>

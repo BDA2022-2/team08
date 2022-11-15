@@ -9691,6 +9691,7 @@ textarea {
   .hero .heading {
     color: #fff;
     font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    margin-top: 120px;
     margin-bottom: 30px;
     font-weight: 600; }
   .hero .lead {
@@ -10296,7 +10297,7 @@ nav[aria-label="breadcrumb"] li:before {
   float: left;
   width: 44px;
   height: 44px;
-  background: #00204a;
+  background: #00462a;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10317,6 +10318,8 @@ nav[aria-label="breadcrumb"] li:before {
   padding: 0 0 0 60px; }
 
 .contact-info p {
+  word-break: keep-all;
+  word-wrap: break-word;
   padding: 0 0 0 60px;
   margin-bottom: 0;
   font-size: 14px; }
