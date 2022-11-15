@@ -28,13 +28,14 @@
 			if (!$user_id||!$before_pw||!$after_pw||!$before_name||!$after_name){
 				echo "<script>alert('모든 칸을 입력해 주세요');</script>";
 				echo "<script>location.replace('./changeAccount.php');</script>";
+				$_SESSION['ss_name']=$after_name;
 				exit;
 			}
 			
 			//attempt to execute the prepared statement
 			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
 				echo "<script>alert('회원정보가 성공적으로 변경되었습니다.');</script>";
-				echo "<script>location.replace('./changeAccount.php');</script>";
+				echo "<script>location.replace('./index.php');</script>";
 			}else if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)<1){
 				echo "<script>alert('ERROR: 잘못된 유저정보 입니다.');</script>";
 				echo "<script>location.replace('./changeAccount.php');</script>";

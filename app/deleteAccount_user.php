@@ -25,7 +25,7 @@
 
 			if (!$user_id||!$user_pw||!$user_name) {
 				echo "<script>alert('id, pw, name 모두 입력해 주세요');</script>";
-				echo "<script>location.replace('./deleteAccount.php');</script>";
+				echo "<script>location.replace('./login.php');</script>";
 				exit;
 			}
 			
