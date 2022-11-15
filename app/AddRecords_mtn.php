@@ -22,7 +22,7 @@
 			echo "<script>location.replace('./AddRecords.php');</script>";
 			exit;
 		}
-		
+
 		if($result&&$rowcount>0){
 			echo "<script>alert('$mtn_name 에 대한 총 $rowcount 개의 검색 결과를 찾았습니다');</script>";
 			mysqli_query($link,"CREATE OR REPLACE VIEW `same_mtn` AS SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name`= '$mtn_name'");
@@ -35,6 +35,7 @@
 			echo "<script>alert('ERROR: Could not execute query');</script>";
 			echo "<script>location.replace('./AddRecords.php');</script>";
 		}
+
 	}
 	//close statement
 	mysqli_free_result($result);
