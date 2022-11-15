@@ -66,72 +66,8 @@
 
 	<div class="section">
 		<div class="container">
-		<?php
-			if(array_key_exists('search_with_name', $_POST)) {
-				search_with_name_func();
-			}
-			function search_with_name_func() {
-				$db_host="localhost";
-				$db_user="team08";
-				$db_password="team08";
-				$db_name="team08";
-			
-				//connect to the database
-				$link=mysqli_connect($db_host,$db_user,$db_password,$db_name);
-				
-				//check connection
-				if($link===false){
-					echo "<script>alert('ERROR: Could not connect');</script>";
-					echo "<script>location.replace('./AddRecords.php');</script>";
-				}else{
-					$mtn_name=trim($_POST['mtn_name']);
-					$sql="SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name`= '$mtn_name'";
-					$result=mysqli_query($link,$sql);
-					$rowcount=mysqli_num_rows($result);
-			
-					if (!$mtn_name){
-						echo "<script>alert('산 이름을 입력해 주세요');</script>";
-						echo "<script>location.replace('./AddRecords.php');</script>";
-						exit;
-					}
-			
-					if($result&&$rowcount>0){
-						echo "<script>alert('$mtn_name 에 대한 총 $rowcount 개의 검색 결과를 찾았습니다');</script>";
-						$sql2 ="CREATE OR REPLACE VIEW `same_mtn` AS SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name`= '$mtn_name'";
-						$res2 = mysqli_query($link,$sql2);
-						if ($res2) {
-							while ($newArray = mysqli_fetch_array($res2)) {
-								$same_idx = $newArray['idx'];
-								$same_mtn_name = $newArray['mtn_name'];
-								echo "The ID is ".$same_idx." and the text is ".$same_mtn_name."<br/>";
-							}
-						} 
-						else {
-						printf("Could not retrieve records: %s\n",mysqli_error($mysqli));
-						}
-						
-
-						echo "$mtn_name 에 대한 총 $rowcount 개의 검색 결과를 찾았습니다";
-					}else if($rowcount<1){
-						echo "<script>alert('ERROR: $mtn_name 을 찾을 수 없습니다');</script>";
-						echo "<script>location.replace('./AddRecords.php');</script>";
-						exit;
-					}else{
-						echo "<script>alert('ERROR: Could not execute query');</script>";
-						echo "<script>location.replace('./AddRecords.php');</script>";
-					}
-			
-				}
-				//close statement
-				mysqli_free_result($result);
-				//close connection
-				mysqli_close($link);
-			}
-    	?>
-		</div>
-		<div class="container">
 				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-					<form method="post">
+					<form action="AddRecords_mtn.php" method="post">
 						<div class="row">
 							<div class="col-12 mb-3">
 								산이름
