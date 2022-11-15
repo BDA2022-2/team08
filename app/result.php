@@ -47,16 +47,16 @@
       // $user_id = $_SESSION['ss_id'];
 
       // result.php로 넘어오는 변수들
-      $mtn_name = $_GET['mtn_name'];
-      $region_1depth_name = $_GET['region_1depth_name'];
-      $region_2depth_name = $_GET['region_2depth_name'];
-      if (isset($_GET['sort'])) {
-        $sort = $_GET['sort'];
+      $mtn_name = $_POST['mtn_name'];
+      $region_1depth_name = $_POST['region_1depth_name'];
+      $region_2depth_name = $_POST['region_2depth_name'];
+      if (isset($_POST['sort'])) {
+        $sort = $_POST['sort'];
       } else {$sort = "idx";}
-      if (isset($_GET['filter_rate'])) {
+      if (isset($_POST['filter_rate'])) {
         $filter_rate = 3.5;
       } else {$filter_rate = 0;}
-      if (isset($_GET['filter_visitor'])) {
+      if (isset($_POST['filter_visitor'])) {
         $filter_visitor = 5;
       } else {$filter_visitor = 0;}
     ?>
@@ -104,7 +104,7 @@
         </div>
         <!-- 필터링 버튼 & 정렬 드롭다운박스 -->
         <div class="filter-and-sort">
-          <form id="undo" class="undo" method="get" <?php echo (($filter_rate==0 and $filter_visitor==0) ? "style=\"display: none\"" : "");?>>
+          <form id="undo" class="undo" method="post" <?php echo (($filter_rate==0 and $filter_visitor==0) ? "style=\"display: none\"" : "");?>>
             <?php
               echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
               echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
@@ -118,7 +118,7 @@
             >초기화
             </button>
           </form>
-          <form id="filter-rate" class="filter-rate" method="get">
+          <form id="filter-rate" class="filter-rate" method="post">
             <?php
               echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
               echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
@@ -126,13 +126,13 @@
               echo "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\" />"
             ?>
             <input
-              <?php echo (array_key_exists('filter_rate',$_GET) ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
+              <?php echo (array_key_exists('filter_rate',$_POST) ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
               type="submit"
               name="filter_rate"              
               value="방문 평점 3.5 이상"
             />
           </form>
-          <form id="filter-visitor" class="filter-visitor" method="get">
+          <form id="filter-visitor" class="filter-visitor" method="post">
             <?php
               echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
               echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
@@ -140,13 +140,13 @@
               echo "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\" />"
             ?>
             <input
-              <?php echo (array_key_exists('filter_visitor',$_GET) ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
+              <?php echo (array_key_exists('filter_visitor',$_POST) ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
               type="submit"
               name="filter_visitor"              
               value="방문 리뷰 5개 이상"
             />
           </form>
-          <form id="sort" class="sort" method="get">
+          <form id="sort" class="sort" method="post">
             <?php
             echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
             echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
@@ -224,7 +224,7 @@
                         <span class=\"caption\">".$review_count."개</span>
                       </span>
                     </div>
-                    <form action=\"info.php\" method=\"get\">
+                    <form action=\"info.php\" method=\"post\">
                     <input type=\"hidden\" name=\"mtn_index\" value=\"".$mtn_index."\"/>
                     <input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\"/>
                       <input
