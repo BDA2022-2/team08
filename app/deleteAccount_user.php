@@ -32,9 +32,9 @@
 			//attempt to execute the prepared statement
 			
 			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
-				echo "<script>alert('Records deleted successfully');</script>";
-				echo "<script>location.replace('./deleteAccount.php');</script>";
-			}else if(mysqli_affected_rows($link)<1){
+				echo "<script>alert('회원 탈퇴가 성공적으로 이루어졌습니다. 이용해주셔서 감사합니다');</script>";
+				echo "<script>location.replace('./index.php');</script>";
+			}else if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)<1){
 				echo "<script>alert('ERROR: 잘못된 유저정보 입니다');</script>";
 				echo "<script>location.replace('./makeAccount.php');</script>";
 				exit;

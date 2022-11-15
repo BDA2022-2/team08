@@ -105,12 +105,15 @@
 					<form action="makeAccount_user.php" method="post">
 						<div class="row">
 							<div class="col-12 mb-3">
+								<text>이름</text>
 								<input type="text" name="user_name" class="form-control" placeholder="이름">
 							</div>
 							<div class="col-6 mb-3">
+								<text>아이디</text>
 								<input type="text" name="user_id" class="form-control" placeholder="ID">
 							</div>
 							<div class="col-6 mb-3">
+								<text>비밀번호</text>
 								<input type="password" name="user_pw" class="form-control" placeholder="PW">
 							</div>
 

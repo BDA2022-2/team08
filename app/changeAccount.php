@@ -102,24 +102,27 @@
 				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
 					<form action="changeAccount_user.php" method="post">
 						<div class="row">
-							<text>가입시 입력한 아이디</text>
 							<div class="col-12 mb-3">
-								<input type="text" class="form-control" name="user_id" placeholder="이름">
+								<text>가입시 입력한 아이디</text>
+								<input type="text" class="form-control" name="user_id" placeholder="아이디">
 							</div>
-							
-							<text>이전 이름과 비밀번호</text>
+
 							<div class="col-6 mb-3">
+								<text>이전 이름</text>
 								<input type="text" class="form-control" name="before_name" placeholder="before_name">
 							</div>
+
 							<div class="col-6 mb-3">
+								<text>이전 비밀번호</text>
 								<input type="text" class="form-control" name="before_pw" placeholder="before_pw">
 							</div>
 							
-							<text>바꿀 이름과 비밀번호</text>
 							<div class="col-6 mb-3">
+								<text>바꿀 이름</text>
 								<input type="text" class="form-control" name="after_name" placeholder="after_name">
 							</div>
 							<div class="col-6 mb-3">
+								<text>바꿀 비밀번호</text>
 								<input type="text" class="form-control" name="after_pw" placeholder="after_pw">
 							</div>
 

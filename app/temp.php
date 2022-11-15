@@ -50,7 +50,7 @@
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up">산행기록 적기</h1>
+					<h1 class="heading" data-aos="fade-up"><?php echo $_POST['mtn_name']; ?> 산행기록 적기</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">			
@@ -66,21 +66,115 @@
 
 	<div class="section">
 		<div class="container">
-				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-					<form action="AddRecords_mtn.php" method="post">
+			<div class="col-lg-8">
+				<?php
+					if(array_key_exists('search_with_name', $_POST)) {
+						search_with_name_func();
+					}
+					function search_with_name_func() {
+						$db_host="localhost";
+						$db_user="team08";
+						$db_password="team08";
+						$db_name="team08";
+					
+						//connect to the database
+						$link=mysqli_connect($db_host,$db_user,$db_password,$db_name);
+						
+						//check connection
+						if($link===false){
+							echo "<script>alert('ERROR: Could not connect');</script>";
+							echo "<script>location.replace('./AddRecords.php');</script>";
+						}else{
+							$mtn_name=trim($_POST['mtn_name']);
+							$sql="SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name`= '$mtn_name'";
+							$result=mysqli_query($link,$sql);
+							$rowcount=mysqli_num_rows($result);
+					
+							if (!$mtn_name){
+								echo "<script>alert('산 이름을 입력해 주세요');</script>";
+								echo "<script>location.replace('./AddRecords.php');</script>";
+								exit;
+							}
+					
+							if($result&&$rowcount>0){
+								echo "<script>alert('$mtn_name 에 대한 총 $rowcount 개의 검색 결과를 찾았습니다');</script>";
+								$sql2 ="CREATE OR REPLACE VIEW `same_mtn` AS SELECT `idx`,`mtn_address` FROM `team08`.`mtn_location` WHERE `mtn_name`= '$mtn_name'";
+								$res2 = mysqli_query($link,$sql2);
+
+								$sql3 ="SELECT * FROM same_mtn";
+								$res3 = mysqli_query($link,$sql3);
+								echo "<br/>".$mtn_name." 산행 기록";
+								echo "<br/>"."$mtn_name 에 대한 총 $rowcount 개의 동일한 검색 결과를 찾았습니다";
+								echo "<br/>"."=============================================";
+								
+								
+
+								if ($res3) {
+									while ($newArray = mysqli_fetch_array($res3,MYSQLI_ASSOC)) {
+										$same_idx = $newArray['idx'];
+										$mtn_address = $newArray['mtn_address'];
+										echo "<br/>"."> 산 아이디: ".$same_idx.", 위치: ".$mtn_address;
+									}
+									echo "<br/>"."=============================================";
+								} 
+								else {
+									printf("Could not retrieve records: %s\n",mysqli_error($mysqli));
+									echo "<script>location.replace('./AddRecords.php');</script>";
+									exit;
+								}
+									
+							}else if($rowcount<1){
+								echo "<script>alert('ERROR: $mtn_name 을 찾을 수 없습니다');</script>";
+								echo "<script>location.replace('./AddRecords.php');</script>";
+								exit;
+							}else{
+								echo "<script>alert('ERROR: Could not execute query');</script>";
+								echo "<script>location.replace('./AddRecords.php');</script>";
+							}
+					
+						}
+						//close statement
+						mysqli_free_result($result);
+						//close connection
+						mysqli_close($link);
+					}
+				?>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+				<form method="post" action="AddRecords_all.php">
 						<div class="row">
-							<div class="col-12 mb-3">
-								산이름
-								<input type="text" name="mtn_name" class="form-control" placeholder="OO산">
+							<div class="col-6 mb-3">
+								산아이디
+								<input type="text" name="mtn_idx" class="form-control" placeholder="상단의 산 아이디를 참고해 주세요">
 							</div>
-							
+							<div class="col-6 mb-3">
+								별점
+								<select id="별점" name="mtn_rate" class="form-control">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+							</div>
+							<div class="col-6 mb-3">
+								방문날짜
+								<input type="date" name="visit_date" class="form-control" placeholder="visited date">
+							</div>
+							<div class="col-12 mb-3">
+								<textarea name="comment" cols="30" rows="7" class="form-control" placeholder="weather comment"></textarea>
+							</div>
+
 							<div class="col-12">
-								<input type="submit" value="산 이름으로 검색" class="btn btn-primary">
+								<input type="submit" value="Add Record" class="btn btn-primary">
 								<input type="reset" value="Reset" class="btn btn-primary">
 							</div>
 						</div>
-					</form>	
-				</div>
+				</form>
+			</div>
 		</div>
 	</div>
 

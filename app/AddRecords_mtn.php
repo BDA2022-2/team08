@@ -151,10 +151,6 @@
 								<input type="text" name="mtn_idx" class="form-control" placeholder="상단의 산 아이디를 참고해 주세요">
 							</div>
 							<div class="col-6 mb-3">
-								산이름
-								<input type="text" name="mtn_name" class="form-control" placeholder="방문한 산의 이름">
-							</div>
-							<div class="col-6 mb-3">
 								별점
 								<select id="별점" name="mtn_rate" class="form-control">
 									<option value="1">1</option>
@@ -175,6 +171,10 @@
 							<div class="col-12">
 								<input type="submit" value="Add Record" class="btn btn-primary">
 								<input type="reset" value="Reset" class="btn btn-primary">
+							</div>
+
+							<div>
+								<input type = "hidden" name = "mtn_name" value ="<?php echo $_POST['mtn_name']; ?>" />
 							</div>
 						</div>
 				</form>

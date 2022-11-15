@@ -65,6 +65,7 @@
 
 	<div class="section section-properties">
 		<div class="container">
+		<div class="row">
 			<?php
 				$db_host="localhost";
 				$db_user="team08";
@@ -95,52 +96,55 @@
 								$comment=$newArray['comment'];
 								$created=$newArray['created'];
 
-								echo
-									'<div class="row">
-										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-											<div class="property-item mb-30">
+							echo '
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+							<div class="property-item mb-30">
+		
+								<a href="property-single.html" class="img">
+									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
+								</a>
+		
+								<div class="property-content">
+									<div class="price mb-2"><span>'.$mtn_name.'</span></div>
+									<div>		
+										<span class="d-block mb-2 text-black-50">'.$visit_date.'</span>
+										<span class="city d-block mb-3">'.$comment.'</span>
 
-												<a href="property-single.html" class="img">
-													<img src="images/img_1.jpg" alt="Image" class="img-fluid">
-												</a>
+										<div class="specs d-flex mb-4">
+											<span class="d-block d-flex align-items-center me-3">
+												<span class="icon-map-marker"></span>
+												<span class="caption">'.$created.'</span>
+											</span>
+										</div>
 
-												<div class="property-content">
-													<div class="price mb-2"><span>'.$mtn_name.'</span></div>
-													<div>
-														<span class="d-block mb-2 text-black-50">'.$visit_date.'</span>
-														<span class="city d-block mb-3">'.$comment.'</span>
-
-														<div class="specs d-flex mb-4">
-															<span class="d-block d-flex align-items-center me-3">
-																<span class="icon-map-marker"></span>
-																
-																<span class="caption">'.$created.'</span>
-															</span>
-														</div>
-
-														<div class="specs d-flex mb-4">
-															<span class="d-block d-flex align-items-center">
-																<span class="icon-star"></span>
-																<span class="caption">'.$mtn_rate.'</span>
-															</span>
-														</div>
-													</div>
-												</div>
-											</div> <!-- .item -->
-										</div>';
-								
-								
-							}
+										<div class="specs d-flex mb-4">
+											<span class="d-block d-flex align-items-center">
+												<span class="icon-star"></span>
+												<span class="caption">'.$mtn_rate.'</span>
+											</span>
+										</div>
+		
+										
+										<form action="" method="post">
+											<input type="submit" value="기록 삭제하기" class="btn btn-primary">
+										</form>
+									</div>
+								</div>
+							</div> <!-- .item -->
+						</div>
+							';
 						}
 					}else{
 						echo "ERROR: Could not retrieve records: $sql".mysqli_error($link);
 					}
 				}
+			}
 				//close statement
 				mysqli_free_result($res);
 				//close connection
 				mysqli_close($link);
 			?>
+			</div>
 		</div>
 			<div class="row align-items-center py-5">
 				<div class="col-lg-3">

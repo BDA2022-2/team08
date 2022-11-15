@@ -35,7 +35,7 @@
 				echo "<script>alert('회원가입이 성공적으로 완료되었습니다');</script>";
 				echo "<script>location.replace('./makeAccount.php');</script>";
 				exit;
-			}else if(mysqli_affected_rows($link)<1){
+			}else if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)<1){
 				echo "<script>alert('ERROR: 이미 동일한 id가 존재합니다');</script>";
 				echo "<script>location.replace('./makeAccount.php');</script>";
 				exit;
