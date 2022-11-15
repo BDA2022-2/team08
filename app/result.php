@@ -31,8 +31,21 @@
     <!-- result.php로 넘어오는 변수들 -->
     <?php
       // 세션에서 user_id 받아오기
-      session_start();
-      $user_id = $_SESSION['ss_id'];
+      // $status = session_status();
+      // if($status == PHP_SESSION_NONE){
+      //     //There is no active session
+      //     session_start();
+      // }else
+      // if($status == PHP_SESSION_DISABLED){
+      //     //Sessions are not available
+      // }else
+      // if($status == PHP_SESSION_ACTIVE){
+      //     //Destroy current and start new one
+      //     session_destroy();
+      //     session_start();
+      // }
+      // $user_id = $_SESSION['ss_id'];
+
       // result.php로 넘어오는 변수들
       $mtn_name = $_GET['mtn_name'];
       $region_1depth_name = $_GET['region_1depth_name'];
@@ -72,7 +85,7 @@
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
                 >
-                  검색하신 ~~~~ 결과입니다 교수님~~~~~
+                  <?php echo $user_name ?>님이 검색하신 결과입니다.
                 </li>
               </ol>
             </nav>
@@ -143,7 +156,7 @@
             ?>
             <select name="sort" onChange="this.form.submit();">
               <option value="idx">-- 정렬 --</option>
-              <option value="avg_rate desc" <?php echo ($sort == "avg_rate desc" ? "selected" : "");?>>별점 순</option>
+              <option value="avg_rate desc" <?php echo ($sort == "avg_rate desc" ? "selected" : "");?>>방문 평점 순</option>
               <option value="cnt desc" <?php echo ($sort == "cnt desc" ? "selected" : "");?>>방문 리뷰 순</option>
             </select>
           </form>

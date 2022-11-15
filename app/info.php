@@ -44,8 +44,8 @@
 			<div class="col-lg-9 text-center mt-5">
 				<h1 class="heading" data-aos="fade-up">
 					<?php
-						$mtn_name = $_GET['mtn_name'];
-						$mtn_index = $_GET['mtn_index'];
+						$mtn_name = $_POST['mtn_name'];
+						$mtn_index = $_POST['mtn_index'];
 						echo($mtn_name);
 					?>
 				</h1>
@@ -73,7 +73,9 @@
 									printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
 								}
 								#review 테이블에서 리뷰 갯수 받아오기
-								$sql2 = "SELECT count(*) AS review_count FROM mtn_review WHERE mtn_name = '".$mtn_name."' AND mtn_idx = '".$mtn_index."'";
+								$sql2 = "SELECT count(*) AS review_count FROM mtn_review 
+										WHERE mtn_name = '".$mtn_name."' AND mtn_idx = '".$mtn_index."'
+										AND visit_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK ) AND NOW()";
 								$res2 = mysqli_query($mysqli, $sql2);
 								if($res2) {
 									$mtn_review = mysqli_fetch_array($res2,MYSQLI_ASSOC);
@@ -82,7 +84,6 @@
 								else {
 									printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
 								}
-
 								mysqli_free_result($res1);
 								mysqli_free_result($res2);
 							}
@@ -118,7 +119,7 @@
 									}
 								echo ' (0.0)</li>';
 							}
-							echo '<li class="breadcrumb-item text-white text-opacity-75" aria-current="page">최근 방문 수 ' . $review_num . '</li>';
+							echo '<li class="breadcrumb-item text-white text-opacity-75" aria-current="page">최근 리뷰 수 ' . $review_num . '</li>';
 						?>
 					</ol>
 				</nav>
