@@ -33,10 +33,9 @@
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
-    <div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+    <?php
+      include 'html/nav.php'
+    ?>
 
     <div class="hero">
       <div class="hero-slide">
@@ -62,14 +61,14 @@
             </h1>
             <div class="row justify-content-center align-items-center">
               <div
-                onclick="location.href='near.php'"
+                onclick="location.href='near1.php'"
                 class="col-6 col-lg-5"
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
                 <div class="box-feature">
                   <img src="images/mountain.svg" class="img-icon">
-                  <p><a href="near.php" class="learn-more"><h3>근처 산 둘러보기</h3></a></p>
+                  <p><a href="near1.php" class="learn-more"><h3>근처 산 둘러보기</h3></a></p>
                 </div>
               </div>
               <div
@@ -98,7 +97,7 @@
                     if($res) {
                         while($row = mysqli_fetch_array($res,MYSQLI_NUM)){
                           $i = 0;
-                          while($i<count($row))
+                          while($i<count($row)-1)
                           {
                             if ($row[$i]) {
                               array_push($rule_arr, $row[$i]);
