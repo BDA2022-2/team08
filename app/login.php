@@ -28,17 +28,24 @@ if(mysqli_connect_errno()){
     <link rel="stylesheet" href="css/tiny-slider.css" />
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/login.css" />
     <script src="js/includeHTML.js"></script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
-    <div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+  <?php
+    include 'html/nav.php'
+  ?>
+  <?php
+    $status = session_status();
+    if($status == PHP_SESSION_ACTIVE){
+        //Destroy current and start new one
+        session_destroy();
+    }
+    ?>
 
-    <!--image부분-->
+    <!-- image부분 -->
     <div
       class="hero page-inner overlay"
       style="
@@ -66,16 +73,14 @@ if(mysqli_connect_errno()){
       </div>
     </div>
 
-    <div class="section">
-      <div class="container">
-        <form action="./login_check.php" method="GET"> 
+    <div class="section" id="login-section">
+      <div class="container" id="login-container">
+        <form action="./login_check.php" method="POST"> 
           <div class="user-login">
-            <label for="user_id">아이디</label>
-            <input type="text" id="user_id" name="user_id" class="form-control" />
+            <input type="text" id="user_id" name="user_id" class="form-control" placeholder="ID"/>
           </div>
           <div class="user-login">
-            <label for="user_pw">비밀번호</label>
-            <input type="password" id="user_pw" name="user_pw" class="form-control">
+            <input type="password" id="user_pw" name="user_pw" class="form-control" placeholder="Password">
           </div>
           <br>
           <div class="login-buttons">

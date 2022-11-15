@@ -5,8 +5,8 @@ if(mysqli_connect_errno()){
   exit();
 }
 
-$search_flower_name = $_GET['search_flower_name'];
-$search_flower_id = $_GET['search_flower_id'];
+$search_flower_name = $_POST['search_flower_name'];
+$search_flower_id = $_POST['search_flower_id'];
 
 $sql1 = "SELECT * FROM plant_species WHERE id = '".$search_flower_id."'";
 $res1 = mysqli_query($mysqli, $sql1);

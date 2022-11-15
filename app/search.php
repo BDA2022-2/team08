@@ -4,8 +4,8 @@ if(mysqli_connect_errno()){
   printf("Connection failed: %s\n", mysqli_connect_error());
   exit();
 }
-session_start();
-$user_id = $_SESSION["ss_id"];
+// session_start();
+// $user_id = $_SESSION["ss_id"];
 ?>
 <html>
   <head>
@@ -37,10 +37,9 @@ $user_id = $_SESSION["ss_id"];
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
-    <div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+  <?php
+    include 'html/nav.php'
+  ?>
 
     <!--image부분-->
     <div
@@ -75,7 +74,7 @@ $user_id = $_SESSION["ss_id"];
     <!--상세 검색(지역1, 지역2, 검색어-->
     <div class="section">
       <div class="container">
-        <form action="./result.php" method="GET">
+        <form action="./result.php" method="POST">
           <div class="search_boxes">
             <span>지역별</span>
             <div class="search_box">
@@ -146,18 +145,24 @@ $user_id = $_SESSION["ss_id"];
         ?>
 
         <!-- 사용자들이 가장 많이 방문한 산 TOP 5 -->
-        <h2>현재 사용자들이 많이 방문한 산</h2>
           <ol>
             <?php
               $sql4 ="SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN NOW() AND DATE_ADD(NOW(),INTERVAL 1 WEEK) GROUP BY mtn_idx";
               $res4 = mysqli_query($mysqli, $sql4);
+              if(!(mysqli_fetch_array($res4,MYSQLI_ASSOC) == NULL)) {
+                echo '<h2>현재 사용자들이 많이 방문한 산</h2>';
+              }
               $i = 1;
               while ($i <= 5) {
-                $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
-                $mtn_name = $mtn_rank["mtn_name"];
-                $mtn_index = $mtn_rank["mtn_idx"];
-                echo '<li><a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a></li>';
-                $i++;
+                if(!(mysqli_fetch_array($res4,MYSQLI_ASSOC) == NULL)) {
+                  $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
+                  $mtn_name = $mtn_rank["mtn_name"];
+                  $mtn_index = $mtn_rank["mtn_idx"];
+                  echo '<li><a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a></li>';
+                  $i++;
+                } else {
+                  break;
+                }
               }
               mysqli_free_result($res2);
               mysqli_free_result($res3);

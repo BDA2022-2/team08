@@ -7,8 +7,8 @@ if(mysqli_connect_errno()){
 
 session_start();
 
-$id_input = trim($_GET['user_id']);
-$pw_input = trim($_GET['user_pw']);
+$id_input = trim($_POST['user_id']);
+$pw_input = trim($_POST['user_pw']);
 
 if (!$id_input || !$pw_input) { // 하나라도 안 적으면 안됨
     echo "<script>alert('회원아이디나 비밀번호가 공백이면 안됩니다.');</script>";

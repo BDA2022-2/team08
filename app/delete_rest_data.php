@@ -5,8 +5,8 @@ if(mysqli_connect_errno()){
   exit();
 }
 
-$search_rest_name = $_GET['search_rest_name'];
-$search_rest_id = $_GET['search_rest_id'];
+$search_rest_name = $_POST['search_rest_name'];
+$search_rest_id = $_POST['search_rest_id'];
 
 $sql1 = "SELECT * FROM restaurants WHERE idx = '".$search_rest_id."'";
 $res1 = mysqli_query($mysqli, $sql1);

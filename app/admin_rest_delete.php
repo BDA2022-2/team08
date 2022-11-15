@@ -110,7 +110,7 @@ if(mysqli_connect_errno()){
 
     <div class="section">
       <div class="container">
-        <form action="./delete_rest_data.php" method="GET"> 
+        <form action="./delete_rest_data.php" method="POST"> 
           <div class="search_rest">
             <label for="search_rest">음식점 이름</label>
             <input type="text" id="search_rest" name="search_rest_name" class="form-control" />
