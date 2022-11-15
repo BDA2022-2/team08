@@ -1,3 +1,11 @@
+<?php
+$mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
+if(mysqli_connect_errno()){
+  printf("Connection failed: %s\n", mysqli_connect_error());
+  exit();
+}
+?>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -26,22 +34,62 @@
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
-    <div include-html="html/nav.html"></div>
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icofont-close js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <nav class="site-nav">
+      <div class="container">
+        <div class="menu-bg-wrap">
+          <div class="site-navigation">
+            <a href="index.html" class="logo m-0 float-start">
+              <img
+                src="images/logo_nav.png"
+                alt="Image"
+                object-fit="cover"
+                height="40px"
+              />
+            </a>
+
+            <ul
+              class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
+            >
+              <li><a href="admin_plant_insert.php">야생화 정보 생성하기</a></li>
+              <li><a href="admin_rest_insert.php">음식점 정보 생성하기</a></li>
+              <li><a href="admin_plant_delete.php">야생화 정보 삭제하기</a></li>
+              <li class="active"><a href="admin_rest_delete.php">음식점 정보 삭제하기</a></li>
+            </ul>
+
+            <a
+              href="#"
+              class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
+              data-toggle="collapse"
+              data-target="#main-navbar"
+            >
+              <span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <script>
       includeHTML();
     </script>
-
-    <!--image부분-->
     <div
       class="hero page-inner overlay"
       style="
         background-image: url('https://images.unsplash.com/photo-1438786657495-640937046d18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80');
-      "
-    >
+      ">
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">산 검색하기</h1>
+            <h1 class="heading" data-aos="fade-up">음식점 정보 삭제하기</h1>
             <nav
               aria-label="breadcrumb"
               data-aos="fade-up"
@@ -52,7 +100,6 @@
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
                 >
-                  지역이나 검색어로 산을 찾을 수 있습니다.
                 </li>
               </ol>
             </nav>
@@ -61,72 +108,23 @@
       </div>
     </div>
 
-    <!--상세 검색 페이지-->
     <div class="section">
       <div class="container">
-        <div class="search_boxes">
-          <p>지역별</p>
-          <div class="search_box">
-            <select name="" id="" onchange="categoryChange(this)">
-              <option value>시/도 선택</option>
-              <option value="all">전체</option>
-              <!--전체값 추가됨-->
-              <option value="seoul">서울</option>
-              <option value="busan">부산</option>
-              <option value="daegu">대구</option>
-              <option value="incheon">인천</option>
-              <option value="gwangju">광주</option>
-              <option value="daejeon">대전</option>
-              <option value="ulsan">울산</option>
-              <option value="sejong">세종</option>
-              <option value="gyeonggi">경기</option>
-              <option value="gangwon">강원</option>
-              <option value="chungbuk">충북</option>
-              <option value="chungnam">충남</option>
-              <option value="jeonbuk">전북</option>
-              <option value="jeonnam">전남</option>
-              <option value="gyeongbuk">경북</option>
-              <option value="gyeongnam">경남</option>
-              <option value="jeju">제주</option>
-            </select>
+        <form action="./delete_rest_data.php" method="GET"> 
+          <div class="search_rest">
+            <label for="search_rest">음식점 이름</label>
+            <input type="text" id="search_rest" name="search_rest_name" class="form-control" />
+            <label for="search_rest">음식점 번호(ID)</label>
+            <input type="text" id="search_flower" name="search_rest_id" class="form-control" />
           </div>
-
-          <div class="search_box">
-            <select name="" id="state">
-              <option>시/군/구 선택</option>
-            </select>
-          </div>
-
-          <p>산 검색</p>
-          <form
-            action="#"
-            class="narrow-w form-search d-flex align-items-stretch mb-3"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <input type="text" class="form-control px-4" />
-          </form>
-
-          <button type="submit" class="btn btn-primary">검색</button>
-          <button type="submit" class="btn btn-primary">초기화</button> <!--그냥 복붙만-->
-
-          <!--최근 검색, 방문 산 내역-->
-          <div>
-            최근에 검색한 산<a href=""></a></br>
-            최근에 방문한 산<a href=""></a>
-          </div>
-        </div>
-
-        <h2>현재 사용자들이 많이 방문한 산</h2>
-            <ol>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-              <li><a href=""></a></li>
-            </ol>
+          <div class="login-buttons">
+            <button type="submit" class="btn btn-primary">삭제하기</button>
+          </div>         
+        </form>
       </div>
     </div>
+
+    <?php mysqli_close($mysqli); ?>
 
     <footer include-html="html/footer.html"></footer>
     <script defer>

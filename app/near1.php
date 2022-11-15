@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -21,17 +22,16 @@
     <link rel="stylesheet" href="css/tiny-slider.css" />
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/near.css" />
+    <link rel="stylesheet" href="css/result.css" />
     <script src="js/includeHTML.js"></script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
-    <div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
-
-    <!--image부분-->
+    <?php
+    include 'html/nav.php'
+    ?>
     <div
       class="hero page-inner overlay"
       style="
@@ -41,7 +41,7 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">로그인</h1>
+            <h1 class="heading" data-aos="fade-up">근처 산 찾기</h1>
             <nav
               aria-label="breadcrumb"
               data-aos="fade-up"
@@ -52,6 +52,7 @@
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
                 >
+                  현재 위치와 가까운 산들을 방문해보세요!
                 </li>
               </ol>
             </nav>
@@ -60,26 +61,25 @@
       </div>
     </div>
 
-    <div class="section">
-      <div class="container">
-        <form action="./login_check.php" method="GET"> 
-          <div class="user-login">
-            <label for="user_id">아이디</label>
-            <input type="text" id="user_id" name="user_id" class="form-control" />
-          </div>
-          <div class="user-login">
-            <label for="user_pw">비밀번호</label>
-            <input
-              type="text"
-              id="user_pw"
-              name="user_pw"
-              class="form-control"
-            />
-          </div>
+    <!-- geolocation으로 사용자 위치 좌표 받아와(js), near.php로 post하기
+    <script type="text/javascript">
+      window.addEventListener('DOMCountentLoaded', navigator.geolocation.getCurrentPosition(success, failed));
+      function success(pos) {
+        const coord = pos.coords;
+        userLat = coord.latitude;
+        userLon = coord.longitude;
+        document.write('<form action="near.php" id="sbm_form" method="post"><input type="hidden" name="userLat" value="' + userLat + '"><input type="hidden" name="userLon" value="' + userLon + '"></form>');
+        document.getElementById('sbm_form').submit();
+      }
+      function failed(err) {
+        console.log("geoloc 실패");
+      }
+    </script> -->
 
-          <button type="submit" class="btn btn-primary">로그인</button>
-          <a href="./makeAccount.php" class="btn btn-primary">회원가입</a> <!--makeAccount.php 생성해야 함-->
-        </form>
+    <div class="section section-4 bg-light">
+      <div class="container">
+        <div class="row justify-content-between mb-5">
+        </div>
       </div>
     </div>
 
@@ -100,10 +100,9 @@
     <script src="js/tiny-slider.js"></script>
     <script src="js/aos.js"></script>
 
-    <script src="js/search.js"></script>
-
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/navbar.js"></script>
+    <script src="js/near.js"></script>
   </body>
 </html>

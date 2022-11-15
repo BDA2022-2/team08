@@ -29,10 +29,9 @@
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
   <body>
-    <div include-html="html/nav.html"></div>
-    <script>
-      includeHTML();
-    </script>
+    <?php
+    include 'html/nav.php'
+    ?>
     <div
       class="hero page-inner overlay"
       style="
@@ -64,27 +63,29 @@
 
     <!-- geolocation으로 사용자 위치 좌표 받아와, php 변수로 저장 -->
     <?php
-    if (isset($_POST['userLat'])) {
-      $userLat = $_POST['userLat'];
-      $userLon = $_POST['userLon'];
-      //echo $userLat;
-    } else {
-      echo "
-      <script type=\"text/javascript\">
-        window.addEventListener('DOMCountentLoaded', navigator.geolocation.getCurrentPosition(success, failed));
-        function success(pos) {
-          const coord = pos.coords;
-          userLat = coord.latitude;
-          userLon = coord.longitude;
-          document.write('<form action=\"near.php\" id=\"sbm_form\" method=\"post\"><input type=\"hidden\" name=\"userLat\" value=\"' + userLat + '\"><input type=\"hidden\" name=\"userLon\" value=\"' + userLon + '\"></form>');
-          document.getElementById('sbm_form').submit();
-        }
-        function failed(err) {
-          console.log(\"geoloc 실패\");
-        }
-      </script>
-      ";
-    }
+    $userLat = $_POST['userLat'];
+    $userLon = $_POST['userLon'];
+    // if (isset($_POST['userLat'])) {
+    //   $userLat = $_POST['userLat'];
+    //   $userLon = $_POST['userLon'];
+    //   //echo $userLat;
+    // } else {
+    //   echo "
+    //   <script type=\"text/javascript\">
+    //     window.addEventListener('DOMCountentLoaded', navigator.geolocation.getCurrentPosition(success, failed));
+    //     function success(pos) {
+    //       const coord = pos.coords;
+    //       userLat = coord.latitude;
+    //       userLon = coord.longitude;
+    //       document.write('<form action=\"near.php\" id=\"sbm_form\" method=\"post\"><input type=\"hidden\" name=\"userLat\" value=\"' + userLat + '\"><input type=\"hidden\" name=\"userLon\" value=\"' + userLon + '\"></form>');
+    //       document.getElementById('sbm_form').submit();
+    //     }
+    //     function failed(err) {
+    //       console.log(\"geoloc 실패\");
+    //     }
+    //   </script>
+    //   ";
+    // }
     ?>
     <!-- 카카오 REST API로 사용자 좌표>주소 변경 -->
     <?php

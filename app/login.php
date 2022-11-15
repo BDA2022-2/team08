@@ -4,7 +4,6 @@ if(mysqli_connect_errno()){
   printf("Connection failed: %s\n", mysqli_connect_error());
   exit();
 }
-
 ?>
 <html>
   <head>
@@ -32,22 +31,6 @@ if(mysqli_connect_errno()){
     <script src="js/includeHTML.js"></script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
-    <style>
-      form {
-        margin: 0px 300px;
-      }
-      .login-buttons {
-        diplay: inline;
-        position: relative;
-        left: 120px;
-      }
-      button {
-        margin: 10px;
-      }
-      a {
-        margin: 10px;
-      }
-    </style>
   </head>
   <body>
     <div include-html="html/nav.html"></div>
@@ -102,6 +85,10 @@ if(mysqli_connect_errno()){
         </form>
       </div>
     </div>
+
+    <?php
+    mysqli_close($mysqli); 
+    ?>
 
     <footer include-html="html/footer.html"></footer>
     <script defer>
