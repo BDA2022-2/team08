@@ -113,14 +113,14 @@
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-map-marker"></span>
-												<span class="caption">'.$created.'</span>
+												<span class="caption">방문일자: '.$visit_date.'</span>
 											</span>
 										</div>
 
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-star"></span>
-												<span class="caption">'.$mtn_rate.'</span>
+												<span class="caption">평점: '.$mtn_rate.'</span>
 											</span>
 										</div>
 		
