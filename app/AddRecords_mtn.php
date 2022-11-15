@@ -272,7 +272,6 @@
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
-	<footer include-html="html/footer.html"></footer>
    <script defer>
        includeHTML();
      </script>
