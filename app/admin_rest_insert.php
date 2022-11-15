@@ -1,3 +1,10 @@
+<?php
+$mysqli = mysqli_connect("localhost", "team08", "team08", "team08");
+if(mysqli_connect_errno()){
+  printf("Connection failed: %s\n", mysqli_connect_error());
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,8 +59,10 @@
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
             >
-              <li><a href="admin.html">야생화 정보 수정하기</a></li>
-              <li class="active"><a href="admin_rest.html">음식점 정보 수정하기</a></li>
+              <li><a href="admin_plant_insert.php">야생화 정보 생성하기</a></li>
+              <li class="active"><a href="admin_rest_insert.php">음식점 정보 생성하기</a></li>
+              <li><a href="admin_plant_delete.php">야생화 정보 삭제하기</a></li>
+              <li><a href="admin_rest_delete.php">음식점 정보 삭제하기</a></li>
             </ul>
 
             <a
@@ -72,24 +81,55 @@
     <script>
       includeHTML();
     </script>
-    <div class="hero">
-      <div class="hero-slide">
-        <div
-          class="img overlay"
-          style="background-image: url('images/hero_bg_3.jpg')"
-        ></div>
-        <div
-          class="img overlay"
-          style="background-image: url('images/hero_bg_2.jpg')"
-        ></div>
-        <div
-          class="img overlay"
-          style="background-image: url('images/hero_bg_1.jpg')"
-        ></div>
+    <div
+      class="hero page-inner overlay"
+      style="
+        background-image: url('https://images.unsplash.com/photo-1438786657495-640937046d18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80');
+      ">
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-lg-9 text-center mt-5">
+            <h1 class="heading" data-aos="fade-up">음식점 정보 생성하기</h1>
+            <nav
+              aria-label="breadcrumb"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <ol class="breadcrumb text-center justify-content-center">
+                <li
+                  class="breadcrumb-item active text-white-50"
+                  aria-current="page"
+                >
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
       </div>
     </div>
+    
+    <div class="section">
+		  <div class="container">
+        <div class="row">
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+            <form action="./insert_rest_data.php" method="GET">
+              <div class="row">
+                <input type="text" class="form-control" name="ID" placeholder="ID">
+                <input type="text" class="form-control" name="rest_name" placeholder="음식점 이름">
+                <input type="text" class="form-control" name="road_base_add" placeholder="도로명 주소">
+                <input type="text" class="form-control" name="address" placeholder="지번 주소">
+                <input type="text" class="form-control" name="status" placeholder="영업여부(Y/N)">
+                <input type="text" class="form-control" name="menu_type" placeholder="음식의 유형">
+                <input type="text" class="form-control" name="menu" placeholder="주된 음식 종류">
+                <input type="text" class="form-control" name="tel" placeholder="전화번호">
+                <input type="submit" value="생성하기" class="btn btn-primary">               
+              </div>
+            </form>
+          </div>
+			</div>
+		</div>
 
-    음식점 정보수정 화면입니다.
+    <?php mysqli_close($mysqli); ?>
 
     <footer include-html="html/footer.html"></footer>
     <script defer>

@@ -127,6 +127,9 @@ $user_id = $_SESSION["ss_id"];
           }
           echo '<div>최근 검색어</div>';
           echo '<a href="./result.php?region_1depth_name='.$search_region1.'&region_2depth_name='.$search_region2.'&mtn_name='.$search_name.'">'.$search_region1.' '.$search_region2.' '.$search_name.'</a>';
+          if($search_region1 || $search_region2 || $search_name) {
+            echo '<a href="./delete_search.php?del='.$user_id.'"> X</a>';
+          }
 
           $sql3 = "SELECT * FROM mtn_review WHERE user_id = '".$user_id."' ORDER BY visit_date DESC LIMIT 1";
           $res3 = mysqli_query($mysqli, $sql3);
@@ -156,6 +159,10 @@ $user_id = $_SESSION["ss_id"];
                 echo '<li><a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a></li>';
                 $i++;
               }
+              mysqli_free_result($res2);
+              mysqli_free_result($res3);
+              mysqli_free_result($res4);
+              mysqli_close($mysqli);
             ?>
             </ol>
       </div>
