@@ -182,7 +182,7 @@
                         <span class=\"caption\">".$review_count."개</span>
                       </span>
                     </div>
-                    <form action=\"info.php\" method=\"get\">
+                    <form action=\"info.php\" method=\"post\">
                     <input type=\"hidden\" name=\"mtn_index\" value=\"".$mtn_index."\"/>
                     <input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\"/>
                       <input
