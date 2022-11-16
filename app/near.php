@@ -61,31 +61,10 @@
       </div>
     </div>
 
-    <!-- geolocation으로 사용자 위치 좌표 받아와, php 변수로 저장 -->
+    <!-- near1.php에서 geolocation으로 사용자 위치 좌표 받아와 near.php로 POST, php 변수로 저장 -->
     <?php
     $userLat = $_POST['userLat'];
     $userLon = $_POST['userLon'];
-    // if (isset($_POST['userLat'])) {
-    //   $userLat = $_POST['userLat'];
-    //   $userLon = $_POST['userLon'];
-    //   //echo $userLat;
-    // } else {
-    //   echo "
-    //   <script type=\"text/javascript\">
-    //     window.addEventListener('DOMCountentLoaded', navigator.geolocation.getCurrentPosition(success, failed));
-    //     function success(pos) {
-    //       const coord = pos.coords;
-    //       userLat = coord.latitude;
-    //       userLon = coord.longitude;
-    //       document.write('<form action=\"near.php\" id=\"sbm_form\" method=\"post\"><input type=\"hidden\" name=\"userLat\" value=\"' + userLat + '\"><input type=\"hidden\" name=\"userLon\" value=\"' + userLon + '\"></form>');
-    //       document.getElementById('sbm_form').submit();
-    //     }
-    //     function failed(err) {
-    //       console.log(\"geoloc 실패\");
-    //     }
-    //   </script>
-    //   ";
-    // }
     ?>
     <!-- 카카오 REST API로 사용자 좌표>주소 변경 -->
     <?php
@@ -163,37 +142,37 @@
                 $mtn_height = $position[5]; 
                 $mtn_rate = number_format((float)$position[6],2);
                 $review_count = (int) $position[7];                    
-                echo "
-                <div class=\"property-content\" style=\"margin-bottom:45px\">
-                  <div class=\"price mb-2\"><span>".$mtn_name."</span></div>
+                printf('
+                <div class="property-content" style="margin-bottom:45px">
+                  <div class="price mb-2"><span>%s</span></div>
                   <div>
-                    <span class=\"d-block mb-2 text-black-50\">".$mtn_address."</span>
-                    <div class=\"specs d-flex mb-4\">
-                      <span class=\"d-block d-flex align-items-center me-3\">
-                        <span class=\"icon-arrow-circle-up me-2\"></span>
-                        <span class=\"caption\">".$mtn_height."m</span>
+                    <span class="d-block mb-2 text-black-50">%s</span>
+                    <div class="specs d-flex mb-4">
+                      <span class="d-block d-flex align-items-center me-3">
+                        <span class="icon-arrow-circle-up me-2"></span>
+                        <span class="caption">%sm</span>
                       </span>
-                      <span class=\"d-block d-flex align-items-center\" style=\"margin-right:20px;\">
-                        <span class=\"icon-star2 me-2\"></span>
-                        <span class=\"caption\" style=\"margin-left:-4px;\">".$mtn_rate."점</span>
+                      <span class="d-block d-flex align-items-center" style="margin-right:20px;">
+                        <span class="icon-star2 me-2"></span>
+                        <span class="caption" style="margin-left:-4px;">%s점</span>
                       </span>
-                      <span class=\"d-block d-flex align-items-center\">
-                        <span class=\"icon-pencil me-2\"></span>
-                        <span class=\"caption\">".$review_count."개</span>
+                      <span class="d-block d-flex align-items-center">
+                        <span class="icon-pencil me-2"></span>
+                        <span class="caption">%d개</span>
                       </span>
                     </div>
-                    <form action=\"info.php\" method=\"post\">
-                    <input type=\"hidden\" name=\"mtn_index\" value=\"".$mtn_index."\"/>
-                    <input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\"/>
+                    <form action="info.php" method="post">
+                    <input type="hidden" name="mtn_index" value="%d"/>
+                    <input type="hidden" name="mtn_name" value="%s"/>
                       <input
-                        class=\"btn btn-primary py-2 px-3\"
-                        type=\"submit\"
-                        value=\"See details\"
+                        class="btn btn-primary py-2 px-3"
+                        type="submit"
+                        value="See details"
                       />
                     </form>
                   </div>
                 </div>
-              ";
+                ', $mtn_name, $mtn_address, $mtn_height, $mtn_rate, $review_count, $mtn_index, $mtn_name);
               }
               ?>
             </div>
@@ -227,13 +206,13 @@
       const userLat = "<?php echo $userLat; ?>";
       const userLon = "<?php echo $userLon; ?>";
       const positions = <?php echo json_encode($positions); ?>;
-      console.log(positions);
+      //console.log(positions);
       const userPosition = new kakao.maps.LatLng(userLat, userLon);
       // 지도 생성
       const mapContainer = document.getElementById("map");
       const mapOption = {
         center: new kakao.maps.LatLng(userLat, userLon),
-        level: 6,
+        level: 7,
       };
       const map = new kakao.maps.Map(mapContainer, mapOption);
       // 사용자 위치 마커
@@ -249,9 +228,13 @@
       for (let i = 0; i < positions.length; i++) {
         const content =
           '<div class="customoverlay">' +
-          `  <a href="http://localhost/team08/app/info.php?mtn_index=${Number(positions[i][0])}&mtn_name=${positions[i][1]}">` +
-          `    <span class="title">${positions[i][1]}</span>` +
-          "  </a>" +
+          ` <form id="customoverlay_form" action="info.php" method="post">` +
+          `   <input type="hidden" name="mtn_index" value = ${Number(positions[i][0])} />` +
+          `   <input type="hidden" name="mtn_name" value = ${positions[i][1]} />` +
+          " </form>" +
+          ` <a href="javascript:submitAtag();">` +
+          `   <span class="title">${positions[i][1]}</span>` +
+          " </a>" +
           "</div>";
         const latlng = new kakao.maps.LatLng(Number(positions[i][3]), Number(positions[i][2]));
         const customOverlay = new kakao.maps.CustomOverlay({
@@ -263,6 +246,12 @@
         customOverlay.setMap(map);
       }
       map.setCenter(userPosition);
+
+      // form 제출 위한 js function
+      function submitAtag(){
+        const customoverlay_form = document.getElementById("customoverlay_form");
+        customoverlay_form.submit();
+      }
     </script>
     <!-- <script src="js/map.js"></script> -->
   </body>
