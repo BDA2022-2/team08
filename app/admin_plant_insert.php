@@ -29,6 +29,7 @@ if(mysqli_connect_errno()){
     <link rel="stylesheet" href="css/tiny-slider.css" />
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/admin_insert.css?after" />
     <script src="js/includeHTML.js"></script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
@@ -108,8 +109,8 @@ if(mysqli_connect_errno()){
       </div>
     </div>
     
-    <div class="section">
-		  <div class="container">
+    <div class="section" id="form-section">
+		  <div class="container"id="form-section">
         <div class="row">
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
             <form action="./insert_plant_data.php" method="POST">
@@ -122,8 +123,9 @@ if(mysqli_connect_errno()){
                 <input type="text" class="form-control" name="blossom" placeholder="개화기 시작(월)">
                 <input type="text" class="form-control" name="falloff" placeholder="결실기(월)">
                 <input type="text" class="form-control" name="is_protected" placeholder="보호식물여부(Y/N)">
-                <input type="text" class="form-control" name="falloff" placeholder="특산식물여부(Y/N)">
+                <input type="text" class="form-control" name="is_special" placeholder="특산식물여부(Y/N)">
                 <input type="text" class="form-control" name="size" placeholder="크기 설명">
+                <input type="text" class="form-control" name="url" placeholder="이미지 URL">
                 <input type="submit" value="생성하기" class="btn btn-primary">               
               </div>
             </form>

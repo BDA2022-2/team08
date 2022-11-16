@@ -1,1 +1,15 @@
+/* .search_boxes {
+    display: inline-block;
+} */
 
+.search_box {
+    display: inline-block;
+}
+
+#input_text {
+    display: inline;
+    width: 500px;
+}
+button {
+    display: inline;
+}
