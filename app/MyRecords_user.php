@@ -14,14 +14,15 @@
 		die("error: could not connect".mysqli_connect_error());
 	}else{
 		//prepare an insert statement
-        $sql="DELETE FROM `team08`.`mtn_review` WHERE review_id=?";
+        $sql="DELETE FROM `team08`.`mtn_review` WHERE review_id=? and user_id=?";
 		
 		if($stmt=mysqli_prepare($link,$sql)){
 			//bind variables to the prepared stmt as parameters
-			mysqli_stmt_bind_param($stmt,"s",$review_id);
+			mysqli_stmt_bind_param($stmt,"ss",$review_id,$user_id);
 			
 			//set parameters
 			$review_id=trim($_POST['review_id']);
+			$user_id=trim($_SESSION["ss_id"]);
 			
 			//attempt to execute the prepared statement
 			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
