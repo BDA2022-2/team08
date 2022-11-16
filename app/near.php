@@ -62,9 +62,20 @@
     </div>
 
     <!-- near1.php에서 geolocation으로 사용자 위치 좌표 받아와 near.php로 POST, php 변수로 저장 -->
+    <!-- info.php에서 뒤로가기로 접근 시, near.php의 사용자 위치 좌표 유지를 위해 세션에 저장한 후, 세션 변수 사용 -->
     <?php
-    $userLat = $_POST['userLat'];
-    $userLon = $_POST['userLon'];
+    if (isset($_POST['userLat'])) {
+      $userLat = $_POST['userLat'];
+      $_SESSION["userLat"] = $userLat;
+    } else { // 뒤로가기로 접근시
+      $userLat = $_SESSION["userLat"];
+    }
+    if (isset($_POST['userLon'])) {
+      $userLon = $_POST['userLon'];
+      $_SESSION["userLon"] = $userLon;
+    } else { // 뒤로가기로 접근시
+      $userLon = $_SESSION["userLon"];
+    }
     ?>
     <!-- 카카오 REST API로 사용자 좌표>주소 변경 -->
     <?php

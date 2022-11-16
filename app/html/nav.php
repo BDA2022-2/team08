@@ -6,6 +6,10 @@
 		$user_id = $_SESSION["ss_id"];
 		$user_name = $_SESSION["ss_name"];
 	}
+	if (isset($_SESSION["userLat"])) {
+		$userLat = $_SESSION["userLat"];
+		$userLon = $_SESSION["userLon"];
+	}
 ?>
 
 <div class="site-mobile-menu site-navbar-target">
