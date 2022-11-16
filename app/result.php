@@ -30,23 +30,6 @@
   <body>
     <!-- result.php로 넘어오는 변수들 -->
     <?php
-      // 세션에서 user_id 받아오기
-      // $status = session_status();
-      // if($status == PHP_SESSION_NONE){
-      //     //There is no active session
-      //     session_start();
-      // }else
-      // if($status == PHP_SESSION_DISABLED){
-      //     //Sessions are not available
-      // }else
-      // if($status == PHP_SESSION_ACTIVE){
-      //     //Destroy current and start new one
-      //     session_destroy();
-      //     session_start();
-      // }
-      // $user_id = $_SESSION['ss_id'];
-
-      // result.php로 넘어오는 변수들
       $mtn_name = $_POST['mtn_name'];
       $region_1depth_name = $_POST['region_1depth_name'];
       $region_2depth_name = $_POST['region_2depth_name'];
@@ -94,7 +77,7 @@
       </div>
     </div>
 
-    <!-- 결과 보여주는 영역 -->
+    <!-- 검색 결과 보여주는 영역 -->
     <div class="section">
       <div class="container">
         <div class="col-lg-6">
@@ -105,7 +88,7 @@
           </h2>',$region_1depth_name, $region_2depth_name, $mtn_name);
           ?>
         </div>
-        <!-- 필터링 버튼 & 정렬 드롭다운박스 -->
+        <!-- 필터링 초기화 버튼 & 필터링 버튼 & 정렬 드롭다운박스 -->
         <div class="filter-and-sort">
           <form id="undo" class="undo" method="post" <?php echo (($filter_rate==0 and $filter_visitor==0) ? "style=\"display: none\"" : "");?>>
             <?php
