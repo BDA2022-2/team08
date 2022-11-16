@@ -1,18 +1,21 @@
-#login-section {
-    height: 400px;
-}
-#login-container {
+/* #form-section {
+
+} */
+
+#form-container {
     display: inline-block;
     width: 500px;
     position: absolute;
     left: 50%;
     top: 100%;
-    transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%);
 }
 
-.login-buttons {
-    text-align: center;
-}
 .btn btn-primary {
     display: inline;
 }
+
+.form-control {
+    margin: 10px;
+}
+

@@ -33,6 +33,23 @@ if(mysqli_connect_errno()){
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/includeHTML.js"></script>
+    <script>
+       function submitAtag(){
+        const customoverlay_form = document.getElementById("customoverlay_form");
+        customoverlay_form.submit();
+        for (let i = 0; i < positions.length; i++) {
+        const content =
+          '<div class="customoverlay">' +
+          ` <form id="customoverlay_form" action="info.php" method="post">` +
+          `   <input type="hidden" name="mtn_index" value = ${Number(positions[i][0])} />` +
+          `   <input type="hidden" name="mtn_name" value = ${positions[i][1]} />` +
+          " </form>" +
+          ` <a href="javascript:submitAtag();">` +
+          `   <span class="title">${positions[i][1]}</span>` +
+          " </a>" +
+          "</div>";
+      }
+    </script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
@@ -71,7 +88,7 @@ if(mysqli_connect_errno()){
       </div>
     </div>
 
-    <!--상세 검색(지역1, 지역2, 검색어-->
+    <!--상세 검색(지역1, 지역2, 검색어)-->
     <div class="section">
       <div class="container">
         <form action="./result.php" method="POST">
@@ -104,14 +121,15 @@ if(mysqli_connect_errno()){
                 <option value="">시/군/구 선택</option>
               </select>
             </div>
-
-            <span>산 검색</span>
-            <input type="text" name="mtn_name" class="form-control px-4" />
-            <button type="submit" class="btn btn-primary">검색</button>
+            <br><br>
+            <div class="search_mtn">
+              <input type="text" name="mtn_name" class="form-control px-4" id="input_text" placeholder="검색어를 입력하세요."/>
+              <button type="submit" class="btn btn-primary">검색</button>
+            </div>
           </div>
         </form>
 
-        <!-- 최근 검색 및 최근 방문 기록 -->
+        <div class="recent">
         <?php
           $sql2 = "SELECT * FROM user WHERE user_id = '".$user_id."'";
           $res2 = mysqli_query($mysqli, $sql2);
@@ -141,13 +159,14 @@ if(mysqli_connect_errno()){
             printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
           }
           echo '<div>최근에 방문한 산</div>';
-          echo '<a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_idx.'">'.$mtn_name.'</a>';
+          //echo '<a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_idx.'">'.$mtn_name.'</a>';
         ?>
+        </div>
 
         <!-- 사용자들이 가장 많이 방문한 산 TOP 5 -->
           <ol>
             <?php
-              $sql4 ="SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN NOW() AND DATE_ADD(NOW(),INTERVAL 1 WEEK) GROUP BY mtn_idx";
+              $sql4 ="SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK) AND NOW() GROUP BY mtn_idx";
               $res4 = mysqli_query($mysqli, $sql4);
               if(!(mysqli_fetch_array($res4,MYSQLI_ASSOC) == NULL)) {
                 echo '<h2>현재 사용자들이 많이 방문한 산</h2>';

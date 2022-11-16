@@ -43,7 +43,10 @@ if(mysqli_connect_errno()){
         //Destroy current and start new one
         session_destroy();
     }
-    ?>
+  ?>
+  <?php
+    include 'html/nav.php'
+  ?>
 
     <!-- image부분 -->
     <div
@@ -79,6 +82,7 @@ if(mysqli_connect_errno()){
           <div class="user-login">
             <input type="text" id="user_id" name="user_id" class="form-control" placeholder="ID"/>
           </div>
+          <br>
           <div class="user-login">
             <input type="password" id="user_pw" name="user_pw" class="form-control" placeholder="Password">
           </div>

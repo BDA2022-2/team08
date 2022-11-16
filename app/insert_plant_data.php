@@ -5,18 +5,19 @@ if(mysqli_connect_errno()){
   exit();
 }
 
-$id = $_GET['ID'];
-$kr_name = $_GET['kr_name'];
-$sci_name = $_GET['sci_name'];
-$kr_family_name = $_GET['kr_family_name'];
-$sci_family_name = $_GET['sci_family_name'];
-$blossom = $_GET['blossom'];
-$falloff = $_GET['falloff'];
-$is_protected = $_GET['is_protected'];
-$is_special = $_GET['is_special'];
-$size = $_GET['size'];
+$id = $_POST['ID'];
+$kr_name = $_POST['kr_name'];
+$sci_name = $_POST['sci_name'];
+$kr_family_name = $_POST['kr_family_name'];
+$sci_family_name = $_POST['sci_family_name'];
+$blossom = $_POST['blossom'];
+$falloff = $_POST['falloff'];
+$is_protected = $_POST['is_protected'];
+$is_special = $_POST['is_special'];
+$size = $_POST['size'];
+$img_url = $_POST['url'];
 
-$sql = "INSERT INTO plant_species VALUES ('".$id."', '".$kr_name."', '".$sci_name."', '".$kr_family_name."', '".$sci_family_name."', '".$blossom."', '".$falloff."', '".$is_protected."', '".$is_special."', '".$size."')";
+$sql = "INSERT INTO plant_species VALUES ('".$id."', '".$kr_name."', '".$sci_name."', '".$kr_family_name."', '".$sci_family_name."', '".$blossom."', '".$falloff."', '".$is_protected."', '".$is_special."', '".$size."', '".$url."')";
 
 $res = mysqli_query($mysqli, $sql);
 if($res) {
