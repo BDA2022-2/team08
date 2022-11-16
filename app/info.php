@@ -342,17 +342,16 @@
 				<div class="col-md-12">
 					<h2 class="font-weight-bold heading text-primary mb-4 mb-md-0">날씨 기반 안전 정보</h2>
 				</div>
-				<div class="col-8 col-lg-4 mt-4"  data-aos="fade-up" data-aos-delay="500">
+				<div class="col-8 col-lg-4 mt-4"  data-aos="fade-up" data-aos-delay="400">
 					<div class="box-feature">
-						<h5 class="mb-3">산사태</h5>
-						<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+						<h5 class="mb-3">산사태 예보</h5>
+						<span class="caption text-black text-opacity-75">발생 횟수</span>
+						<div class="col-6 col-sm-6 col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="400">
 							<div class="counter-wrap mb-5 mb-lg-0">
-								<span class="caption text-black text-opacity-75">발생 횟수</span>
-								<span class="number"><span class="countup text-primary">
 									<?php
-										#DB 연결 - 산사태 발생횟수 가져오기
+										#DB 연결 - 산사태 예보 발생횟수 가져오기
 										$mtn_addr_arr = explode(' ', $mtn_addr);
-										$WS_L = [(int)$WSD, (int)$WSD + 0.9];
+										$T1H_L = [(int)$T1H - 2.5, (int)$T1H + 2.5];
 										$sql = "SELECT
 													tb_l.fc_type,
 													COUNT(*) AS cou
@@ -378,7 +377,7 @@
 																	spot_no
 																WHERE
 																	city LIKE '".$mtn_addr_arr[1]."%'
-																AND two_meter_tprt BETWEEN ".$WS_L[0]." AND ".$WS_L[1]." AND two_meter_wdsp <= ".$WSD." AND two_meter_hmdt <= ".$REH." AND wght_rain_qntt <= ".$PCP."
+																AND two_meter_tprt BETWEEN ".$T1H_L[0]." AND ".$T1H_L[1]." AND two_meter_wdsp <= ".$WSD." AND two_meter_hmdt <= ".$REH." AND wght_rain_qntt <= ".$PCP."
 															)
 														) AS t
 														)
@@ -387,13 +386,16 @@
 														t.df_obsrt_tm_hour
 												) AS tb_w
 												ON
-													tb_w.dat BETWEEN tb_l.start_date AND tb_l.end_date;";
+												ADDTIME(tb_w.dat, tb_w.hou) BETWEEN ADDTIME(tb_l.start_date, tb_l.start_time) AND ADDTIME(tb_l.end_date, tb_l.end_time);";
 										$res = mysqli_query($mysqli, $sql);
 										if($res) {
 											while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
 												$type = $row["fc_type"];
 												$count = $row["cou"];
-												echo $count;
+												echo '<div class="mb-5 mb-lg-0">
+														<span class="number">
+															<span class="h5 my-5 text-black text-opacity-75">'.$type.' </span><span class="countup text-primary">'.$count.'</span><span class="h5 text-black text-opacity-75">회</span></span>
+													</div>';
 											}
 										}
 										else {
@@ -401,19 +403,17 @@
 										}
 										mysqli_free_result($res);
 									?>
-									<span class="h5 text-black text-opacity-75">회</span>
-								</span></span>
 							</div>
 						</div>
 					</div>
 					<div class="box-feature">
-						<h5 class="mb-3">산불</h5>
-						<div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+						<h5 class="mb-3">산불 예보</h5>
+						<div class="col-6 col-sm-6 col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="400">
 							<div class="counter-wrap mb-5 mb-lg-0">
 								<span class="caption text-black text-opacity-75">발생 횟수</span>
-								<span class="number"><span class="countup text-primary">
 									<?php
-										#DB 연결 - 산불 발생횟수 가져오기
+										#DB 연결 - 산불 예보 발생횟수 가져오기
+										$WS_L = [(int)$WSD, (int)$WSD + 0.9];
 										$sql = "SELECT COUNT(*) as cou FROM fire_fc WHERE address LIKE '".$mtn_addr_arr[1]."%' AND effective_humidity >= ".$REH." AND wind_speed BETWEEN ".$WS_L[0]." AND ".$WS_L[1].";";
 										$res = mysqli_query($mysqli, $sql);
 										if($res) {
@@ -425,10 +425,9 @@
 											printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
 										}
 										mysqli_free_result($res);
-										echo $count;
+										echo '<span class="number"><span class="countup text-primary">'.$count.'</span><span class="caption h5 text-black text-opacity-75">회</span>
+											 </span>';
 									?>
-									<span class="caption h5 text-black text-opacity-75">회</span>
-								</span></span>
 							</div>
 						</div>
 					</div>
