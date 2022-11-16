@@ -99,17 +99,20 @@
       <div class="container">
         <div class="col-lg-6">
           <?php
-          echo"<h2 class=\"font-weight-bold text-primary heading\">".$region_1depth_name." ".$region_2depth_name." ".$mtn_name."</h2>";
+          printf('
+          <h2 class="font-weight-bold text-primary heading">
+          %s %s %s          
+          </h2>',$region_1depth_name, $region_2depth_name, $mtn_name);
           ?>
         </div>
         <!-- 필터링 버튼 & 정렬 드롭다운박스 -->
         <div class="filter-and-sort">
           <form id="undo" class="undo" method="post" <?php echo (($filter_rate==0 and $filter_visitor==0) ? "style=\"display: none\"" : "");?>>
             <?php
-              echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
-              echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
-              echo "<input type=\"hidden\" name=\"region_2depth_name\" value=\"".$region_2depth_name."\" />";
-              echo "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\" />"
+              printf('<input type="hidden" name="mtn_name" value="%s" />
+                      <input type="hidden" name="region_1depth_name" value="%s" />
+                      <input type="hidden" name="region_2depth_name" value="%s" />
+                      <input type="hidden" name="sort" value="%s" />', $mtn_name, $region_1depth_name, $region_2depth_name, $sort);
             ?>
             <span class="icon-undo me-2"></span>
             <button
@@ -120,13 +123,13 @@
           </form>
           <form id="filter-rate" class="filter-rate" method="post">
             <?php
-              echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
-              echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
-              echo "<input type=\"hidden\" name=\"region_2depth_name\" value=\"".$region_2depth_name."\" />";
-              echo "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\" />"
+              printf('<input type="hidden" name="mtn_name" value="%s" />
+                      <input type="hidden" name="region_1depth_name" value="%s" />
+                      <input type="hidden" name="region_2depth_name" value="%s" />
+                      <input type="hidden" name="sort" value="%s" />', $mtn_name, $region_1depth_name, $region_2depth_name, $sort);
             ?>
             <input
-              <?php echo (array_key_exists('filter_rate',$_POST) ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
+              <?php echo ($filter_rate ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
               type="submit"
               name="filter_rate"              
               value="방문 평점 3.5 이상"
@@ -134,13 +137,13 @@
           </form>
           <form id="filter-visitor" class="filter-visitor" method="post">
             <?php
-              echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
-              echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
-              echo "<input type=\"hidden\" name=\"region_2depth_name\" value=\"".$region_2depth_name."\" />";
-              echo "<input type=\"hidden\" name=\"sort\" value=\"".$sort."\" />"
+              printf('<input type="hidden" name="mtn_name" value="%s" />
+                      <input type="hidden" name="region_1depth_name" value="%s" />
+                      <input type="hidden" name="region_2depth_name" value="%s" />
+                      <input type="hidden" name="sort" value="%s" />', $mtn_name, $region_1depth_name, $region_2depth_name, $sort);
             ?>
             <input
-              <?php echo (array_key_exists('filter_visitor',$_POST) ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
+              <?php echo ($filter_visitor ? "style=\"background-color: #f1eee9; color: #a37551; border: 1px solid #f1eee9;\"" : "");?>
               type="submit"
               name="filter_visitor"              
               value="방문 리뷰 5개 이상"
@@ -148,11 +151,11 @@
           </form>
           <form id="sort" class="sort" method="post">
             <?php
-            echo "<input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\" />";
-            echo "<input type=\"hidden\" name=\"region_1depth_name\" value=\"".$region_1depth_name."\" />";
-            echo "<input type=\"hidden\" name=\"region_2depth_name\" value=\"".$region_2depth_name."\" />";
-            echo ($filter_rate ? "<input type=\"hidden\" name=\"filter_rate\" value=\"".$filter_rate."\" />" : "");
-            echo ($filter_visitor ? "<input type=\"hidden\" name=\"filter_rate\" value=\"".$filter_visitor."\" />" : "");
+              printf('<input type="hidden" name="mtn_name" value="%s" />
+              <input type="hidden" name="region_1depth_name" value="%s" />
+              <input type="hidden" name="region_2depth_name" value="%s" />', $mtn_name, $region_1depth_name, $region_2depth_name);
+              echo ($filter_rate ? "<input type=\"hidden\" name=\"filter_rate\" value=\"".$filter_rate."\" />" : "");
+              echo ($filter_visitor ? "<input type=\"hidden\" name=\"filter_visitor\" value=\"".$filter_visitor."\" />" : "");
             ?>
             <select name="sort" onChange="this.form.submit();">
               <option value="idx">-- 정렬 --</option>
@@ -205,37 +208,37 @@
                 $review_count = $newArray['cnt'];
                 $ranking = $newArray['ranking'];
 
-                echo "
-                <div class=\"property-content\" style=\"margin-bottom:120px\">
-                  <div class=\"price mb-2\"><span>".$mtn_name."</span></div>
+                printf('
+                <div class="property-content" style="margin-bottom:120px">
+                  <div class="price mb-2"><span>%s</span></div>
                   <div>
-                    <span class=\"d-block mb-2 text-black-50\">".$mtn_address."</span>
-                    <div class=\"specs d-flex mb-4\">
-                      <span class=\"d-block d-flex align-items-center me-3\">
-                        <span class=\"icon-arrow-circle-up me-2\"></span>
-                        <span class=\"caption\">".$mtn_height."m</span>
+                    <span class="d-block mb-2 text-black-50">%s</span>
+                    <div class="specs d-flex mb-4">
+                      <span class="d-block d-flex align-items-center me-3">
+                        <span class="icon-arrow-circle-up me-2"></span>
+                        <span class="caption">%sm</span>
                       </span>
-                      <span class=\"d-block d-flex align-items-center\" style=\"margin-right:20px;\">
-                        <span class=\"icon-star2 me-2\"></span>
-                        <span class=\"caption\" style=\"margin-left:-4px;\">".$mtn_rate."점</span>
+                      <span class="d-block d-flex align-items-center" style="margin-right:20px;">
+                        <span class="icon-star2 me-2"></span>
+                        <span class="caption" style="margin-left:-4px;">%s점</span>
                       </span>
-                      <span class=\"d-block d-flex align-items-center\">
-                        <span class=\"icon-pencil me-2\"></span>
-                        <span class=\"caption\">".$review_count."개</span>
+                      <span class="d-block d-flex align-items-center">
+                        <span class="icon-pencil me-2"></span>
+                        <span class="caption">%d개</span>
                       </span>
                     </div>
-                    <form action=\"info.php\" method=\"post\">
-                    <input type=\"hidden\" name=\"mtn_index\" value=\"".$mtn_index."\"/>
-                    <input type=\"hidden\" name=\"mtn_name\" value=\"".$mtn_name."\"/>
+                    <form action="info.php" method="post">
+                    <input type="hidden" name="mtn_index" value="%d"/>
+                    <input type="hidden" name="mtn_name" value="%s"/>
                       <input
-                        class=\"btn btn-primary py-2 px-3\"
-                        type=\"submit\"
-                        value=\"See details\"
+                        class="btn btn-primary py-2 px-3"
+                        type="submit"
+                        value="See details"
                       />
                     </form>
                   </div>
                 </div>
-                ";
+                ', $mtn_name, $mtn_address, $mtn_height, $mtn_rate, $review_count, $mtn_index, $mtn_name);
               }
             } else {
               printf("error");
