@@ -75,28 +75,56 @@
               <img src="images/logo_main.png" class="img-icon">
             </h1>
             <div class="row justify-content-center align-items-center">
-              <div
-                onclick="location.href='near1.php'"
-                class="col-6 col-lg-5"
-                data-aos="fade-up"
-                data-aos-delay="300"
-              >
-                <div class="box-feature">
-                  <img src="images/mountain.svg" class="img-icon">
-                  <p><a href="near1.php" class="learn-more"><h3>근처 산 둘러보기</h3></a></p>
-                </div>
-              </div>
-              <div
-                onclick="location.href='search.php'"
-                class="col-6 col-lg-5"
-                data-aos="fade-up"
-                data-aos-delay="400"
-              >
-                <div class="box-feature">
-                  <img src="images/location.svg" class="img-icon">
-                  <p><a href="search.php" class="learn-more"><h3>산 검색하기</h3></a></p>
-                </div>
-              </div>
+              <?php
+                if ($login) {
+                  echo '<div
+                    onclick="location.href=\'near1.php\'"
+                    class="col-6 col-lg-5"
+                    data-aos="fade-up"
+                    data-aos-delay="300"
+                  >
+                    <div class="box-feature">
+                      <img src="images/mountain.svg" class="img-icon">
+                      <p><a href="near1.php" class="learn-more"><h3>근처 산 둘러보기</h3></a></p>
+                    </div>
+                  </div>
+                  <div
+                    onclick="location.href=\'search.php\'"
+                    class="col-6 col-lg-5"
+                    data-aos="fade-up"
+                    data-aos-delay="400"
+                  >
+                    <div class="box-feature">
+                      <img src="images/location.svg" class="img-icon">
+                      <p><a href="search.php" class="learn-more"><h3>산 검색하기</h3></a></p>
+                    </div>
+                  </div>';
+                }
+                else {
+                  echo '<div
+                    onclick="location.href=\'login.php\'"
+                    class="col-6 col-lg-5"
+                    data-aos="fade-up"
+                    data-aos-delay="300"
+                  >
+                    <div class="box-feature">
+                      <img src="images/mountain.svg" class="img-icon">
+                      <p><a href="login.php" class="learn-more"><h3>근처 산 둘러보기</h3></a></p>
+                    </div>
+                  </div>
+                  <div
+                    onclick="location.href=\'login.php\'"
+                    class="col-6 col-lg-5"
+                    data-aos="fade-up"
+                    data-aos-delay="400"
+                  >
+                    <div class="box-feature">
+                      <img src="images/location.svg" class="img-icon">
+                      <p><a href="login.php" class="learn-more"><h3>산 검색하기</h3></a></p>
+                    </div>
+                  </div>';
+                }
+              ?>
             </div>
             <span class="text-white">
               <?php
@@ -120,7 +148,7 @@
                 }
                 mysqli_free_result($res);
                 mysqli_close($mysqli);
-                echo $rule_arr[rand()%count($rule_arr)];
+                echo '<i>"'.$rule_arr[rand()%count($rule_arr)].'"</i>';
               ?>
             </span>
           </div>

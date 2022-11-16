@@ -28,28 +28,37 @@
 
 						<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
 							<li class="active"><a href="index.php">Home</a></li>
-							<li><a href="near1.php">근처 산 찾기</a></li>
-							<li><a href="search.php">산 검색하기</a></li>
-							<li class="has-children">
-								<a href="#">산행 기록</a>
-								<ul class="dropdown">
-									<li><a href="MyRecords.php">나의 산행 기록</a></li>
-									<li><a href="AddRecords.php">산행 기록 추가</a></li>
-								</ul>
-							</li>
 							<?php
 								if ($login) {
-									echo '<li class="has-children">
-											<a href="#">'.$user_name.'님</a>
+									echo '<li><a href="near1.php">근처 산 찾기</a></li>
+										<li><a href="search.php">산 검색하기</a></li>
+										<li class="has-children">
+											<a href="#">산행 기록</a>
 											<ul class="dropdown">
-												<li><a href="changeAccount.php">회원정보 수정</a></li>
-												<li class="active"><a href="login.php">로그아웃</a></li>
-												<li class="active"><a href="deleteAccount.php">회원 탈퇴</a></li>
+												<li><a href="MyRecords.php">나의 산행 기록</a></li>
+												<li><a href="AddRecords.php">산행 기록 추가</a></li>
 											</ul>
+										</li>
+										<li class="has-children">
+												<a href="#">'.$user_name.'님</a>
+												<ul class="dropdown">
+													<li><a href="changeAccount.php">회원정보 수정</a></li>
+													<li class="active"><a href="login.php">로그아웃</a></li>
+													<li class="active"><a href="deleteAccount.php">회원 탈퇴</a></li>
+												</ul>
 										</li>';
 								}
 								else {
-									echo '<li><a href="login.php">로그인하기</a></li>';
+									echo '<li><a href="login.php">근처 산 찾기</a></li>
+									<li><a href="login.php">산 검색하기</a></li>
+									<li class="has-children">
+										<a href="#">산행 기록</a>
+										<ul class="dropdown">
+											<li><a href="login.php">나의 산행 기록</a></li>
+											<li><a href="login.php">산행 기록 추가</a></li>
+										</ul>
+									</li>
+									<li><a href="login.php">로그인하기</a></li>';
 								}
 							?>
 						</ul>
