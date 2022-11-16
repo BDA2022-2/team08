@@ -49,12 +49,12 @@
 		<div class="container">
 			<div class="row justify-content-center align-items-center">
 				<div class="col-lg-9 text-center mt-5">
-					<h1 class="heading" data-aos="fade-up">나의 산행기록</h1>
+					<h1 class="heading" data-aos="fade-up">나의 산행 기록</h1>
 
 					<nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
 						<ol class="breadcrumb text-center justify-content-center">
-							<li class="breadcrumb-item "><a href="MyRecords.php">나의 산행기록</a></li>
-							<li class="breadcrumb-item "><a href="AddRecords.php">산행기록 적기</a></li>
+							<li class="breadcrumb-item "><a href="MyRecords.php">나의 산행 기록</a></li>
+							<li class="breadcrumb-item "><a href="AddRecords.php">산행 기록 추가</a></li>
 						</ol>
 					</nav>
 				</div>
@@ -87,6 +87,7 @@
 					if($res){			
 						if($res){
 							while($newArray=mysqli_fetch_array($res,MYSQLI_ASSOC)){
+								$review_id=$newArray['review_id'];
 								$mtn_idx=$newArray['mtn_idx'];
 								$mtn_name=$newArray['mtn_name'];
 								$user_id=$newArray['user_id'];
@@ -99,7 +100,7 @@
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 							<div class="property-item mb-30">
 		
-								<a href="property-single.html" class="img">
+								<a href="#" class="img">
 									<img src="images/img_1.jpg" alt="Image" class="img-fluid">
 								</a>
 		
@@ -112,20 +113,21 @@
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center me-3">
 												<span class="icon-map-marker"></span>
-												<span class="caption">'.$created.'</span>
+												<span class="caption">방문일자: '.$visit_date.'</span>
 											</span>
 										</div>
 
 										<div class="specs d-flex mb-4">
 											<span class="d-block d-flex align-items-center">
 												<span class="icon-star"></span>
-												<span class="caption">'.$mtn_rate.'</span>
+												<span class="caption">평점: '.$mtn_rate.'</span>
 											</span>
 										</div>
 		
 										
-										<form action="" method="post">
+										<form action="MyRecords_user.php" method="post">
 											<input type="submit" value="기록 삭제하기" class="btn btn-primary">
+											<input type="hidden" name="review_id" value='.$review_id.'>
 										</form>
 									</div>
 								</div>
@@ -144,22 +146,6 @@
 				mysqli_close($link);
 			?>
 			</div>
-		</div>
-			<div class="row align-items-center py-5">
-				<div class="col-lg-3">
-					Pagination (1 of 10)
-				</div>
-				<div class="col-lg-6 text-center">
-					<div class="custom-pagination">
-						<a href="#">1</a>
-						<a href="#" class="active">2</a>
-						<a href="#">3</a>
-						<a href="#">4</a>
-						<a href="#">5</a>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<footer include-html="html/footer.html"></footer>
