@@ -17,7 +17,7 @@
 		if($stmt=mysqli_prepare($link,$sql)){
 			//bind variables to the prepared stmt as parameters
 			mysqli_stmt_bind_param($stmt,"sssss",$after_name,$after_pw,$before_name,$before_pw,$user_id);
-			
+			session_start();
 			//set parameters
 			$before_name=trim($_POST['before_name']);
 			$before_pw=trim($_POST['before_pw']);
@@ -33,10 +33,7 @@
 			
 			//attempt to execute the prepared statement
 			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
-				$status = session_status();
-				if($status == PHP_SESSION_ACTIVE){
-					$_SESSION["ss_name"]=$after_name;
-				}
+				$_SESSION['ss_name']=$after_name;
 				echo "<script>alert('회원정보가 성공적으로 변경되었습니다.');</script>";
 				echo "<script>location.replace('./index.php');</script>";
 			}else if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)<1){
