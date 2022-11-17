@@ -86,7 +86,7 @@
 							echo "<script>location.replace('./AddRecords.php');</script>";
 						}else{
 							$mtn_name=trim($_POST['mtn_name']);
-							$sql="SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name` LIKE %$mtn_name%";
+							$sql="SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name` LIKE '%$mtn_name%'";
 							$result=mysqli_query($link,$sql);
 							$rowcount=mysqli_num_rows($result);
 					
@@ -103,19 +103,20 @@
 
 								$sql3 ="SELECT * FROM `same_mtn`";
 								$res3 = mysqli_query($link,$sql3);
-								echo "<br/>".$mtn_name." 산행 기록";
+								
 								echo "<br/>"."$mtn_name 에 대한 총 $rowcount 개의 동일한 검색 결과를 찾았습니다";
-								echo "<br/>"."=============================================";
+								echo "<br/>"."===============================================================================================";
 								
 								
-
+								
 								if ($res3) {
 									while ($newArray = mysqli_fetch_array($res3,MYSQLI_ASSOC)) {
 										$same_idx = $newArray['idx'];
 										$mtn_address = $newArray['mtn_address'];
-										echo "<br/>"."> 산 아이디: ".$same_idx.", 위치: ".$mtn_address;
+										echo "<br/>"."> 산 아이디: "."<b>".$same_idx."</b>".", 위치: ".$mtn_address;
 									}
-									echo "<br/>"."=============================================";
+									echo "<br/>"."===============================================================================================";
+									echo "<br/>"."<br/>";
 								} 
 								else {
 									printf("Could not retrieve records: %s\n",mysqli_error($mysqli));
@@ -140,11 +141,11 @@
 					}
 				?>
 			</div>
-		</div>
+	</div>
 
 		<div class="container">
-			<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-				<form method="post" action="AddRecords_all.php">
+				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+					<form method="post" action="AddRecords_all.php">
 						<div class="row">
 							<div class="col-6 mb-3">
 								산아이디
@@ -177,9 +178,9 @@
 								<input type = "hidden" name = "mtn_name" value ="<?php echo $_POST['mtn_name']; ?>" />
 							</div>
 						</div>
-				</form>
+					</form>
+				</div>
 			</div>
-		</div>
 	</div>
 
 	<div class="site-footer">

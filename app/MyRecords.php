@@ -81,7 +81,7 @@
 					//prepare an insert statement
 					//$sql="INSERT INTO `team08`.`mtn_review`(`review_id`,`mtn_idx`,`mtn_name`,`user_id`,`visit_date`,`mtn_rate`,`comment`,`created`) VALUES (?,?,?,?,?,?,?,?)";
 					//$sql="INSERT INTO `team08`.`mtn_review`(`mtn_idx`,`mtn_name`,`user_id`,`visit_date`,`mtn_rate`,`comment`,`created`) VALUES (?,?,?,?,?,?,?)";
-					$sql="select * from `team08`.`mtn_review`";
+					$sql="select * from `team08`.`mtn_review` where user_id='".$_SESSION["ss_id"]."'";
 					$res=mysqli_query($link,$sql);
 					
 					if($res){			
@@ -123,9 +123,25 @@
 												<span class="caption">평점: '.$mtn_rate.'</span>
 											</span>
 										</div>
+
+										<form action="MyRecords_update.php" method="post">
+											<div class="row">
+												<div class="col-6 mb-3">
+													<select id="별점" name="mtn_rate" class="form-control">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+													</select>
+												</div>
+												<input type="submit" value="평점 변경하기" class="col-6 mb-3">
+											</div>
+											<input type="hidden" name="review_id" value='.$review_id.'>
+										</form>
 		
 										
-										<form action="MyRecords_user.php" method="post">
+										<form action="MyRecords_delete.php" method="post">
 											<input type="submit" value="기록 삭제하기" class="btn btn-primary">
 											<input type="hidden" name="review_id" value='.$review_id.'>
 										</form>
