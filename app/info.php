@@ -163,7 +163,7 @@
 							$RN1 = "0";
 							$REH = "70";
 							$POP = "100";
-							$PCP = "20";
+							$PCP = "10";
 							$PTY = "4";
 							$WSD = "7.3";
 							#더미데이터-2
@@ -325,7 +325,7 @@
 										<br>
 										<span class="icon-opacity text-black-50"></span> 현재 습도 %s%%<br><br>
 										<span class="icon-toys text-black-50"></span> 현재 풍속 %sm/s<br><br> 
-										<span class="icon-tint text-black-50"></span> &nbsp강수량&nbsp %s
+										<span class="icon-tint text-black-50"></span> &nbsp강수량&nbsp %smm
 									</div>', $T1H, $TMX, $TMN, $REH, $WSD, $PCP);
 						}
 					?>
@@ -363,7 +363,8 @@
 												JOIN(
 													SELECT
 														t.df_obsrt_tm_date AS dat,
-														t.df_obsrt_tm_time AS hou
+														t.df_obsrt_tm_time AS hou,
+														AVG(t.two_meter_tprt) AS tp_avg
 													FROM
 														(
 															(
@@ -378,13 +379,14 @@
 																FROM
 																	spot_no
 																WHERE
-																	city LIKE '%".$mtn_addr_arr[1]."%'
-															) AND two_meter_tprt BETWEEN ".$T1H_L[0]." AND ".$T1H_L[1]." AND two_meter_wdsp <= ".$WSD." AND two_meter_hmdt <= ".$REH." AND wght_rain_qntt <= ".$PCP."
+																	city LIKE '강원도%'
+															) AND two_meter_wdsp <= ".$WSD." AND two_meter_hmdt <= ".$REH." AND wght_rain_qntt <= ".$PCP."
 														) AS t
 														)
 													GROUP BY
 														t.df_obsrt_tm_date,
 														t.df_obsrt_tm_time
+													HAVING tp_avg BETWEEN ".$T1H_L[0]." AND ".$T1H_L[1]."
 												) AS tb_w
 												ON
 													ADDTIME(tb_w.dat, tb_w.hou) BETWEEN ADDTIME(tb_l.start_date,tb_l.start_time
