@@ -8,7 +8,6 @@
 	$link=mysqli_connect($db_host,$db_user,$db_password,$db_name);
 	$link->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
 	
-	try{
 	//check connection
 	if($link===false){
 		die("error: could not connect".mysqli_connect_error());
@@ -50,10 +49,7 @@
 			echo "<script>location.replace('./deletemakeAccount.php');</script>";
 		}
 	}
-	$link->commit();
-	}catch (Exception $e) {
-		$link->rollback();
-	}
+	
 	//close statement
 	mysqli_stmt_close($stmt);
 	//close connection

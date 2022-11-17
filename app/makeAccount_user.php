@@ -17,6 +17,7 @@
 		if($stmt=mysqli_prepare($link,$sql)){
 			//bind variables to the prepared stmt as parameters
 			mysqli_stmt_bind_param($stmt,"sss",$user_id,$user_pw,$user_name);
+			session_start();
 			
 			//set parameters
 			$user_id=trim($_POST['user_id']);
