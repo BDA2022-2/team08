@@ -20,3 +20,12 @@ and mtn_address like '%서울특별시%'
 and mtn_address like '%도봉구%'
 and ifnull(avg_rate,0) >= 0
 and ifnull(cnt,0) >= 0;
+
+-- 인덱스 생성
+CREATE INDEX mtn_wea_idx ON mtn_weather (spot_no, two_meter_tprt, two_meter_wdsp, two_meter_hmdt, wght_rain_qntt);
+
+-- 인덱스 확인
+SHOW INDEX FROM mtn_weather;
+
+-- 인덱스 삭제
+ALTER TABLE mtn_weather DROP INDEX mtn_wea_idx;y

@@ -62,7 +62,7 @@
 								#location 테이블에서 산 정보 받아오기
 								$sql1 = "SELECT * FROM mtn_location WHERE mtn_name = '".$mtn_name."' AND idx = '".$mtn_index."'";
 								$res1 = mysqli_query($mysqli, $sql1);
-								if($res1) {
+								if($res1) {	
 									$mtn_info = mysqli_fetch_array($res1,MYSQLI_ASSOC);
 									$mtn_degree_e = (string)round((float)$mtn_info['mtn_degree_e']);
 									$mtn_degree_n = (string)round((float)$mtn_info['mtn_degree_n']);
@@ -142,19 +142,20 @@
 				  <div class="row my-3">
 					<?php
 						date_default_timezone_set('Asia/Seoul');
-						// #더미데이터-1
+						
+						// #더미데이터-1. 설악산
 						$SKY = "1";
 						$T1H = "11";
 						$TMN = "0";
 						$TMX = "13";
 						$RN1 = "0";
 						$REH = "36";
-						$POP = "20";
+						$POP = "10";
 						$PCP = "0";
 						$PTY = "0";
 						$WSD = "7.3";
 						
-						#더미데이터
+						#더미데이터-2
 						// $SKY = "3";
 						// $T1H = "11";
 						// $TMN = "0";
@@ -351,22 +352,21 @@
 									<?php
 										#DB 연결 - 산사태 예보 발생횟수 가져오기
 										$mtn_addr_arr = explode(' ', $mtn_addr);
-										$T1H_L = [(int)$T1H - 2.5, (int)$T1H + 2.5];
+										$T1H_L = [(int)$T1H - 2.5, (int)$T1H + 2.5]; 
 										$sql = "SELECT
 													tb_l.fc_type,
 													COUNT(*) AS cou
 												FROM
 													landslide_fc AS tb_l
-												INNER JOIN(
+												JOIN(
 													SELECT
 														t.df_obsrt_tm_date AS dat,
-														t.df_obsrt_tm_hour AS hou
+														t.df_obsrt_tm_time AS hou
 													FROM
 														(
 															(
 															SELECT
-																*,
-																HOUR(df_obsrt_tm_time) AS df_obsrt_tm_hour
+																*
 															FROM
 																mtn_weather
 															WHERE
@@ -376,17 +376,18 @@
 																FROM
 																	spot_no
 																WHERE
-																	city LIKE '".$mtn_addr_arr[1]."%'
-																AND two_meter_tprt BETWEEN ".$T1H_L[0]." AND ".$T1H_L[1]." AND two_meter_wdsp <= ".$WSD." AND two_meter_hmdt <= ".$REH." AND wght_rain_qntt <= ".$PCP."
-															)
+																	city LIKE '%".$mtn_addr_arr[1]."%'
+															) AND two_meter_tprt BETWEEN ".$T1H_L[0]." AND ".$T1H_L[1]." AND two_meter_wdsp <= ".$WSD." AND two_meter_hmdt <= ".$REH." AND wght_rain_qntt <= ".$PCP."
 														) AS t
 														)
 													GROUP BY
 														t.df_obsrt_tm_date,
-														t.df_obsrt_tm_hour
+														t.df_obsrt_tm_time
 												) AS tb_w
 												ON
-												ADDTIME(tb_w.dat, tb_w.hou) BETWEEN ADDTIME(tb_l.start_date, tb_l.start_time) AND ADDTIME(tb_l.end_date, tb_l.end_time);";
+													ADDTIME(tb_w.dat, tb_w.hou) BETWEEN ADDTIME(tb_l.start_date,tb_l.start_time
+													) AND ADDTIME(tb_l.end_date, tb_l.end_time)
+												AND tb_l.administ_district LIKE '%".$mtn_addr_arr[1]."%'";
 										$res = mysqli_query($mysqli, $sql);
 										if($res) {
 											while($row = mysqli_fetch_array($res,MYSQLI_ASSOC)){
