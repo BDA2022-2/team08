@@ -4,8 +4,6 @@ if(mysqli_connect_errno()){
   printf("Connection failed: %s\n", mysqli_connect_error());
   exit();
 }
-// session_start();
-// $user_id = $_SESSION["ss_id"];
 ?>
 <html>
   <head>
@@ -33,23 +31,6 @@ if(mysqli_connect_errno()){
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/includeHTML.js"></script>
-    <script>
-       function submitAtag(){
-        const customoverlay_form = document.getElementById("customoverlay_form");
-        customoverlay_form.submit();
-        for (let i = 0; i < positions.length; i++) {
-        const content =
-          '<div class="customoverlay">' +
-          ` <form id="customoverlay_form" action="info.php" method="post">` +
-          `   <input type="hidden" name="mtn_index" value = ${Number(positions[i][0])} />` +
-          `   <input type="hidden" name="mtn_name" value = ${positions[i][1]} />` +
-          " </form>" +
-          ` <a href="javascript:submitAtag();">` +
-          `   <span class="title">${positions[i][1]}</span>` +
-          " </a>" +
-          "</div>";
-      }
-    </script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
   </head>
@@ -129,68 +110,143 @@ if(mysqli_connect_errno()){
           </div>
         </form>
 
-        <div class="recent">
+        <!-- 최근 검색어 및 최근 방문 산 -->
         <?php
           $sql2 = "SELECT * FROM user WHERE user_id = '".$user_id."'";
           $res2 = mysqli_query($mysqli, $sql2);
           if($res2) {
             $user_info = mysqli_fetch_array($res2,MYSQLI_ASSOC);
-            $search_name = $user_info["search_mtn"];
-            $search_region1 = $user_info["search_location1"];
-            $search_region2 = $user_info["search_location2"];
+            $mtn_name = $user_info["search_mtn"];
+            $region_1depth_name = $user_info["search_location1"];
+            $region_2depth_name = $user_info["search_location2"];
           }
           else {
             printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
           }
-          echo '<div>최근 검색어</div>';
-          echo '<a href="./result.php?region_1depth_name='.$search_region1.'&region_2depth_name='.$search_region2.'&mtn_name='.$search_name.'">'.$search_region1.' '.$search_region2.' '.$search_name.'</a>';
-          if($search_region1 || $search_region2 || $search_name) {
-            echo '<a href="./delete_search.php?del='.$user_id.'"> X</a>';
-          }
+        ?>
 
+        <div>최근 검색어</div>
+        <form name="recent_search">
+          <input type="hidden" name="mtn_name"/>
+          <input type="hidden" name="region_1depth_name"/>
+          <input type="hidden" name="region_2depth_name"/>
+        </form>
+
+        <a href="javascript:goPage1('<?php echo $mtn_name?>', '<?php echo $region_1depth_name?>', '<?php echo $region_2depth_name?>');"><?php echo $region_1depth_name." ".$region_2depth_name." ".$mtn_name?></a>
+        <a href="./delete_search.php?del=<?php echo $user_id?>"> X</a>
+        
+
+        <script>
+
+        function goPage1(mtn_name, region_1depth_name, region_2depth_name = 0) {
+          var f = document.recent_search;
+          f.mtn_name.value = mtn_name;
+          f.region_1depth_name.value = region_1depth_name;
+          f.region_2depth_name.value = region_2depth_name;
+          f.action = "./result.php"
+          f.method = "post"
+          f.submit();
+        };
+        </script>
+
+        <?php
           $sql3 = "SELECT * FROM mtn_review WHERE user_id = '".$user_id."' ORDER BY visit_date DESC LIMIT 1";
           $res3 = mysqli_query($mysqli, $sql3);
           if($res3) {
             $review_info = mysqli_fetch_array($res3,MYSQLI_ASSOC);
             $mtn_name = $review_info['mtn_name'];
-            $mtn_idx = $review_info['mtn_idx'];
+            $mtn_index = $review_info['mtn_idx'];
           }
           else {
             printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
           }
-          echo '<div>최근에 방문한 산</div>';
-          //echo '<a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_idx.'">'.$mtn_name.'</a>';
         ?>
-        </div>
 
-        <!-- 사용자들이 가장 많이 방문한 산 TOP 5 -->
-          <ol>
-            <?php
-              $sql4 ="SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK) AND NOW() GROUP BY mtn_idx";
-              $res4 = mysqli_query($mysqli, $sql4);
-              if(!(mysqli_fetch_array($res4,MYSQLI_ASSOC) == NULL)) {
-                echo '<h2>현재 사용자들이 많이 방문한 산</h2>';
-              }
-              $i = 1;
-              while ($i <= 5) {
-                if(!(mysqli_fetch_array($res4,MYSQLI_ASSOC) == NULL)) {
-                  $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
-                  $mtn_name = $mtn_rank["mtn_name"];
-                  $mtn_index = $mtn_rank["mtn_idx"];
-                  echo '<li><a href="./info.php?mtn_name='.$mtn_name.'&mtn_index='.$mtn_index.'">'.$mtn_name.'</a></li>';
-                  $i++;
-                } else {
-                  break;
-                }
-              }
-              mysqli_free_result($res2);
-              mysqli_free_result($res3);
-              mysqli_free_result($res4);
-              mysqli_close($mysqli);
-            ?>
-            </ol>
+        <div>최근에 방문한 산</div>
+        <form name="recent_visit">
+          <input type="hidden" name="mtn_name"/>
+          <input type="hidden" name="mtn_index"/>
+        </form>
+
+        <a href="javascript:goPage2('<?php echo $mtn_name?>', '<?php echo $mtn_index?>');"><?php echo $mtn_name?></a>
+
+        <script>
+          function goPage2(mtn_name, mtn_index = 0) {
+            var f = document.recent_visit;
+            f.mtn_name.value = mtn_name;
+            f.mtn_index.value = mtn_index;
+            f.action = "./info.php"
+            f.method = "post"
+            f.submit();
+          };
+        </script>
+
+        <h3>사용자들이 가장 많이 방문한 산</h3>
+          <?php
+            $sql4 ="SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN NOW() AND DATE_ADD(NOW(),INTERVAL 1 WEEK) GROUP BY mtn_idx";
+            $res4 = mysqli_query($mysqli, $sql4);
+            $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
+            $mtn_name = $mtn_rank["mtn_name"];
+            $mtn_index = $mtn_rank["mtn_idx"];
+          ?> 
+          <form name="visit_trend">
+          <input type="hidden" name="mtn_name"/>
+          <input type="hidden" name="mtn_index"/>
+          </form>
+          <a href="javascript:goPage2('<?php echo $mtn_name?>', '<?php echo $mtn_index?>');">1. <?php echo $mtn_name?></a>
+          
+          <?php
+            $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
+            $mtn_name = $mtn_rank["mtn_name"];
+            $mtn_index = $mtn_rank["mtn_idx"];
+          ?>
+          <form name="visit_trend">
+          <input type="hidden" name="mtn_name"/>
+          <input type="hidden" name="mtn_index"/>
+          </form>
+          <a href="javascript:goPage2('<?php echo $mtn_name?>', '<?php echo $mtn_index?>');">2. <?php echo $mtn_name?></a>
+
+          <?php
+            $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
+            $mtn_name = $mtn_rank["mtn_name"];
+            $mtn_index = $mtn_rank["mtn_idx"];
+          ?>
+          <form name="visit_trend">
+          <input type="hidden" name="mtn_name"/>
+          <input type="hidden" name="mtn_index"/>
+          </form>
+          <a href="javascript:goPage2('<?php echo $mtn_name?>', '<?php echo $mtn_index?>');">3. <?php echo $mtn_name?></a>
+
+          <?php
+            $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
+            $mtn_name = $mtn_rank["mtn_name"];
+            $mtn_index = $mtn_rank["mtn_idx"];
+          ?>
+          <form name="visit_trend">
+          <input type="hidden" name="mtn_name"/>
+          <input type="hidden" name="mtn_index"/>
+          </form>
+          <a href="javascript:goPage2('<?php echo $mtn_name?>', '<?php echo $mtn_index?>');">4. <?php echo $mtn_name?></a>
+
+          <?php
+            $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
+            $mtn_name = $mtn_rank["mtn_name"];
+            $mtn_index = $mtn_rank["mtn_idx"];
+          ?>
+          <form name="visit_trend">
+          <input type="hidden" name="mtn_name"/>
+          <input type="hidden" name="mtn_index"/>
+          </form>
+          <a href="javascript:goPage2('<?php echo $mtn_name?>', '<?php echo $mtn_index?>');">5. <?php echo $mtn_name?></a>
+
       </div>
     </div>
+    <?php
+      mysqli_free_result($res2);
+      mysqli_free_result($res3);
+      mysqli_free_result($res4);
+      mysqli_close($mysqli);
+    ?>
 
     <footer include-html="html/footer.html"></footer>
     <script defer>
@@ -204,6 +260,26 @@ if(mysqli_connect_errno()){
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
+
+    <!-- <script>
+      function submitAtag(){
+        const b= document.getElementById("b");
+          b.submit();
+          for (let i = 0; i < positions.length; i++) {
+          const content =
+            '<div class="a">' +
+            ` <form id="b" action="result.php" method="post">` +
+            `   <input type="hidden" name="region_1depth_name" value = $region_1depth_name />` +
+            `   <input type="hidden" name="region_2depth_name" value = $region_2depth_name />` +
+            `   <input type="hidden" name="mtn_name" value = $mtn_name />` +
+            " </form>" +
+            ` <a href="javascript:submitAtag();">` +
+            `   <span class="title">$region_1depth_name $region_2depth_name mtn_name</span>` +
+            " </a>" +
+            "</div>";
+          }
+      }
+    </script> -->
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/tiny-slider.js"></script>
