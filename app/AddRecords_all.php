@@ -15,6 +15,7 @@
         $sql="INSERT INTO `team08`.`mtn_review`(`mtn_idx`,`mtn_name`,`visit_date`,`mtn_rate`,`comment`,`user_id`) VALUES (?,?,?,?,?,?)";
 		
 		if($stmt=mysqli_prepare($link,$sql)){
+			session_start();
 			//bind variables to the prepared stmt as parameters
 			mysqli_stmt_bind_param($stmt,"ssssss",$mtn_idx,$mtn_name,$visit_date,$mtn_rate,$comment,$user_id);
 			

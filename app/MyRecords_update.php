@@ -14,22 +14,24 @@
 		die("error: could not connect".mysqli_connect_error());
 	}else{
 		//prepare an insert statement
-        $sql="DELETE FROM `team08`.`mtn_review` WHERE review_id=? and user_id=?";
+        $sql="UPDATE `team08`.`mtn_review` SET mtn_rate=? WHERE review_id=? and user_id=?";
 		
 		if($stmt=mysqli_prepare($link,$sql)){
 			//bind variables to the prepared stmt as parameters
-			mysqli_stmt_bind_param($stmt,"ss",$review_id,$user_id);
+			mysqli_stmt_bind_param($stmt,"sss",$mtn_rate,$review_id,$user_id);
+			session_start();
 			
 			//set parameters
+			$mtn_rate=trim($_POST['mtn_rate']);
 			$review_id=trim($_POST['review_id']);
 			$user_id=trim($_SESSION["ss_id"]);
 			
 			//attempt to execute the prepared statement
 			if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)>0){
-				echo "<script>alert('기록 삭제가 성공적으로 이루어졌습니다. ');</script>";
+				echo "<script>alert('평점 수정이 성공적으로 이루어졌습니다. ');</script>";
 				echo "<script>location.replace('./MyRecords.php');</script>";
 			}else if(mysqli_stmt_execute($stmt)&&mysqli_affected_rows($link)<1){
-				echo "<script>alert('ERROR: 잘못된 접근입니다');</script>";
+				echo "<script>alert('ERROR: 변경을 원하는 값이 이전 평점의 값과 동일합니다');</script>";
 				echo "<script>location.replace('./MyRecords.php');</script>";
 				exit;
 			}else{
