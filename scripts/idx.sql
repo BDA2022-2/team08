@@ -28,4 +28,4 @@ CREATE INDEX mtn_wea_idx ON mtn_weather (spot_no, two_meter_tprt, two_meter_wdsp
 SHOW INDEX FROM mtn_weather;
 
 -- 인덱스 삭제
-ALTER TABLE mtn_weather DROP INDEX mtn_wea_idx;y
+ALTER TABLE mtn_weather DROP INDEX mtn_wea_idx;

@@ -142,30 +142,32 @@
 				  <div class="row my-3">
 					<?php
 						date_default_timezone_set('Asia/Seoul');
-						
-						// #더미데이터-1. 설악산
-						$SKY = "1";
-						$T1H = "11";
-						$TMN = "0";
-						$TMX = "13";
-						$RN1 = "0";
-						$REH = "36";
-						$POP = "10";
-						$PCP = "0";
-						$PTY = "0";
-						$WSD = "7.3";
-						
-						#더미데이터-2
-						// $SKY = "3";
-						// $T1H = "11";
-						// $TMN = "0";
-						// $TMX = "13";
-						// $RN1 = "0";
-						// $REH = "70";
-						// $POP = "100";
-						// $PCP = "20";
-						// $PTY = "4";
-						// $WSD = "7.3";
+						if ($mtn_name == "설악산(대청봉)") {
+							$SKY = "1";
+							$T1H = "11";
+							$TMN = "0";
+							$TMX = "13";
+							$RN1 = "0";
+							$REH = "36";
+							$POP = "10";
+							$PCP = "0";
+							$PTY = "0";
+							$WSD = "7.3";
+							// #더미데이터-1. 설악산
+						}
+						else {
+							$SKY = "3";
+							$T1H = "17";
+							$TMN = "12";
+							$TMX = "23";
+							$RN1 = "0";
+							$REH = "70";
+							$POP = "100";
+							$PCP = "20";
+							$PTY = "4";
+							$WSD = "7.3";
+							#더미데이터-2
+						}
 
 						// #API로 날씨 받아오는 코드
 						// if ((int)date("i",time()) < 45){
@@ -513,7 +515,7 @@
 										if ($kr_name){
 											echo '<div class="property-item">
 												<a class="img-fluid">
-													<img src="'.$url.'" alt="Image" class="img-flower">
+													<img src="'.$url.'" onError="this.src = \'images/noimage.jpg\'" alt="Image" class="img-flower">
 												</a>
 												<div class="property-content">
 													<div>
