@@ -7,9 +7,7 @@ if(mysqli_connect_errno()){
 session_start();
 $user_id = $_SESSION["ss_id"];
 
-$del = $_POST['del'];
-
-$sql = "UPDATE user SET search_mtn = '', search_location1 = '', search_location2 = '' WHERE user_id = '".$del."'";
+$sql = "UPDATE user SET search_mtn = '', search_location1 = '', search_location2 = '' WHERE user_id = '".$user_id."'";
 $res = mysqli_query($mysqli, $sql);
 if($res) {
     echo "<script>location.replace('./search.php');</script>";

@@ -47,7 +47,7 @@ if(mysqli_connect_errno()){
       <div class="container">
         <div class="menu-bg-wrap">
           <div class="site-navigation">
-            <a href="index.html" class="logo m-0 float-start">
+            <a href="index.php" class="logo m-0 float-start">
               <img
                 src="images/logo_nav.png"
                 alt="Image"
