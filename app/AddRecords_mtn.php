@@ -86,7 +86,7 @@
 							echo "<script>location.replace('./AddRecords.php');</script>";
 						}else{
 							$mtn_name=trim($_POST['mtn_name']);
-							$sql="SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name`= '$mtn_name'";
+							$sql="SELECT `mtn_name`,`idx` FROM `team08`.`mtn_location` WHERE `mtn_name` LIKE %$mtn_name%";
 							$result=mysqli_query($link,$sql);
 							$rowcount=mysqli_num_rows($result);
 					
@@ -101,7 +101,7 @@
 								$sql2 ="CREATE OR REPLACE VIEW `same_mtn` AS SELECT `idx`,`mtn_address` FROM `team08`.`mtn_location` WHERE `mtn_name`= '$mtn_name'";
 								$res2 = mysqli_query($link,$sql2);
 
-								$sql3 ="SELECT * FROM same_mtn";
+								$sql3 ="SELECT * FROM `same_mtn`";
 								$res3 = mysqli_query($link,$sql3);
 								echo "<br/>".$mtn_name." 산행 기록";
 								echo "<br/>"."$mtn_name 에 대한 총 $rowcount 개의 동일한 검색 결과를 찾았습니다";

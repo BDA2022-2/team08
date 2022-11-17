@@ -12,11 +12,11 @@
 		die("error: could not connect".mysqli_connect_error());
 	}else{
 		//prepare an insert statement
-        $sql="INSERT INTO `team08`.`mtn_review`(`mtn_idx`,`mtn_name`,`visit_date`,`mtn_rate`,`comment`) VALUES (?,?,?,?,?)";
+        $sql="INSERT INTO `team08`.`mtn_review`(`mtn_idx`,`mtn_name`,`visit_date`,`mtn_rate`,`comment`,`user_id`) VALUES (?,?,?,?,?,?)";
 		
 		if($stmt=mysqli_prepare($link,$sql)){
 			//bind variables to the prepared stmt as parameters
-			mysqli_stmt_bind_param($stmt,"sssss",$mtn_idx,$mtn_name,$visit_date,$mtn_rate,$comment);
+			mysqli_stmt_bind_param($stmt,"ssssss",$mtn_idx,$mtn_name,$visit_date,$mtn_rate,$comment,$user_id);
 			
 			//set parameters
 			$mtn_idx=trim($_POST['mtn_idx']);
@@ -24,6 +24,7 @@
 			$visit_date=trim($_POST['visit_date']);
 			$mtn_rate=trim($_POST['mtn_rate']);
 			$comment=trim($_POST['comment']);
+			$user_id=trim($_SESSION["ss_id"]);
 
 			if (!$mtn_idx) {
 				echo "<script>alert('산 아이디를 확인 해 주세요');</script>";
