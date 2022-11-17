@@ -183,7 +183,7 @@ if(mysqli_connect_errno()){
 
         <h3>사용자들이 가장 많이 방문한 산</h3>
           <?php
-            $sql4 ="SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN NOW() AND DATE_ADD(NOW(),INTERVAL 1 WEEK) GROUP BY mtn_idx";
+            $sql4 ="SELECT *, COUNT(*), RANK() OVER (ORDER BY COUNT(review_id) DESC) AS rank_num FROM mtn_review WHERE visit_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK) AND NOW() GROUP BY mtn_idx";
             $res4 = mysqli_query($mysqli, $sql4);
             $mtn_rank = mysqli_fetch_array($res4,MYSQLI_ASSOC);
             $mtn_name = $mtn_rank["mtn_name"];
