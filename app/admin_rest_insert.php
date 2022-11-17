@@ -29,6 +29,7 @@ if(mysqli_connect_errno()){
     <link rel="stylesheet" href="css/tiny-slider.css" />
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/admin_insert.css" />
     <script src="js/includeHTML.js"></script>
 
     <title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
