@@ -1,9 +1,9 @@
--- -- DB 생성 ("team08")
--- CREATE DATABASE team08 default CHARACTER SET UTF8;
+-- DB 생성 ("team08")
+CREATE DATABASE team08 default CHARACTER SET UTF8;
 
--- -- 사용자 추가 (user id: "team08", password: "team08")
--- GRANT ALL PRIVILEGES ON team08.* TO 'team08'@'localhost' IDENTIFIED BY 'team08';
--- USE team08;
+-- 사용자 추가 (user id: "team08", password: "team08")
+GRANT ALL PRIVILEGES ON team08.* TO 'team08'@'localhost' IDENTIFIED BY 'team08';
+USE team08;
 
 -- Tables 생성
 CREATE TABLE `team08`.`mtn_location` (
@@ -98,9 +98,9 @@ CREATE TABLE `team08`.`restaurants` (
   );
 
 CREATE TABLE `team08`.`plant_species` (
-  `id` INT NULL,
-  `kr_name` VARCHAR(45) NOT NULL PRIMARY KEY,
-  `sci_name` TINYTEXT NULL,
+  `id` INT NOT NULL PRIMARY KEY,
+  `kr_name` VARCHAR(45) NULL,
+  `sci_name` TEXT(110) NULL,
   `kr_family_name` VARCHAR(45) NULL,
   `sci_family_name` VARCHAR(65) NULL,
   `blossom` INT UNSIGNED NULL,
