@@ -11,3 +11,6 @@ DROP TABLE mtn_accident;
 DROP TABLE mtn_weather;
 DROP TABLE mtn_location;
 DROP TABLE spot_no;
+
+-- 뷰 삭제
+DROP VIEW same_mtn;
