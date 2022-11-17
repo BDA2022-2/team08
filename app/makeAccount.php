@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="css/style.css">
 
 	<script src="js/includeHTML.js"></script>
-	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
+	<title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
 	
 </head>
 <body>

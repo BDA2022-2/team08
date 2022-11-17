@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="css/style.css">
 
 	<script src="js/includeHTML.js"></script>
-	<title>Property &mdash; Free Bootstrap 5 Website Template by Untree.co</title>
+	<title>우산 &mdash; 산악 날씨 종합 정보 시스템</title>
 </head>
 <body>
 <?php
@@ -124,26 +124,12 @@
 											</span>
 										</div>
 
-										<form action="MyRecords_update.php" method="post">
-											<div class="row">
-												<div class="col-6 mb-3">
-													<select id="별점" name="mtn_rate" class="form-control">
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-														<option value="5">5</option>
-													</select>
-												</div>
-												<input type="submit" value="평점 변경하기" class="col-6 mb-3">
-											</div>
-											<input type="hidden" name="review_id" value='.$review_id.'>
-										</form>
 		
 										
 										<form action="MyRecords_delete.php" method="post">
 											<input type="submit" value="기록 삭제하기" class="btn btn-primary">
 											<input type="hidden" name="review_id" value='.$review_id.'>
+											<input type="hidden" name="mtn_idx" value='.$mtn_idx.'>
 										</form>
 									</div>
 								</div>
