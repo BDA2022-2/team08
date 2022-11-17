@@ -125,8 +125,7 @@
                 style="
                   width: 90%;
                   height: 450px;
-                  margin-top: 13px;
-                  margin-left: 30px;
+                  margin: 0 auto;
                   position: relative;
                 "
               ></div>

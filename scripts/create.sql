@@ -154,3 +154,4 @@ CREATE TABLE `team08`.`img` (
 
 -- 인덱스 생성
 CREATE INDEX mtn_loc_idx ON mtn_location (mtn_name, mtn_address);
+CREATE INDEX mtn_wea_idx ON mtn_weather (spot_no, two_meter_tprt, two_meter_wdsp, two_meter_hmdt, wght_rain_qntt);

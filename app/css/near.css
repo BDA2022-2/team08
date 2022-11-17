@@ -54,6 +54,9 @@
 }
 
 /* 지도 */
+#map {
+  margin: 0 auto;
+}
 .section .heading {
   font-weight: 600;
 }
