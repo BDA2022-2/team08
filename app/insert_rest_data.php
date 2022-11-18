@@ -5,20 +5,20 @@ if(mysqli_connect_errno()){
   exit();
 }
 
-$rest_name = $_GET['rest_name'];
-$road_base_add = $_GET['road_base_add'];
-$address = $_GET['address'];
-if($_GET['status'] == "Y") {
+$rest_name = $_POST['rest_name'];
+$road_base_add = $_POST['road_base_add'];
+$address = $_POST['address'];
+if($_POST['status'] == "Y") {
     $status_code = '1';
     $status = "영업";
 } else {
     $status_code = '0';
     $status = "폐업";
 }
-$menu_type = $_GET['menu_type'];
-$menu = $_GET['menu'];
-$tel = $_GET['tel'];
-$id = $_GET['ID'];
+$menu_type = $_POST['menu_type'];
+$menu = $_POST['menu'];
+$tel = $_POST['tel'];
+$id = $_POST['ID'];
 
 $sql = "INSERT INTO restaurants VALUES ('".$rest_name."', '".$road_base_add."', '".$address."', '".$status_code."', '".$status."', '".$menu_type."', '".$menu."', '".$tel."', '".$id."')";
 
