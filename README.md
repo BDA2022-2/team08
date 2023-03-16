@@ -2,7 +2,7 @@
 이화여자대학교 컴퓨터공학과 빅데이터응용 강의 과제로 진행한 프로젝트의 레포지토리입니다.
 <br>
 - 개발기간: 2022.11.04 ~ 2022.11.17
-- Report: [Final Report Notion Page](https://www.notion.so/Final-Project-Report-Team08-8bf5c6e039164a4fb7364a436524bdd5)
+- Report: [Final Report Notion Page](https://steel-shirt-a25.notion.site/Final-Project-Report-Team08-8bf5c6e039164a4fb7364a436524bdd5)
 
 ### 프로젝트 개요
 산악 기상 종합 정보 시스템, ‘우산’(우리 산에 가자)은
